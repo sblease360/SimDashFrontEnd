@@ -28,6 +28,8 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="clientscript.js" />
+    <Content Include="index.html" />
     <Content Include="libman.json" />
     <Content Include="server.js" />
     <Content Include="package.json" />

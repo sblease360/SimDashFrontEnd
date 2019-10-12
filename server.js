@@ -10,23 +10,10 @@ const wss = new WebSocket.Server({
 //iRacing Stuff
 var irsdk = require('node-irsdk');
 irsdk.init({
-    telemetryUpdateInterval: 50,
+    telemetryUpdateInterval: 2000,
     sessionInfoUpdateInterval: 5000
 });
 var iracing = irsdk.getInstance()
-
-console.log('\nWaiting for iRacing...')
-
-iracing.on('Connected', function () {
-    console.log('\nConnected to iRacing!.')
-})
-
-iracing.once('Disconnected', function () {
-    console.log('iRacing closed.')
-})
-
-
-
 
 //Main logic
 wss.on('connection', function connection(ws) {
@@ -42,8 +29,15 @@ wss.on('connection', function connection(ws) {
     })
 })
 
+console.log('\nWaiting for iRacing instance')
 
+iracing.on('Connected', function () {
+    console.log('\nConnected to iRacing!.')
+})
 
+iracing.once('Disconnected', function () {
+    console.log('iRacing closed.')
+})
 
 
 

@@ -3,12 +3,13 @@
 function connectToDataSource() {
     console.log("loaded - creating WebSocket connection");
     webSocket.onopen = function (event) {
-        webSocket.send("Connection to data sending application established");
+        console.log("sending connection confirmation");
+        webSocket.send("webapp connected");
     };
 };
 
 webSocket.onmessage = function (e) {
-    console.log("websocket recieved: %O", e.data);
+    console.log("websocket recieved");
     //var date = new Date(null);
     //date.setSeconds(e.data.values.SessionTime)
     //var timeString = date.toISOString().substr(11, 8);
