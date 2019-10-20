@@ -58,6 +58,7 @@ function displayConnectionState() {
             break;
         case 3: //closed
             document.getElementById('dataSourceStatus').innerHTML = 'Disconnected'
+            document.getElementById('irStatus').innerHTML = "Not Running"
             break;
         default: //bad things have happened
     };
