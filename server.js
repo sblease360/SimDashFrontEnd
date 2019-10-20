@@ -21,6 +21,23 @@ wss.on('connection', function connection(ws) {
         console.log('recieved: %s', message);
     });
 
+    console.log('\nWaiting for iRacing instance')
+
+    iracing.on('Connected', function () {
+        console.log('\nConnected to iRacing!.');
+        wss.clients.forEach(function each(client) {
+            client.send("Connected to iRacing");
+        })
+    })
+
+    iracing.once('Disconnected', function () {
+        console.log('iRacing closed.');
+        wss.clients.forEach(function each(client) {
+            client.send("Disconnected from iRacing");
+        })
+
+    })
+
     iracing.on('Telemetry', function (telem) {
         wss.clients.forEach(function each(client) {
             console.log("Sending Telem Data at session time %o", telem.values.SessionTime);
@@ -29,15 +46,7 @@ wss.on('connection', function connection(ws) {
     })
 })
 
-console.log('\nWaiting for iRacing instance')
 
-iracing.on('Connected', function () {
-    console.log('\nConnected to iRacing!.')
-})
-
-iracing.once('Disconnected', function () {
-    console.log('iRacing closed.')
-})
 
 
 
