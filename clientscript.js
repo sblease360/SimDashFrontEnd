@@ -2,6 +2,15 @@
 
 var socket = null;
 
+function isJSON(str) {
+    try {     
+        JSON.parse(str);
+    } catch (e) {
+        return false;
+    }
+    return true;
+};
+
 function initialisePage() {
     startConnection();
     setInterval(checkConnection(), 5000);
@@ -19,16 +28,29 @@ function startConnection() {
 
     socket.onmessage = function (event) {
         console.log("WebSocket data recieved");
+
+        if (isJSON(event.data)) {
+            //**** This is where telemetry data is dealt with
+
+            //Below converts session time into nicely formatted hours, mins, seconds
+            //var date = new Date(null);
+            //date.setSeconds(e.data.values.SessionTime)
+            //var timeString = date.toISOString().substr(11, 8);
+
+            var telem = null
+            telem = JSON.parse(event.data);
+
+            document.getElementById('currentRevs').value = telem.RPM
+
+            document.getElementById('testelem').innerHTML = telem.RPM;}
+
         if (event.data == "Connected to iRacing") {
             document.getElementById('irStatus').innerHTML = "Running"
         };
         if (event.data == "Disconnected from iRacing") {
             document.getElementById('irStatus').innerHTML = "Not Running"
         }
-        //var date = new Date(null);
-        //date.setSeconds(e.data.values.SessionTime)
-        //var timeString = date.toISOString().substr(11, 8);
-        document.getElementById('testelem').innerHTML = event.data;
+
     }
 
     socket.onclose = function (event) {

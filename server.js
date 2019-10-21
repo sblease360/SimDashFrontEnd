@@ -10,7 +10,7 @@ const wss = new WebSocket.Server({
 //iRacing Stuff
 var irsdk = require('node-irsdk');
 irsdk.init({
-    telemetryUpdateInterval: 2000,
+    telemetryUpdateInterval: 50,
     sessionInfoUpdateInterval: 5000
 });
 var iracing = irsdk.getInstance()
