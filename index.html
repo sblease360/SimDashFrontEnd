@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <title>iRacing dashboard </title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="custom_styling.css" />
 </head>
 <body onload="startConnection()">
     <div class="container-fluid">
@@ -15,11 +16,15 @@
             <div class="col text-left" id="irStatus">Not Running</div>
         </div>
         <div class="row bg-dark">
-            <div class="col"> a</div>
-            <div class="col-6" id="revCounter">
-                <meter id="currentRevs" value="500" min="500" low="1500" high="6000" max="6900" title="rpm"></meter>
+            <div class="col d-flex align-items-center justify-content-center">
+                <h1 class="text-light" id="currGear"></h1>
             </div>
-            <div class="col"> a</div>
+            <div class="col-6" id="revCounter">
+                <meter id="currentRevs" value="500" min="500" low="1500" high="6000" max="6975" title="rpm"></meter>
+            </div>
+            <div class="col d-flex align-items-center justify-content-center">
+                <h1 class="text-light text-center" id="currRevs"></h1>
+            </div>
         </div>
     </div>
         <div class="row bg-secondary">

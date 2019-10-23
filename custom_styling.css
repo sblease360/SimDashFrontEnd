@@ -1,0 +1,15 @@
+meter {
+    border: 1px solid #000;
+    background-color: #1a1e21;
+}
+
+meter::-webkit-meter-bar {
+    background: none;
+    background-color: whitesmoke;
+}
+#currentRevs{
+    width: 100%;
+    height: 3em;
+    margin: 5px;
+    margin-top: 8px;
+}

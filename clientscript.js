@@ -41,8 +41,16 @@ function startConnection() {
             telem = JSON.parse(event.data);
 
             document.getElementById('currentRevs').value = telem.RPM
+            if (telem.Gear === 0) {
+                document.getElementById('currGear').innerHTML = "N";
+            } else if (telem.Gear === -1) {
+                document.getElementById('currGear').innerHTML = "R";
+            } else {
+                document.getElementById('currGear').innerHTML = telem.Gear;
+            }
+                ;
 
-            document.getElementById('testelem').innerHTML = telem.RPM;}
+            document.getElementById('currRevs').innerHTML = Math.round(telem.RPM);}
 
         if (event.data == "Connected to iRacing") {
             document.getElementById('irStatus').innerHTML = "Running"

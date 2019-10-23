@@ -29,6 +29,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="clientscript.js" />
+    <Content Include="custom_styling.css">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="index.html" />
     <Content Include="libman.json" />
     <Content Include="server.js" />
