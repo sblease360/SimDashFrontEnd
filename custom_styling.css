@@ -13,3 +13,31 @@ meter::-webkit-meter-bar {
     margin: 5px;
     margin-top: 8px;
 }
+
+#revCounter {
+    position: relative;
+    border: 3px solid black;
+    border-radius: 5px;
+    border-color: black;
+    background: repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 6px,
+            #000 6px,
+            #000 9px); 
+    );
+}
+
+#currentRevsBar{
+    position: relative;
+    border: 1px solid #ffffff;
+    border-radius: 5px 0px 0px 5px;
+    height: 3em;
+    width: 5%;
+    z-index: -1;
+}
+
+#gearInfo{
+    position: relative;
+    z-index: 0;
+}

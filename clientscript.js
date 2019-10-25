@@ -37,10 +37,12 @@ function startConnection() {
             //date.setSeconds(e.data.values.SessionTime)
             //var timeString = date.toISOString().substr(11, 8);
 
-            var telem = null
+            var telem = null;
+            //var revPercent = null;
             telem = JSON.parse(event.data);
 
-            document.getElementById('currentRevs').value = telem.RPM
+            //revPercent = 100 * (telem.RPM / 9000)
+            document.getElementById('currentRevsBar').style.width = (100 * (telem.RPM / 9000)) + "%";
             if (telem.Gear === 0) {
                 document.getElementById('currGear').innerHTML = "N";
             } else if (telem.Gear === -1) {
