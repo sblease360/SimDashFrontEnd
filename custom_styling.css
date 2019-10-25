@@ -16,25 +16,18 @@ meter::-webkit-meter-bar {
 
 #revCounter {
     position: relative;
-    border: 3px solid black;
-    border-radius: 5px;
-    border-color: black;
-    background: repeating-linear-gradient(
-            90deg,
-            transparent,
-            transparent 6px,
-            #000 6px,
-            #000 9px); 
+    border: 6px solid #0f1214;
+    border-radius: 4px;
+    background: repeating-linear-gradient( 90deg, transparent, transparent 6px, #0f1214 6px, #0f1214 9px);
     );
 }
 
 #currentRevsBar{
     position: relative;
-    border: 1px solid #ffffff;
-    border-radius: 5px 0px 0px 5px;
     height: 3em;
     width: 5%;
     z-index: -1;
+    background-color: #a5abb4;
 }
 
 #gearInfo{
