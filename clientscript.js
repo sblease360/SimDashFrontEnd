@@ -19,6 +19,7 @@ function initialisePage() {
 function startConnection() {
     console.log('Attempting to create new websocket connection');
     socket = new WebSocket('ws://127.0.0.1:8080');
+    var sessionInfo = null;
 
     socket.onopen = function (event) {
         console.log("WebSocket connection open, sending confirmation to data source");
@@ -26,12 +27,11 @@ function startConnection() {
         displayConnectionState();
     };
 
-    socket.onmessage = function (event) {
+    socket.onmessage = function (event) {    
         if (isJSON(event.data)) {
             //check if the JSON is session info (recieved once on connection, if not then it is telem data)
             if (JSON.parse(event.data).hasOwnProperty('hardRedline')) {
                 console.log("This is session info data");
-                var sessionInfo = null;
                 sessionInfo = JSON.parse(event.data);
                 document.getElementById('softRedline').style.width = 2 + (100 * ((sessionInfo.hardRedline - sessionInfo.softRedline) / sessionInfo.hardRedline)) + "%";
             } else {
@@ -47,7 +47,7 @@ function startConnection() {
                 //var revPercent = null;
                 telem = JSON.parse(event.data);
 
-                //revPercent = 100 * (telem.RPM / 9000)
+                //Display gearing and rev counter percentages
                 document.getElementById('currentRevsBar').style.width = (100 * (telem.RPM / 6990)) + "%";
                 if (telem.Gear === 0) {
                     document.getElementById('currGear').innerHTML = "N";
@@ -58,15 +58,26 @@ function startConnection() {
                 }
                 ;
                 document.getElementById('currRevs').innerHTML = Math.round(telem.RPM);
+
+                //Set shift light if required
+                if (!(sessionInfo == null)) {
+                    if (telem.RPM > sessionInfo.shiftLight) {
+                        document.getElementById('revCounterBorder').style.borderColor = "#FF0000";
+                    } else {
+                        document.getElementById('revCounterBorder').style.borderColor = "#0f1214";
+                    }
+                }
+    
+            }
+        } else {
+            if (event.data == "Connected to iRacing") {
+                document.getElementById('irStatus').innerHTML = "Running"
+            };
+            if (event.data == "Disconnected from iRacing") {
+                document.getElementById('irStatus').innerHTML = "Not Running"
             }
         }
 
-        if (event.data == "Connected to iRacing") {
-            document.getElementById('irStatus').innerHTML = "Running"
-        };
-        if (event.data == "Disconnected from iRacing") {
-            document.getElementById('irStatus').innerHTML = "Not Running"
-        }
 
     }
 

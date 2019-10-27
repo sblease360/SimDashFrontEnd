@@ -18,7 +18,7 @@
     position: relative;
     width: 4%;
     z-index: -3;
-    background-color: #a5abb4;
+    background: linear-gradient(180deg, #a5abb4 50%, #afb6bf 50%)
 }
 
 #hardRedline {
