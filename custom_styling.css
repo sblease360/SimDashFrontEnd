@@ -1,13 +1,21 @@
+#revCounterBorder {
+    position: relative;
+    border: 4px solid;
+    border-color: #0f1214;
+    border-radius: 4px;
+    height: 3.5em;
+}
+
 #revCounter {
     position: relative;
-    border: 6px solid #0f1214;
-    border-radius: 4px;
+    border: 2px solid #0f1214;
+    height: 100%;
     background: repeating-linear-gradient( 90deg, transparent, transparent 6px, #0f1214 6px, #0f1214 9px);
 }
 
-#currentRevsBar{
+#currentRevsBar {
+    height: 100%;
     position: relative;
-    height: 3em;
     width: 4%;
     z-index: -3;
     background-color: #a5abb4;
@@ -27,7 +35,7 @@
     position: relative;
     border: 1px solid #ff0000;
     height: 100%;
-    width: 7%;
+    width: 90%;
     background-color: #ff0000;
     float: right;
     z-index: -2;

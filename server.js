@@ -10,7 +10,7 @@ const wss = new WebSocket.Server({
 //iRacing Stuff
 var irsdk = require('node-irsdk');
 irsdk.init({
-    telemetryUpdateInterval: 50,
+    telemetryUpdateInterval: 500,
     sessionInfoUpdateInterval: 5000
 });
 var iracing = irsdk.getInstance()
@@ -44,7 +44,36 @@ wss.on('connection', function connection(ws) {
             client.send(JSON.stringify(telem.values));
         })
     })
+
+    iracing.on('SessionInfo', function (sessionInfo) {
+        var carInfo = null
+        wss.clients.forEach(function each(client) {
+            console.log("Sending Session State Data");
+            carInfo = getRevThresholds(sessionInfo.data.DriverInfo.Drivers[0].CarScreenName);
+            client.send(JSON.stringify(carInfo));
+        })
+    })
 })
+
+function getRevThresholds(carName) {
+    var revInfo = null
+    switch (carName) {
+        case "Audi RS 3 LMS TCR":
+            revInfo = {
+                hardRedline: 6985,
+                softRedline: 6700,
+                shiftLight: 6700,
+            };
+            return revInfo;
+        default: 
+            revInfo = {
+                hardRedline: 5000,
+                softRedline: 4000,
+                shiftLight: 4500,
+            };
+            return revInfo;
+    }
+}
 
 
 

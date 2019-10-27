@@ -27,32 +27,39 @@ function startConnection() {
     };
 
     socket.onmessage = function (event) {
-        console.log("WebSocket data recieved");
-
         if (isJSON(event.data)) {
-            //**** This is where telemetry data is dealt with
-
-            //Below converts session time into nicely formatted hours, mins, seconds
-            //var date = new Date(null);
-            //date.setSeconds(e.data.values.SessionTime)
-            //var timeString = date.toISOString().substr(11, 8);
-
-            var telem = null;
-            //var revPercent = null;
-            telem = JSON.parse(event.data);
-
-            //revPercent = 100 * (telem.RPM / 9000)
-            document.getElementById('currentRevsBar').style.width = (100 * (telem.RPM / 9000)) + "%";
-            if (telem.Gear === 0) {
-                document.getElementById('currGear').innerHTML = "N";
-            } else if (telem.Gear === -1) {
-                document.getElementById('currGear').innerHTML = "R";
+            //check if the JSON is session info (recieved once on connection, if not then it is telem data)
+            if (JSON.parse(event.data).hasOwnProperty('hardRedline')) {
+                console.log("This is session info data");
+                var sessionInfo = null;
+                sessionInfo = JSON.parse(event.data);
+                document.getElementById('softRedline').style.width = 2 + (100 * ((sessionInfo.hardRedline - sessionInfo.softRedline) / sessionInfo.hardRedline)) + "%";
             } else {
-                document.getElementById('currGear').innerHTML = telem.Gear;
-            }
-                ;
+                console.log("this is telemetry data");
+                //If it doesn't have hardRedline then it is telemetry data
 
-            document.getElementById('currRevs').innerHTML = Math.round(telem.RPM);}
+                //Below converts session time into nicely formatted hours, mins, seconds
+                //var date = new Date(null);
+                //date.setSeconds(e.data.values.SessionTime)
+                //var timeString = date.toISOString().substr(11, 8);
+
+                var telem = null;
+                //var revPercent = null;
+                telem = JSON.parse(event.data);
+
+                //revPercent = 100 * (telem.RPM / 9000)
+                document.getElementById('currentRevsBar').style.width = (100 * (telem.RPM / 6990)) + "%";
+                if (telem.Gear === 0) {
+                    document.getElementById('currGear').innerHTML = "N";
+                } else if (telem.Gear === -1) {
+                    document.getElementById('currGear').innerHTML = "R";
+                } else {
+                    document.getElementById('currGear').innerHTML = telem.Gear;
+                }
+                ;
+                document.getElementById('currRevs').innerHTML = Math.round(telem.RPM);
+            }
+        }
 
         if (event.data == "Connected to iRacing") {
             document.getElementById('irStatus').innerHTML = "Running"
@@ -94,7 +101,6 @@ function displayConnectionState() {
             break;
         default: //bad things have happened
     };
-    //setTimeout(displayConnectionState, 1000);
 };
 
 

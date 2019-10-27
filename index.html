@@ -9,31 +9,39 @@
 </head>
 <body onload="startConnection()">
     <div class="container-fluid">
+
         <div class="row bg-info text-light">
             <div class="col text-right">Server:</div>
             <div class="col text-left" id="dataSourceStatus">Disconnected</div>
             <div class="col text-right">iRacing:</div>
             <div class="col text-left" id="irStatus">Not Running</div>
         </div>
+
         <div class="row bg-dark" id="gearInfo">
-            <div class="col" id="gearArea">
+
+            <div class="col d-flex align-items-center justify-content-center" id="gearArea">
                 <h1 class="text-light" id="currGear"></h1>
             </div>
-            <div class="col-9 m-0 p-0 my-1" id="revCounter">
-                <div id="hardRedline"></div>
-                <div id="softRedline"></div>
-                <div id="currentRevsBar"></div>
+
+            <div class="col-9 m-0 p-0 my-1" id="revCounterBorder">
+                <div class="" id="revCounter">
+                    <div id="hardRedline"></div>
+                    <div id="softRedline"></div>
+                    <div id="currentRevsBar"></div>
+                </div>
             </div>
-            <div class="col align-items-center justify-content-center" id="revsArea">
+
+            <div class="col align-items-center justify-content-center d-flex" id="revsArea">
                 <h1 class="text-light text-center" id="currRevs"></h1>
             </div>
         </div>
-    </div>
+
         <div class="row bg-secondary">
             <div class="col">
                 <p id="testelem"></p>
             </div>
         </div>
+    </div>
 
     <script type="text/javascript" src="clientscript.js"></script>
 </body>
