@@ -9,7 +9,9 @@
 #revCounter {
     position: relative;
     border: 2px solid #0f1214;
+    border-right: 4px solid #0f1214;
     height: 100%;
+    width: 90%;
     background: repeating-linear-gradient( 90deg, transparent, transparent 6px, #0f1214 6px, #0f1214 9px);
 }
 
@@ -18,7 +20,12 @@
     position: relative;
     width: 4%;
     z-index: -3;
-    background: linear-gradient(180deg, #a5abb4 50%, #afb6bf 50%)
+    background-color: #a5abb4;
+}
+
+#revsArea{
+    height: 100%;
+    background-color: #0f1214;
 }
 
 #hardRedline {
@@ -49,4 +56,15 @@
 
 #gearArea revsArea{
     max-width: 10px;
+}
+
+#currRevs{
+    color: #ffffff;
+    height:100%;
+    margin-bottom: 0.1em;
+}
+
+#mph {
+    font-size: 0.4em;
+    color: #93959e;
 }

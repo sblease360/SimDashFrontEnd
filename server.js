@@ -30,6 +30,9 @@ var iracing = irsdk.getInstance()
 
 console.log('\nWaiting for iRacing instance')
 
+var revInfo = null
+var sessionJSON = null
+
 //WebSocket data
 wss.on('connection', function connection(ws) {
     ws.on('message', function incoming(message) {
@@ -40,6 +43,10 @@ wss.on('connection', function connection(ws) {
             console.log("Connection established - confirming iRacing status");
             wss.clients.forEach(function each(client) {
                 client.send("Connected to iRacing");
+            })
+            wss.clients.forEach(function each(client) {
+                console.log("Sending session state data as new client joined");   
+                client.send(JSON.stringify(sessionJSON));
             })
         };
     });
@@ -67,8 +74,6 @@ iracing.on('Telemetry', function (telem) {
 })
 
 iracing.on('SessionInfo', function (rawInfo) {
-    var revInfo = null
-    var sessionJSON = null
     //Get rev counter details and add them to session data before sending
     revInfo = getRevThresholds(rawInfo.data.DriverInfo.Drivers[0].CarScreenName);
     sessionJSON = JSON.parse(JSON.stringify(rawInfo.data));
@@ -85,8 +90,6 @@ iracing.on('SessionInfo', function (rawInfo) {
         client.send(JSON.stringify(sessionJSON));
     })
 })
-
-
 
 function getRevThresholds(carName) {
     var revInfo = null

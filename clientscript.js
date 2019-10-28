@@ -55,16 +55,21 @@ function startConnection() {
                     document.getElementById('currGear').innerHTML = "R";
                 } else {
                     document.getElementById('currGear').innerHTML = telem.Gear;
-                }
-                ;
+                };
+                
                 document.getElementById('currRevs').innerHTML = Math.round(telem.RPM);
+
+                //Display current speed
+                document.getElementById('currSpeed').innerHTML = Math.round(telem.Speed * 2.23694) + '<span id="mph"> mph</span>';
 
                 //Set shift light if required
                 if (!(sessionInfo == null)) {
                     if (telem.RPM > sessionInfo.shiftLight) {
                         document.getElementById('revCounterBorder').style.borderColor = "#FF0000";
+                        document.getElementById('revsArea').style.backgroundColor = "#FF0000"
                     } else {
                         document.getElementById('revCounterBorder').style.borderColor = "#0f1214";
+                        document.getElementById('revsArea').style.backgroundColor = "#0f1214"
                     }
                 }
     
