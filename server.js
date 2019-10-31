@@ -74,40 +74,47 @@ iracing.on('Telemetry', function (telem) {
 })
 
 iracing.on('SessionInfo', function (rawInfo) {
-    //Get rev counter details and add them to session data before sending
-    revInfo = getRevThresholds(rawInfo.data.DriverInfo.Drivers[0].CarScreenName);
+    var gearOverrideInfo = null
     sessionJSON = JSON.parse(JSON.stringify(rawInfo.data));
+    gearOverrideInfo = getRevThresholds(rawInfo.data.DriverInfo.Drivers[0].CarScreenName);
+    if (gearOverrideInfo === null) {
+        sessionJSON.hardRedLine = sessionJSON.DriverInfo.DriverCarRedLine;
+        sessionJSON.softRedLine = sessionJSON.DriverInfo.DriverCarSLFirstRPM;
+        sessionJSON.shiftLight = sessionJSON.DriverInfo.DriverCarSLBlinkRPM;
+    } else {
+        if (!(gearOverrideInfo.hardRedLine === null)) { sessionJSON.hardRedLine = gearOverrideInfo.hardRedLine };
+        if (!(gearOverrideInfo.softRedLine === null)) { sessionJSON.softRedLine = gearOverrideInfo.softRedLine };
+        if (!(gearOverrideInfo.shiftLight === null)) { sessionJSON.shiftLight = gearOverrideInfo.shiftLight };
+    }
 
-    sessionJSON.hardRedline = revInfo.hardRedline;
-    sessionJSON.softRedline = revInfo.softRedline;
-    sessionJSON.shiftLight = revInfo.shiftLight;
-    //console.log(typeof sessionJSON);
-    //console.log(isAO(sessionJSON));
-    //console.log(sessionJSON.DriverInfo.Drivers[0].CarScreenName);
-    //console.log(sessionJSON.softRedline);
+    if (!(gearOverrideInfo === null)) {
+        
+    }
+    //Consider if this needs the option to overwrite at well, if so it can be done by improving the override code in getRevThresholds()
+    sessionJSON.shiftLightRPM = sessionJSON.DriverInfo.DriverCarSLBlinkRPM;
+    
     wss.clients.forEach(function each(client) {
         console.log("Sending Session State Data");    
         client.send(JSON.stringify(sessionJSON));
     })
 })
 
+//hardRedLine, softRedLine and shiftLight are used in the visuals of the rev counter
+//They can be overridden here for specific cars
+//This is definitely required where the telemetry adjusts the redline for launch control etc
+//Might have other uses and need expanding on in the future
 function getRevThresholds(carName) {
-    var revInfo = null
+    var revInfo = {
+        hardRedLine: null,
+        softRedLine: null,
+        shiftLight: null
+    };
     switch (carName) {
-        case "Audi RS 3 LMS TCR":
-            revInfo = {
-                hardRedline: 6985,
-                softRedline: 6700,
-                shiftLight: 6700,
-            };
+        case "Audi RS 3 LMS TCR": 
+            revInfo.hardRedLine = 7000;
             return revInfo;
-        default: 
-            revInfo = {
-                hardRedline: 5000,
-                softRedline: 4000,
-                shiftLight: 4500,
-            };
-            return revInfo;
+        default:
+            return null;
     }
 }
 

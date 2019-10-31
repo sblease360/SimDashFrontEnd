@@ -27,16 +27,29 @@ function startConnection() {
         displayConnectionState();
     };
 
-    socket.onmessage = function (event) {    
+    socket.onmessage = function (event) { 
+        //All data from the game is passed as JSON, other items are sent in plain text
         if (isJSON(event.data)) {
-            //check if the JSON is session info (recieved once on connection, if not then it is telem data)
-            if (JSON.parse(event.data).hasOwnProperty('hardRedline')) {
+            //check if the JSON is session info (recieved only when it changes)
+            if (JSON.parse(event.data).hasOwnProperty('CameraInfo')) {
                 console.log("This is session info data");
                 sessionInfo = JSON.parse(event.data);
-                document.getElementById('softRedline').style.width = 2 + (100 * ((sessionInfo.hardRedline - sessionInfo.softRedline) / sessionInfo.hardRedline)) + "%";
+
+                document.getElementById('sessionDetails').innerHTML = sessionInfo.WeekendInfo.EventType + " session at " + sessionInfo.WeekendInfo.TrackName;
+
+                console.log(sessionInfo.hardRedLine);
+                console.log(sessionInfo.softRedLine);
+                console.log(sessionInfo.shiftLight);
+                
+
+                //Set soft red line in gear element
+                document.getElementById('softRedLine').style.width = 2 + (100 * ((sessionInfo.hardRedLine - sessionInfo.softRedLine) / sessionInfo.hardRedLine)) + "%";
+                   
+               
+                
+
             } else {
                 console.log("this is telemetry data");
-                //If it doesn't have hardRedline then it is telemetry data
 
                 //Below converts session time into nicely formatted hours, mins, seconds
                 //var date = new Date(null);
@@ -47,8 +60,10 @@ function startConnection() {
                 //var revPercent = null;
                 telem = JSON.parse(event.data);
 
-                //Display gearing and rev counter percentages
-                document.getElementById('currentRevsBar').style.width = (100 * (telem.RPM / 6990)) + "%";
+                //Display gearing and rev counter percentages - two versions required
+                document.getElementById('currentRevsBar').style.width = (100 * (telem.RPM / sessionInfo.hardRedLine)) + "%";
+                
+
                 if (telem.Gear === 0) {
                     document.getElementById('currGear').innerHTML = "N";
                 } else if (telem.Gear === -1) {
@@ -72,6 +87,10 @@ function startConnection() {
                         document.getElementById('revsArea').style.backgroundColor = "#0f1214"
                     }
                 }
+
+                //Output lap details
+                document.getElementById('lastLapTime').innerHTML = "Last: " + telem.LapLastLapTime;
+                document.getElementById('bestLapTime').innerHTML = "Best: " + telem.LapBestLapTime;
     
             }
         } else {

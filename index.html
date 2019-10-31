@@ -11,10 +11,23 @@
     <div class="container-fluid">
 
         <div class="row bg-info text-light">
-            <div class="col text-right">Server Status:</div>
-            <div class="col text-left" id="dataSourceStatus">Disconnected</div>
-            <div class="col text-right">iRacing Status:</div>
-            <div class="col text-left" id="irStatus">N/A</div>
+            <div class="col-3">
+                <div class="row">
+                    <div class="col text-left">Server Status:</div>
+                    <div class="col text-left" id="dataSourceStatus">Disconnected</div>
+                </div>
+                <div class="row">
+                    <div class="col text-left">iRacing Status:</div>
+                    <div class="col text-left" id="irStatus">N/A</div>
+                </div>
+            </div>
+            <div class="col d-flex align-items-center justify-content-center">
+                <div class="row">
+                    <div class="col">
+                        <h4 id="sessionDetails"></h4>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="row bg-dark" id="gearInfo">
@@ -25,8 +38,8 @@
 
             <div class="row col-9 m-2 p-0" id="revCounterBorder">
                 <div class="col m-0 p-0" id="revCounter">
-                    <div id="hardRedline"></div>
-                    <div id="softRedline"></div>
+                    <div id="hardRedLine"></div>
+                    <div id="softRedLine"></div>
                     <div id="currentRevsBar"></div>
                 </div>
                 <div class="col-2 m-0 p-0 d-flex align-items-center justify-content-center" id="revsArea">
@@ -42,7 +55,8 @@
 
         <div class="row bg-secondary">
             <div class="col">
-                <p id="testelem"></p>
+                <h2 id="lastLapTime"></h2>
+                <h2 id="bestLapTime"></h2>
             </div>
         </div>
     </div>

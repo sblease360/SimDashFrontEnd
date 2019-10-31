@@ -28,7 +28,7 @@
     background-color: #0f1214;
 }
 
-#hardRedline {
+#hardRedLine {
     position: relative;
     border: 1px solid #ff0000;
     height: 100%;
@@ -38,7 +38,7 @@
     z-index: -1;
 }
 
-#softRedline {
+#softRedLine {
     position: relative;
     border: 1px solid #ff0000;
     height: 100%;
