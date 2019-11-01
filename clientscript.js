@@ -34,13 +34,13 @@ function startConnection() {
             if (JSON.parse(event.data).hasOwnProperty('CameraInfo')) {
                 console.log("This is session info data");
                 sessionInfo = JSON.parse(event.data);
-
+                console.log(sessionInfo);
                 document.getElementById('sessionDetails').innerHTML = sessionInfo.WeekendInfo.EventType + " session at " + sessionInfo.WeekendInfo.TrackName;
 
-                console.log(sessionInfo.hardRedLine);
-                console.log(sessionInfo.softRedLine);
-                console.log(sessionInfo.shiftLight);
-                
+                //track conditions
+                document.getElementById('trackTemp').innerHTML = sessionInfo.WeekendInfo.TrackSurfaceTemp;
+                document.getElementById('airTemp').innerHTML = sessionInfo.WeekendInfo.TrackAirTemp;
+                document.getElementById('skyConditions').innerHTML = sessionInfo.WeekendInfo.TrackSkies;
 
                 //Set soft red line in gear element
                 document.getElementById('softRedLine').style.width = 2 + (100 * ((sessionInfo.hardRedLine - sessionInfo.softRedLine) / sessionInfo.hardRedLine)) + "%";
