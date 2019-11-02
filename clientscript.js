@@ -20,6 +20,7 @@ function startConnection() {
     console.log('Attempting to create new websocket connection');
     socket = new WebSocket('ws://127.0.0.1:8080');
     var sessionInfo = null;
+    var telem = null;
 
     socket.onopen = function (event) {
         console.log("WebSocket connection open, sending confirmation to data source");
@@ -35,7 +36,7 @@ function startConnection() {
                 console.log("This is session info data");
                 sessionInfo = JSON.parse(event.data);
                 //console.log(sessionInfo);
-                document.getElementById('sessionDetails').innerHTML = sessionInfo.WeekendInfo.EventType + " session at " + sessionInfo.WeekendInfo.TrackName;
+                document.getElementById('sessionDetails').innerHTML = sessionInfo.WeekendInfo.EventType + " session - " + sessionInfo.WeekendInfo.TrackName;
 
                 //track conditions
                 document.getElementById('trackTemp').innerHTML = sessionInfo.WeekendInfo.TrackSurfaceTemp;
@@ -50,14 +51,6 @@ function startConnection() {
 
             } else {
                 console.log("this is telemetry data");
-
-                //Below converts session time into nicely formatted hours, mins, seconds
-                //var date = new Date(null);
-                //date.setSeconds(e.data.values.SessionTime)
-                //var timeString = date.toISOString().substr(11, 8);
-
-                var telem = null;
-                //var revPercent = null;
                 telem = JSON.parse(event.data);
 
                 //Display gearing and rev counter percentages - two versions required
@@ -90,11 +83,14 @@ function startConnection() {
 
                 //Output lap numbers and fuel details
                 document.getElementById('fuelRemaining').innerHTML = telem.FuelLevel.toFixed(2);
-                document.getElementById('lapsComplete').innerHTML = telem.LapCompleted;
+                document.getElementById('lapsComplete').innerHTML = telem.Lap;
 
                 //Output lap timings
-                document.getElementById('lastLapTime').innerHTML = "Last: " + fancyTimeFormat(telem.LapLastLapTime);
+                document.getElementById('lastLapTime').innerHTML = "Last: " + telem.LapLastLapTime;
                 document.getElementById('bestLapTime').innerHTML = "Best: " + telem.LapBestLapTime.toFixed(3);
+                document.getElementById('lapsThisStint').innerHTML = telem.LapCompleted - telem.startOfStint;
+                console.log(telem.LapCompleted);
+                console.log(telem.startOfStint);
     
             }
         } else {
@@ -142,27 +138,5 @@ function displayConnectionState() {
     };
 };
 
-function fancyTimeFormat(time) {
-    // Hours, minutes and seconds
-    if (time == -1) {
-        return "-:--.---";
-    }
 
-    var hrs = ~~(time / 3600);
-    var mins = ~~((time % 3600) / 60);
-    var secs = ~~time % 60;
-    var milliSecs = 1000 * (time - ~~time).toFixed(3)
-
-    // Output like "1:01" or "4:03:59" or "123:03:59"
-    var ret = "";
-
-    if (hrs > 0) {
-        ret += "" + hrs + ":" + (mins < 10 ? "0" : "");
-    }
-
-    ret += "" + mins + ":" + (secs < 10 ? "0" : "");
-    ret += "" + secs + "." + (milliSecs < 100 ? "0" : "");
-    ret += "" + milliSecs;
-    return ret;
-}
 

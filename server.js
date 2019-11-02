@@ -32,6 +32,13 @@ console.log('\nWaiting for iRacing instance')
 
 var revInfo = null
 var sessionJSON = null
+var fuelInfo = null
+var lapInfo = {
+    outlap: null,
+    startOfStint: null,
+    pitState: null
+    }
+var currLap = null
 
 //WebSocket data
 wss.on('connection', function connection(ws) {
@@ -66,10 +73,48 @@ iracing.once('Disconnected', function () {
     })
 })
 
-iracing.on('Telemetry', function (telem) {
+iracing.on('Telemetry', function (rawTelem) {
+    var telem = null;
+    telem = JSON.parse(JSON.stringify(rawTelem.values));
+
+    //set flags for car in pits
+    if (telem.OnPitRoad === true) {
+        lapInfo.pitState = true;
+    };
+
+    //Initialise current lap variable, this is used to control logic that only needs to be recalculated on lap change
+    if (currLap === null) {
+        currLap = telem.Lap;
+    }
+
+    if (lapInfo.pitState === true && telem.OnPitRoad === false) {
+        lapInfo.outlap = true;
+        lapInfo.startOfStint = telem.Lap;
+    }
+
+    //Has lap changed on last lap tick?
+    if (!(currLap === telem.Lap)) {
+        lapInfo.pitState = false; 
+        //record all required values for fuel/laptimes etc, update averages as required.
+        if (telem.LapLastLapTime === -1) {
+            //This is an outlap
+            lapInfo.startOfStint = telem.LapCompleted;
+
+        }
+
+        //Finally, update current lap as this is needed for next lap
+        currLap = telem.Lap;
+    }
+
+    if (!(lapInfo.startOfStint === null)) {
+        telem.startOfStint = lapInfo.startOfStint;
+    }
+    
+
+    //Transmit data to clients
     wss.clients.forEach(function each(client) {
-        console.log("Sending Telem Data at session time %o", telem.values.SessionTime);
-        client.send(JSON.stringify(telem.values));
+        console.log("Sending Telem Data at session time %o", telem.SessionTime);
+        client.send(JSON.stringify(telem));
     })
 })
 
@@ -118,6 +163,29 @@ function getRevThresholds(carName) {
     }
 }
 
+//To be used server side to format second values into nice strings for output
+function fancyTimeFormat(time) {
+    // Hours, minutes, seconds and milliseconds in format 00:00.000 assuming no hours
+    if (time == -1) {
+        return "-:--.---";
+    }
+
+    var hrs = ~~(time / 3600);
+    var mins = ~~((time % 3600) / 60);
+    var secs = ~~time % 60;
+    var milliSecs = 1000 * (time - ~~time).toFixed(3)
+
+    var ret = "";
+
+    if (hrs > 0) {
+        ret += "" + hrs + ":" + (mins < 10 ? "0" : "");
+    }
+
+    ret += "" + mins + ":" + (secs < 10 ? "0" : "");
+    ret += "" + secs + "." + (milliSecs < 100 ? "0" : "");
+    ret += "" + milliSecs;
+    return ret;
+}
 
 
 
