@@ -34,7 +34,7 @@ function startConnection() {
             if (JSON.parse(event.data).hasOwnProperty('CameraInfo')) {
                 console.log("This is session info data");
                 sessionInfo = JSON.parse(event.data);
-                console.log(sessionInfo);
+                //console.log(sessionInfo);
                 document.getElementById('sessionDetails').innerHTML = sessionInfo.WeekendInfo.EventType + " session at " + sessionInfo.WeekendInfo.TrackName;
 
                 //track conditions
@@ -88,9 +88,13 @@ function startConnection() {
                     }
                 }
 
-                //Output lap details
-                document.getElementById('lastLapTime').innerHTML = "Last: " + telem.LapLastLapTime;
-                document.getElementById('bestLapTime').innerHTML = "Best: " + telem.LapBestLapTime;
+                //Output lap numbers and fuel details
+                document.getElementById('fuelRemaining').innerHTML = telem.FuelLevel.toFixed(2);
+                document.getElementById('lapsComplete').innerHTML = telem.LapCompleted;
+
+                //Output lap timings
+                document.getElementById('lastLapTime').innerHTML = "Last: " + fancyTimeFormat(telem.LapLastLapTime);
+                document.getElementById('bestLapTime').innerHTML = "Best: " + telem.LapBestLapTime.toFixed(3);
     
             }
         } else {
@@ -138,5 +142,27 @@ function displayConnectionState() {
     };
 };
 
+function fancyTimeFormat(time) {
+    // Hours, minutes and seconds
+    if (time == -1) {
+        return "-:--.---";
+    }
 
+    var hrs = ~~(time / 3600);
+    var mins = ~~((time % 3600) / 60);
+    var secs = ~~time % 60;
+    var milliSecs = 1000 * (time - ~~time).toFixed(3)
+
+    // Output like "1:01" or "4:03:59" or "123:03:59"
+    var ret = "";
+
+    if (hrs > 0) {
+        ret += "" + hrs + ":" + (mins < 10 ? "0" : "");
+    }
+
+    ret += "" + mins + ":" + (secs < 10 ? "0" : "");
+    ret += "" + secs + "." + (milliSecs < 100 ? "0" : "");
+    ret += "" + milliSecs;
+    return ret;
+}
 
