@@ -94,7 +94,7 @@ iracing.on('Telemetry', function (rawTelem) {
         lapInfo.pitState = false; 
     }
 
-    //Has lap changed on last lap tick?
+    //Things that happen each lap
     if (!(currLap === telem.Lap)) {
 
         //Check if outlap status needs to be turned off
@@ -102,7 +102,7 @@ iracing.on('Telemetry', function (rawTelem) {
             lapInfo.outlap = false;
         }
 
-        //Finally, update current lap as this is needed for next lap
+        //Finally, update current lap so it is correct next time round
         currLap = telem.Lap;
     }
 

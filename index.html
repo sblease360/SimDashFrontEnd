@@ -10,21 +10,20 @@
 <body onload="startConnection()">
     <div class="container-fluid">
 
-        <div class="row bg-info text-light">
-            <div class="col-3">
+        <div class="row bg-nearly-black text-light pb-1">
+            <div class="col-4">
                 <div class="row">
-                    <div class="col text-left">Server Status:</div>
-                    <div class="col text-left" id="dataSourceStatus">Disconnected</div>
+                    <div class="col-3 text-left"><span class="module-header status-info">Server:</span></div>
+                    <div class="col text-left"><span class="module-header status-info" id="dataSourceStatus">Disconnected</span></div>
                 </div>
                 <div class="row">
-                    <div class="col text-left">iRacing Status:</div>
-                    <div class="col text-left" id="irStatus">N/A</div>
+                    <div class="col-3 text-left"><span class="module-header status-info">iRacing:</span></div>
+                    <div class="col text-left"><span class="module-header status-info" id="irStatus"">N/A</span></div>
                 </div>
             </div>
             <div class="col d-flex align-items-center justify-content-center">
                 <div class="row">
                     <div class="col">
-                        <h4 id="sessionDetails"></h4>
                     </div>
                 </div>
             </div>
@@ -55,7 +54,7 @@
 
         <div class="row bg-dark-1-lighter" id="lapAndFuelData">
             <div class="col">
-                <div class="row border-bottom border-top border-dark thicker-border" id="fuelRow1">
+                <div class="row border-left border-bottom border-top border-dark thicker-border" id="fuelRow1">
                     <div class="col border-right border-dark thicker-border">
                         <p class="module-header">Fuel Remaining:</p>
                         <h4 class="text-white text-center" id="fuelRemaining"></h4>
@@ -73,7 +72,7 @@
                         <h4 class="text-white text-center" id="trackTemp">0</h4>
                     </div>
                 </div>
-                <div class="row border-bottom border-dark thicker-border" id="fuelRow2">
+                <div class="row border-left border-bottom border-dark thicker-border" id="fuelRow2">
                     <div class="col border-right border-dark thicker-border">
                         <p class="module-header">Current Lap:</h5>
                         <h4 class="text-white text-center" id="currentLap"></h4>
@@ -91,7 +90,7 @@
                         <h4 class="text-white text-center" id="airTemp">0</h4>
                     </div>
                 </div>
-                <div class="row border-bottom border-dark thicker-border" id="fuelRow3">
+                <div class="row border-left border-bottom border-dark thicker-border" id="fuelRow3">
                     <div class="col border-right border-dark thicker-border">
                         <p class="module-header">Lap in stint:</p>
                         <h4 class="text-white text-center" id="lapsThisStint"></h4>

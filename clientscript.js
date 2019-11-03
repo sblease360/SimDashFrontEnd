@@ -36,7 +36,6 @@ function startConnection() {
                 console.log("This is session info data");
                 sessionInfo = JSON.parse(event.data);
                 console.log(sessionInfo);
-                document.getElementById('sessionDetails').innerHTML = sessionInfo.WeekendInfo.EventType + " session - " + sessionInfo.WeekendInfo.TrackName;
 
                 //track conditions
                 document.getElementById('trackTemp').innerHTML = sessionInfo.WeekendInfo.TrackSurfaceTemp;
