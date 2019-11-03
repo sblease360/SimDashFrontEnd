@@ -77,39 +77,37 @@ iracing.on('Telemetry', function (rawTelem) {
     var telem = null;
     telem = JSON.parse(JSON.stringify(rawTelem.values));
 
-    //set flags for car in pits
-    if (telem.OnPitRoad === true) {
-        lapInfo.pitState = true;
-    };
-
     //Initialise current lap variable, this is used to control logic that only needs to be recalculated on lap change
     if (currLap === null) {
         currLap = telem.Lap;
     }
 
+    //set flags for car in pits to identify when this has changed on the last tick
+    if (telem.OnPitRoad === true) {
+        lapInfo.pitState = true;
+    };
+
+    //Things that happen when we have left the pit lane
     if (lapInfo.pitState === true && telem.OnPitRoad === false) {
         lapInfo.outlap = true;
         lapInfo.startOfStint = telem.Lap;
+        lapInfo.pitState = false; 
     }
 
     //Has lap changed on last lap tick?
     if (!(currLap === telem.Lap)) {
-        lapInfo.pitState = false; 
-        //record all required values for fuel/laptimes etc, update averages as required.
-        if (telem.LapLastLapTime === -1) {
-            //This is an outlap
-            lapInfo.startOfStint = telem.LapCompleted;
 
+        //Check if outlap status needs to be turned off
+        if (lapInfo.outlap === true && !(lapInfo.startOfStint === telem.lap)) {
+            lapInfo.outlap = false;
         }
 
         //Finally, update current lap as this is needed for next lap
         currLap = telem.Lap;
     }
 
-    if (!(lapInfo.startOfStint === null)) {
-        telem.startOfStint = lapInfo.startOfStint;
-    }
-    
+    telem.startOfStint = lapInfo.startOfStint;
+    telem.outlap = lapInfo.outlap;  
 
     //Transmit data to clients
     wss.clients.forEach(function each(client) {

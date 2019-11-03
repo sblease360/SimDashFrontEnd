@@ -1,3 +1,24 @@
+.text-black {
+    color: #000;
+}
+
+.thicker-border {
+    border-width: 3px !important;
+    border-color: #343A40!important;
+}
+
+.bg-dark-1-lighter {
+    background-color: #505a63;
+}
+
+.module-header {
+    color: #a2a8ad;
+    padding: 0;
+    margin: 0;
+    font-weight:500;
+}
+
+
 #revCounterBorder {
     position: relative;
     border: 4px solid;

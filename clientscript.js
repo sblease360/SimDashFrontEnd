@@ -35,7 +35,7 @@ function startConnection() {
             if (JSON.parse(event.data).hasOwnProperty('CameraInfo')) {
                 console.log("This is session info data");
                 sessionInfo = JSON.parse(event.data);
-                //console.log(sessionInfo);
+                console.log(sessionInfo);
                 document.getElementById('sessionDetails').innerHTML = sessionInfo.WeekendInfo.EventType + " session - " + sessionInfo.WeekendInfo.TrackName;
 
                 //track conditions
@@ -52,6 +52,7 @@ function startConnection() {
             } else {
                 console.log("this is telemetry data");
                 telem = JSON.parse(event.data);
+                console.log(telem);
 
                 //Display gearing and rev counter percentages - two versions required
                 document.getElementById('currentRevsBar').style.width = (100 * (telem.RPM / sessionInfo.hardRedLine)) + "%";
@@ -83,14 +84,26 @@ function startConnection() {
 
                 //Output lap numbers and fuel details
                 document.getElementById('fuelRemaining').innerHTML = telem.FuelLevel.toFixed(2);
-                document.getElementById('lapsComplete').innerHTML = telem.Lap;
+                document.getElementById('currentLap').innerHTML = telem.Lap;
 
                 //Output lap timings
                 document.getElementById('lastLapTime').innerHTML = "Last: " + telem.LapLastLapTime;
                 document.getElementById('bestLapTime').innerHTML = "Best: " + telem.LapBestLapTime.toFixed(3);
-                document.getElementById('lapsThisStint').innerHTML = telem.LapCompleted - telem.startOfStint;
-                console.log(telem.LapCompleted);
-                console.log(telem.startOfStint);
+                switch (telem.outlap) {
+                    case null:
+                        document.getElementById('lapsThisStint').innerHTML = "---"
+                        break;
+                    case true:
+                        document.getElementById('lapsThisStint').innerHTML = "outlap"
+                        break;
+                    case false:
+                        document.getElementById('lapsThisStint').innerHTML = telem.Lap - telem.startOfStint;
+                        break;
+                    default:
+                        document.getElementById('lapsThisStint').innerHTML = "---"
+                } 
+                //document.getElementById('lapsThisStint').innerHTML = telem.LapCompleted - telem.startOfStint;
+                document.getElementById('pitRoadStatus').innerHTML = telem.OnPitRoad;
     
             }
         } else {

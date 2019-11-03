@@ -53,33 +53,71 @@
 
         </div>
 
-        <div class="row bg-secondary" id="lapAndFuelData">
+        <div class="row bg-dark-1-lighter" id="lapAndFuelData">
             <div class="col">
-                <h4 id="fuelRemaining">fuel remaining</h4>
-                <h4 id="lapsComplete">laps complete</h4>
-                <h4 id="lapsThisStint">laps this stint</h4>
+                <div class="row border-bottom border-top border-dark thicker-border" id="fuelRow1">
+                    <div class="col border-right border-dark thicker-border">
+                        <p class="module-header">Fuel Remaining:</p>
+                        <h4 class="text-white text-center" id="fuelRemaining"></h4>
+                    </div>
+                    <div class="col border-right border-dark thicker-border">
+                        <p class="module-header">Laps Left:</p>
+                        <h4 class="text-white text-center" id="lapsLeftFuel"></h4>
+                    </div>
+                    <div class="col border-right border-dark thicker-border">
+                        <p class="module-header">Fuel to add:</p>
+                        <h4 class="text-white text-center" id="fuelRequired"></h4>
+                    </div>
+                    <div class="col border-right border-dark thicker-border">
+                        <p class="module-header">Track Temp:</p>
+                        <h4 class="text-white text-center" id="trackTemp">0</h4>
+                    </div>
+                </div>
+                <div class="row border-bottom border-dark thicker-border" id="fuelRow2">
+                    <div class="col border-right border-dark thicker-border">
+                        <p class="module-header">Current Lap:</h5>
+                        <h4 class="text-white text-center" id="currentLap"></h4>
+                    </div>
+                    <div class="col border-right border-dark thicker-border">
+                        <p class="module-header">Lowest Usage:</p>
+                        <h4 class="text-white text-center" id="minLapUsage"></h4>
+                    </div>
+                    <div class="col border-right border-dark thicker-border">
+                        <p class="module-header">Highest Usage:</p>
+                        <h4 class="text-white text-center" id="maxLapUsage"></h4>
+                    </div>
+                    <div class="col border-right border-dark thicker-border">
+                        <p class="module-header">Air Temp:</p>
+                        <h4 class="text-white text-center" id="airTemp">0</h4>
+                    </div>
+                </div>
+                <div class="row border-bottom border-dark thicker-border" id="fuelRow3">
+                    <div class="col border-right border-dark thicker-border">
+                        <p class="module-header">Lap in stint:</p>
+                        <h4 class="text-white text-center" id="lapsThisStint"></h4>
+                    </div>
+                    <div class="col border-right border-dark thicker-border">
+                        <p class="module-header">Last Lap Usage:</p>
+                        <h4 class="text-white text-center" id="lastLapUsage"></h4>
+                    </div>
+                    <div class="col border-right border-dark thicker-border">
+                        <p class="module-header">Avg Usage:</p>
+                        <h4 class="text-white text-center" id="avgLapUsage"></h4>
+                    </div>
+                    <div class="col border-right border-dark thicker-border">
+                        <p class="module-header">Weather Conditions:</p>
+                        <h4 class="text-white text-center" id="skyConditions">Clear</h4>
+                    </div>
+                </div>
             </div>
-            <div class="col">
-                <h4 id="lapsLeftFuel">laps left fuel</h4>
-                <h4 id="minLapUsage">min lap usage</h4>
-                <h4 id="lastLapUsage">last lap usage</h4>
-            </div>
-            <div class="col">
-                <h4 id="fuelRequired">fuel required</h4>
-                <h4 id="maxLapUsage">max lap usage</h4>
-                <h4 id="avgLapUsage">avg lap usage</h4>
-            </div>
-            <div class="col">
-                <h4 id="trackTemp">track temp</h4>
-                <h4 id="airTemp">air temp</h4>
-                <h4 id="skyConditions">sky conditions</h4>
-            </div>
+
         </div>
 
         <div class="row bg-primary">
             <div class="col">
                 <h2 id="lastLapTime"></h2>
                 <h2 id="bestLapTime"></h2>
+                <h1 id="pitRoadStatus"></h1>
             </div>
         </div>
     </div>
