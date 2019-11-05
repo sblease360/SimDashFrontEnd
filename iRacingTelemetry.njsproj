@@ -32,6 +32,7 @@
     <Content Include="custom_styling.css">
       <SubType>Code</SubType>
     </Content>
+    <None Include="FolderProfile.pubxml" />
     <Content Include="index.html" />
     <Content Include="libman.json" />
     <Content Include="server.js" />

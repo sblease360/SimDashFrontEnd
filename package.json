@@ -4,7 +4,7 @@
   "description": "iRacingTelemetry",
   "main": "server.js",
   "author": {
-    "name": ""
+    "name": "Sam Blease"
   },
   "dependencies": {
     "ws": "^7.1.2"

@@ -1,5 +1,67 @@
 'use strict';
 
+//Constants and global variables
+const WebSocket = require('ws');
+const wss = new WebSocket.Server({ port: 8080 });
+
+var revInfo = null;
+var sessionJSON = null;
+var fuelInfo = null;
+var lapInfo = {
+    outlap: null,
+    startOfStint: null,
+    pitState: null
+};
+var currLap = null;
+var currSector = 0;
+var sectorBounds = [];
+var lapArray = [];
+var lapDetail = {
+    num: null,
+    sectorTimes: [],
+    lapTime: null,
+    clean: null,
+    fuelUsed: null,
+    outlap: null
+}
+
+//Initialise iRacing connection and log that we are waiting for a connection
+var irsdk = require('node-irsdk');
+irsdk.init({
+    telemetryUpdateInterval: 50,
+    sessionInfoUpdateInterval: 500
+});
+var iracing = irsdk.getInstance()
+console.log('\nWaiting for iRacing instance')
+
+//WebSocket handlers
+wss.on('connection', function connection(ws) {
+    ws.on('message', function incoming(message) {
+        console.log('recieved: %s', message);
+        if (iracing.sessionInfo == null) {
+            console.log("Connected to output site, no iRacing connection");
+        } else {
+            console.log("Connection established - confirming iRacing status");
+            sendWebSocketData("Connected to iRacing");
+            console.log("Sending session state data as new client joined");
+            sendWebSocketData(JSON.stringify(sessionJSON));
+        };
+    });
+})
+
+iracing.on('Connected', function () {
+    console.log('\nConnected to iRacing!.');
+    sendWebSocketData("Connected to iRacing");
+})
+
+iracing.once('Disconnected', function () {
+    console.log('iRacing closed.');
+    sendWebSocketData("Disconnected from iRacing");
+})
+
+//############# General purpose functions
+
+//Check if some data is JSON and return only true or false
 function isJSON(str) {
     try {
         JSON.parse(str);
@@ -9,69 +71,95 @@ function isJSON(str) {
     return true;
 };
 
+//Check if some data is an object and return true or false
 function isAO(val) {
     return val instanceof Array || val instanceof Object ? true : false;
 };
 
-//Websocket stuff
-const WebSocket = require('ws');
+//Send data to the websocket client(s)
+function sendWebSocketData(data) {
+    wss.clients.forEach(function each(client) {
+        client.send(data);
+    })
+}
 
-const wss = new WebSocket.Server({
-    port: 8080
-});
+//############# Specific functions
 
-//iRacing Stuff
-var irsdk = require('node-irsdk');
-irsdk.init({
-    telemetryUpdateInterval: 50,
-    sessionInfoUpdateInterval: 500
-});
-var iracing = irsdk.getInstance()
+//Everything that needs to be done when leaving the pitlane
+function leavingPitLane(lapInfo, telem) {
+    lapInfo.outlap = true;
+    lapInfo.startOfStint = telem.Lap;
+    lapInfo.pitState = false; 
+    return lapInfo;
+}
 
-console.log('\nWaiting for iRacing instance')
+//add calculated values to the telem object which will be sent to the frontend
+function addDataToTelem(telem) {
+    telem.startOfStint = lapInfo.startOfStint;
+    telem.outlap = lapInfo.outlap; 
+    return telem;
+}
 
-var revInfo = null
-var sessionJSON = null
-var fuelInfo = null
-var lapInfo = {
-    outlap: null,
-    startOfStint: null,
-    pitState: null
+//Override hardRedLine, softRedLine and ShiftLight if required (because of launch control or similar)
+//If overridden, output new values to JSON, if not copy values from existing JSON
+function getRevThresholds(existingJSON, carName) {
+
+    var revInfo = {
+        hardRedLine: null,
+        softRedLine: null,
+        shiftLight: null
+    };
+    //Override values
+    switch (carName) {
+        case "Audi RS 3 LMS TCR":
+            revInfo.hardRedLine = 7000;
     }
-var currLap = null
+    //Output
+    if (!(revInfo.hardRedLine === null)) {
+        existingJSON.hardRedLine = gearOverrideInfo.hardRedLine
+    } else {
+        existingJSON.hardRedLine = existingJSON.DriverInfo.DriverCarRedLine;
+    }
 
-//WebSocket data
-wss.on('connection', function connection(ws) {
-    ws.on('message', function incoming(message) {
-        console.log('recieved: %s', message);
-        if (iracing.sessionInfo == null) {
-            console.log("Connected to output site, no iRacing connection");
-        } else {
-            console.log("Connection established - confirming iRacing status");
-            wss.clients.forEach(function each(client) {
-                client.send("Connected to iRacing");
-            })
-            wss.clients.forEach(function each(client) {
-                console.log("Sending session state data as new client joined");   
-                client.send(JSON.stringify(sessionJSON));
-            })
-        };
-    });
-})
+    if (!(revInfo.softRedLine === null)) {
+        existingJSON.softRedLine = gearOverrideInfo.softRedLine;
+    } else {
+        existingJSON.softRedLine = existingJSON.DriverInfo.DriverCarSLFirstRPM;
+    };
 
-iracing.on('Connected', function () {
-    console.log('\nConnected to iRacing!.');
-    wss.clients.forEach(function each(client) {
-        client.send("Connected to iRacing");
-    })
-})
+    if (!(revInfo.shiftLight === null)) {
+        existingJSON.shiftLight = gearOverrideInfo.shiftLight;
+    } else {
+        existingJSON.shiftLight = existingJSON.DriverInfo.DriverCarSLBlinkRPM;
+    }
 
-iracing.once('Disconnected', function () {
-    console.log('iRacing closed.');
-    wss.clients.forEach(function each(client) {
-        client.send("Disconnected from iRacing");
-    })
-})
+    return existingJSON;
+}
+
+//Output time values in seconds as 00:00:00.000
+function fancyTimeFormat(time) {
+    //To be used server side to format second values into nice strings for output
+    // Hours, minutes, seconds and milliseconds in format 00:00.000 assuming no hours
+    if (time == -1) {
+        return "-:--.---";
+    }
+
+    var hrs = ~~(time / 3600);
+    var mins = ~~((time % 3600) / 60);
+    var secs = ~~time % 60;
+    var milliSecs = 1000 * (time - ~~time).toFixed(3);
+
+    var ret = "";
+
+    if (hrs > 0) {
+        ret += "" + hrs + ":" + (mins < 10 ? "0" : "");
+    }
+
+    ret += "" + mins + ":" + (secs < 10 ? "0" : "");
+    ret += "" + secs + "." + (milliSecs < 100 ? "0" : "");
+    ret += "" + milliSecs;
+    return ret;
+}
 
 iracing.on('Telemetry', function (rawTelem) {
     var telem = null;
@@ -89,14 +177,11 @@ iracing.on('Telemetry', function (rawTelem) {
 
     //Things that happen when we have left the pit lane
     if (lapInfo.pitState === true && telem.OnPitRoad === false) {
-        lapInfo.outlap = true;
-        lapInfo.startOfStint = telem.Lap;
-        lapInfo.pitState = false; 
+        lapInfo = leavingPitLane(lapInfo, telem);
     }
 
     //Things that happen each lap
     if (!(currLap === telem.Lap)) {
-
         //Check if outlap status needs to be turned off
         if (lapInfo.outlap === true && !(lapInfo.startOfStint === telem.lap)) {
             lapInfo.outlap = false;
@@ -106,84 +191,25 @@ iracing.on('Telemetry', function (rawTelem) {
         currLap = telem.Lap;
     }
 
-    telem.startOfStint = lapInfo.startOfStint;
-    telem.outlap = lapInfo.outlap;  
+    //Add calculated values to the telemetry object before it is sent to the front end
+    telem = addDataToTelem(telem)
 
     //Transmit data to clients
-    wss.clients.forEach(function each(client) {
-        console.log("Sending Telem Data at session time %o", telem.SessionTime);
-        client.send(JSON.stringify(telem));
-    })
+    sendWebSocketData(JSON.stringify(telem));
 })
 
 iracing.on('SessionInfo', function (rawInfo) {
-    var gearOverrideInfo = null
     sessionJSON = JSON.parse(JSON.stringify(rawInfo.data));
-    gearOverrideInfo = getRevThresholds(rawInfo.data.DriverInfo.Drivers[0].CarScreenName);
-    if (gearOverrideInfo === null) {
-        sessionJSON.hardRedLine = sessionJSON.DriverInfo.DriverCarRedLine;
-        sessionJSON.softRedLine = sessionJSON.DriverInfo.DriverCarSLFirstRPM;
-        sessionJSON.shiftLight = sessionJSON.DriverInfo.DriverCarSLBlinkRPM;
-    } else {
-        if (!(gearOverrideInfo.hardRedLine === null)) { sessionJSON.hardRedLine = gearOverrideInfo.hardRedLine };
-        if (!(gearOverrideInfo.softRedLine === null)) { sessionJSON.softRedLine = gearOverrideInfo.softRedLine };
-        if (!(gearOverrideInfo.shiftLight === null)) { sessionJSON.shiftLight = gearOverrideInfo.shiftLight };
-    }
 
-    if (!(gearOverrideInfo === null)) {
-        
-    }
-    //Consider if this needs the option to overwrite at well, if so it can be done by improving the override code in getRevThresholds()
-    sessionJSON.shiftLightRPM = sessionJSON.DriverInfo.DriverCarSLBlinkRPM;
-    
-    wss.clients.forEach(function each(client) {
-        console.log("Sending Session State Data");    
-        client.send(JSON.stringify(sessionJSON));
-    })
+    //Check gear override info for the current car and set variables for use in front end
+    sessionJSON = getRevThresholds(sessionJSON, rawInfo.data.DriverInfo.Drivers[0].CarScreenName);
+
+    console.log("Sending Session State Data");
+    sendWebSocketData(JSON.stringify(sessionJSON));
 })
 
-//hardRedLine, softRedLine and shiftLight are used in the visuals of the rev counter
-//They can be overridden here for specific cars
-//This is definitely required where the telemetry adjusts the redline for launch control etc
-//Might have other uses and need expanding on in the future
-function getRevThresholds(carName) {
-    var revInfo = {
-        hardRedLine: null,
-        softRedLine: null,
-        shiftLight: null
-    };
-    switch (carName) {
-        case "Audi RS 3 LMS TCR": 
-            revInfo.hardRedLine = 7000;
-            return revInfo;
-        default:
-            return null;
-    }
-}
 
-//To be used server side to format second values into nice strings for output
-function fancyTimeFormat(time) {
-    // Hours, minutes, seconds and milliseconds in format 00:00.000 assuming no hours
-    if (time == -1) {
-        return "-:--.---";
-    }
 
-    var hrs = ~~(time / 3600);
-    var mins = ~~((time % 3600) / 60);
-    var secs = ~~time % 60;
-    var milliSecs = 1000 * (time - ~~time).toFixed(3)
-
-    var ret = "";
-
-    if (hrs > 0) {
-        ret += "" + hrs + ":" + (mins < 10 ? "0" : "");
-    }
-
-    ret += "" + mins + ":" + (secs < 10 ? "0" : "");
-    ret += "" + secs + "." + (milliSecs < 100 ? "0" : "");
-    ret += "" + milliSecs;
-    return ret;
-}
 
 
 
