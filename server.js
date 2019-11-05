@@ -6,23 +6,22 @@ const wss = new WebSocket.Server({ port: 8080 });
 
 var revInfo = null;
 var sessionJSON = null;
-var fuelInfo = null;
-var lapInfo = {
-    outlap: null,
-    startOfStint: null,
-    pitState: null
-};
 var currLap = null;
-var currSector = 0;
-var sectorBounds = [];
+var pitState = null;
+var initialFuel = null;
+var outlap = null; 
+var inlap = null;
+var prevLapDone = null;
 var lapArray = [];
 var lapDetail = {
     num: null,
-    sectorTimes: [],
     lapTime: null,
     clean: null,
     fuelUsed: null,
-    outlap: null
+    outlap: null,
+    inlap: null,
+    startOfStint: null,
+    initialFuel: null, 
 }
 
 //Initialise iRacing connection and log that we are waiting for a connection
@@ -38,7 +37,7 @@ console.log('\nWaiting for iRacing instance')
 wss.on('connection', function connection(ws) {
     ws.on('message', function incoming(message) {
         console.log('recieved: %s', message);
-        if (iracing.sessionInfo == null) {
+        if (iracing.sessionJSON == null) {
             console.log("Connected to output site, no iRacing connection");
         } else {
             console.log("Connection established - confirming iRacing status");
@@ -85,18 +84,10 @@ function sendWebSocketData(data) {
 
 //############# Specific functions
 
-//Everything that needs to be done when leaving the pitlane
-function leavingPitLane(lapInfo, telem) {
-    lapInfo.outlap = true;
-    lapInfo.startOfStint = telem.Lap;
-    lapInfo.pitState = false; 
-    return lapInfo;
-}
-
 //add calculated values to the telem object which will be sent to the frontend
 function addDataToTelem(telem) {
-    telem.startOfStint = lapInfo.startOfStint;
-    telem.outlap = lapInfo.outlap; 
+    telem.startOfStint = lapDetail.startOfStint;
+    telem.outlap = outlap; 
     return telem;
 }
 
@@ -165,38 +156,153 @@ iracing.on('Telemetry', function (rawTelem) {
     var telem = null;
     telem = JSON.parse(JSON.stringify(rawTelem.values));
 
-    //Initialise current lap variable, this is used to control logic that only needs to be recalculated on lap change
+    //Initialise variables on first telemetry tick
     if (currLap === null) {
         currLap = telem.Lap;
     }
 
+    //Things that happen when we enter the pitlane
+    if (pitState === false && telem.OnPitRoad === true) {
+        inlap = true;
+    }
+
+
     //set flags for car in pits to identify when this has changed on the last tick
     if (telem.OnPitRoad === true) {
-        lapInfo.pitState = true;
+        pitState = true;
     };
 
     //Things that happen when we have left the pit lane
-    if (lapInfo.pitState === true && telem.OnPitRoad === false) {
-        lapInfo = leavingPitLane(lapInfo, telem);
+    if (pitState === true && telem.OnPitRoad === false) {
+        outlap = true;
+        lapDetail.startOfStint = telem.Lap;
+        pitState = false; 
+        initialFuel = telem.FuelLevel
     }
 
     //Things that happen each lap
     if (!(currLap === telem.Lap)) {
+        //Set flag to add laptime
+        prevLapDone = false;
+
+        //Update the lapDetail object with the required information
+        //NOTE: this does not get added to the array yet, because the accurate lap time information is not available for a couple of seconds in the telemetry
+        lapDetail.num = currLap;
+        console.log(inlap);
+        if (inlap === true) {
+            lapDetail.inlap = true;
+        } else {
+            lapDetail.inlap = false;
+        }
+
+        if (outlap === true) {
+            lapDetail.outlap = true;
+            lapDetail.initialFuel = initialFuel;
+            lapDetail.fuelUsed = initialFuel - telem.FuelLevel;
+        } else if (lapArray.length > 0) { 
+            lapDetail.outlap = false;
+            lapDetail.initialFuel = lapArray[lapArray.length - 1].initialFuel - lapArray[lapArray.length - 1].fuelUsed
+            lapDetail.fuelUsed = lapDetail.initialFuel - telem.FuelLevel;
+        } else { //This can happen if the server was started with the car already on track - ensure values don't break the rest of the array
+            lapDetail.outlap = false;
+            lapDetail.initialFuel = telem.FuelLevel;
+            lapDetail.fuelUsed = 0;
+        };      
+
         //Check if outlap status needs to be turned off
-        if (lapInfo.outlap === true && !(lapInfo.startOfStint === telem.lap)) {
-            lapInfo.outlap = false;
+        if (outlap === true && !(lapDetail.startOfStint === telem.Lap)) {
+            outlap = false;
+        }
+
+        //Turn off inlap status
+        if (inlap === true) {
+            inlap = false;
         }
 
         //Finally, update current lap so it is correct next time round
         currLap = telem.Lap;
     }
 
+    //telem.LapLastLapTime doesn't get updated for a few seconds after telem.Lap does
+    //To get accuract lap times displayed, wait for this time and then push a copy of the object to the array 
+    if (prevLapDone === false && telem.LapCurrentLapTime < 5) {
+        lapDetail.lapTime = telem.LapLastLapTime;
+        lapArray.push(JSON.parse(JSON.stringify(lapDetail)));
+        prevLapDone = true;
+        console.log(lapArray);
+    }
+
     //Add calculated values to the telemetry object before it is sent to the front end
     telem = addDataToTelem(telem)
 
+    if (!(sessionJSON === null)) {
+        compileAndTransmitData(telem)
+    }
+
     //Transmit data to clients
-    sendWebSocketData(JSON.stringify(telem));
+    //sendWebSocketData(JSON.stringify(telem));
 })
+
+function compileAndTransmitData(telem) {
+    var telemetryOutput = {};
+
+    //Gear and rev data
+    telemetryOutput.revBarWidth = (100 * (telem.RPM / sessionJSON.hardRedLine)) + "%";
+
+    switch (telem.Gear) {
+        case 0:
+            telemetryOutput.currGear = "N";
+            break;
+        case -1:
+            telemetryOutput.currGear = "R";
+            break;
+        default:
+            telemetryOutput.currGear = telem.Gear;
+    };
+
+    telemetryOutput.currRevs = Math.round(telem.RPM);
+
+    telemetryOutput.currSpeed = Math.round(telem.Speed * 2.23694) + '<span id="speedUnits"> mph</span>';
+
+    if (telem.RPM > sessionJSON.shiftLight) {
+        telemetryOutput.shiftLight = true;
+    } else {
+        telemetryOutput.shiftLight = false;
+    };
+
+    //Fuel and current lap details
+    telemetryOutput.fuelRemaining = telem.FuelLevel.toFixed(2) + " l"
+    telemetryOutput.currentLap = telem.Lap;
+
+    telemetryOutput.lastLapTime = fancyTimeFormat(telem.LapLastLapTime);
+    telemetryOutput.bestLapTime = fancyTimeFormat(telem.LapBestLapTime);
+
+    switch (telem.outlap) {
+        case true:
+            telemetryOutput.lapsThisStint = "Outlap"
+            break;
+        case false:
+            telemetryOutput.lapsThisStint = (telem.Lap - telem.startOfStint) + '<span class="additionalData"> + outlap</span>';
+            break; 
+        default: 
+            telemetryOutput.lapsThisStint = "---"
+    };
+
+    if (lapArray.length > 0) {
+        telemetryOutput.lastLapUsage = (Math.round(100 * lapArray[lapArray.length - 1].fuelUsed))/100;
+    } else {
+        telemetryOutput.lastLapUsage = "---"
+    };
+
+    //Session info details
+    telemetryOutput.trackTemp = sessionJSON.WeekendInfo.TrackSurfaceTemp;
+    telemetryOutput.airTemp = sessionJSON.WeekendInfo.TrackAirTemp;
+    telemetryOutput.skyConditions = sessionJSON.WeekendInfo.TrackSkies;
+    telemetryOutput.softRedLine = 2 + (100 * ((sessionJSON.hardRedLine - sessionJSON.softRedLine) / sessionJSON.hardRedLine)) + "%"
+
+    //Output data to clients
+    sendWebSocketData(JSON.stringify(telemetryOutput));
+};
 
 iracing.on('SessionInfo', function (rawInfo) {
     sessionJSON = JSON.parse(JSON.stringify(rawInfo.data));
@@ -204,8 +310,7 @@ iracing.on('SessionInfo', function (rawInfo) {
     //Check gear override info for the current car and set variables for use in front end
     sessionJSON = getRevThresholds(sessionJSON, rawInfo.data.DriverInfo.Drivers[0].CarScreenName);
 
-    console.log("Sending Session State Data");
-    sendWebSocketData(JSON.stringify(sessionJSON));
+    console.log("Session info updated")
 })
 
 

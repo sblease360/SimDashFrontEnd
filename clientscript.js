@@ -31,80 +31,40 @@ function startConnection() {
     socket.onmessage = function (event) { 
         //All data from the game is passed as JSON, other items are sent in plain text
         if (isJSON(event.data)) {
-            //check if the JSON is session info (recieved only when it changes)
-            if (JSON.parse(event.data).hasOwnProperty('CameraInfo')) {
-                console.log("This is session info data");
-                sessionInfo = JSON.parse(event.data);
-                console.log(sessionInfo);
+            console.log("this is telemetry data");
+            telem = JSON.parse(event.data);
+            console.log(telem);
 
-                //track conditions
-                document.getElementById('trackTemp').innerHTML = sessionInfo.WeekendInfo.TrackSurfaceTemp;
-                document.getElementById('airTemp').innerHTML = sessionInfo.WeekendInfo.TrackAirTemp;
-                document.getElementById('skyConditions').innerHTML = sessionInfo.WeekendInfo.TrackSkies;
+            //Session details
+            document.getElementById('trackTemp').innerHTML = telem.trackTemp
+            document.getElementById('airTemp').innerHTML = telem.airTemp
+            document.getElementById('skyConditions').innerHTML = telem.skyConditions
+            document.getElementById('softRedLine').style.width = telem.softRedLine
 
-                //Set soft red line in gear element
-                document.getElementById('softRedLine').style.width = 2 + (100 * ((sessionInfo.hardRedLine - sessionInfo.softRedLine) / sessionInfo.hardRedLine)) + "%";
-                   
-               
-                
+            //Rev and gear information
+            document.getElementById('currentRevsBar').style.width = telem.revBarWidth;
+            document.getElementById('currGear').innerHTML = telem.currGear;
+            document.getElementById('currRevs').innerHTML = telem.currRevs;
+            document.getElementById('currSpeed').innerHTML = telem.currSpeed;
 
+            if (telem.shiftLight === true) {
+                document.getElementById('revCounterBorder').style.borderColor = "#FF0000";
+                document.getElementById('revsArea').style.backgroundColor = "#FF0000";
             } else {
-                console.log("this is telemetry data");
-                telem = JSON.parse(event.data);
-                console.log(telem);
-
-                //Display gearing and rev counter percentages - two versions required
-                document.getElementById('currentRevsBar').style.width = (100 * (telem.RPM / sessionInfo.hardRedLine)) + "%";
-                
-
-                if (telem.Gear === 0) {
-                    document.getElementById('currGear').innerHTML = "N";
-                } else if (telem.Gear === -1) {
-                    document.getElementById('currGear').innerHTML = "R";
-                } else {
-                    document.getElementById('currGear').innerHTML = telem.Gear;
-                };
-                
-                document.getElementById('currRevs').innerHTML = Math.round(telem.RPM);
-
-                //Display current speed
-                document.getElementById('currSpeed').innerHTML = Math.round(telem.Speed * 2.23694) + '<span id="mph"> mph</span>';
-
-                //Set shift light if required
-                if (!(sessionInfo == null)) {
-                    if (telem.RPM > sessionInfo.shiftLight) {
-                        document.getElementById('revCounterBorder').style.borderColor = "#FF0000";
-                        document.getElementById('revsArea').style.backgroundColor = "#FF0000"
-                    } else {
-                        document.getElementById('revCounterBorder').style.borderColor = "#0f1214";
-                        document.getElementById('revsArea').style.backgroundColor = "#0f1214"
-                    }
-                }
-
-                //Output lap numbers and fuel details
-                document.getElementById('fuelRemaining').innerHTML = telem.FuelLevel.toFixed(2);
-                document.getElementById('currentLap').innerHTML = telem.Lap;
-
-                //Output lap timings
-                document.getElementById('lastLapTime').innerHTML = "Last: " + telem.LapLastLapTime;
-                document.getElementById('bestLapTime').innerHTML = "Best: " + telem.LapBestLapTime.toFixed(3);
-                switch (telem.outlap) {
-                    case null:
-                        document.getElementById('lapsThisStint').innerHTML = "---"
-                        break;
-                    case true:
-                        document.getElementById('lapsThisStint').innerHTML = "outlap"
-                        break;
-                    case false:
-                        document.getElementById('lapsThisStint').innerHTML = telem.Lap - telem.startOfStint;
-                        break;
-                    default:
-                        document.getElementById('lapsThisStint').innerHTML = "---"
-                } 
-                //document.getElementById('lapsThisStint').innerHTML = telem.LapCompleted - telem.startOfStint;
-                document.getElementById('pitRoadStatus').innerHTML = telem.OnPitRoad;
-    
+                document.getElementById('revCounterBorder').style.borderColor = "#0f1214";
+                document.getElementById('revsArea').style.backgroundColor = "#0f1214";
             }
+
+            //Output lap numbers and fuel details
+            document.getElementById('fuelRemaining').innerHTML = telem.fuelRemaining;
+            document.getElementById('currentLap').innerHTML = telem.currentLap;
+            document.getElementById('lastLapUsage').innerHTML = telem.lastLapUsage;
+
+            //Output lap timings
+            document.getElementById('lastLapTime').innerHTML = "Last: " + telem.lastLapTime;
+            document.getElementById('bestLapTime').innerHTML = "Best: " + telem.bestLapTime;
+            document.getElementById('lapsThisStint').innerHTML = telem.lapsThisStint;
+               
         } else {
             if (event.data == "Connected to iRacing") {
                 document.getElementById('irStatus').innerHTML = "Running"
