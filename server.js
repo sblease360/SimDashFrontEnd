@@ -271,7 +271,7 @@ function compileAndTransmitData(telem) {
     };
 
     //Fuel and current lap details
-    telemetryOutput.fuelRemaining = telem.FuelLevel.toFixed(2) + " l"
+    telemetryOutput.fuelRemaining = telem.FuelLevel.toFixed(2) + '<span class="additionalData"> L</span>'
     telemetryOutput.currentLap = telem.Lap;
 
     telemetryOutput.lastLapTime = fancyTimeFormat(telem.LapLastLapTime);
