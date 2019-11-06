@@ -63,6 +63,9 @@ iracing.once('Disconnected', function () {
     sendWebSocketData("Disconnected from iRacing");
 })
 
+//https stuff
+
+
 //############# General purpose functions
 
 //Check if some data is JSON and return only true or false

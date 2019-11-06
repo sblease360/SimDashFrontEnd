@@ -18,7 +18,7 @@ function initialisePage() {
 
 function startConnection() {
     console.log('Attempting to create new websocket connection');
-    socket = new WebSocket('ws://192.168.178.30:8080');
+    socket = new WebSocket('ws://127.0.0.1:8080');
     var sessionInfo = null;
     var telem = null;
 
