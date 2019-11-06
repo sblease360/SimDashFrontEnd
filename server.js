@@ -24,9 +24,10 @@ var lapDetail = {
     initialFuel: null, 
 }
 var stintInfo = {
-    minFuel: null,
-    maxFuel: null,
-    avgFuel: null
+    minFuel: "---",
+    maxFuel: "---",
+    avgFuel: "---",
+    lapsLeft: "---",
 };
 
 //Initialise iRacing connection and log that we are waiting for a connection
@@ -271,6 +272,9 @@ iracing.on('Telemetry', function (rawTelem) {
         stintInfo.minFuel = val.min;
         stintInfo.maxFuel = val.max;
         stintInfo.avgFuel = val.avg;
+        if (!(isNaN(val.avg))) {
+            stintInfo.lapsLeft = (Math.round(100 * (telem.FuelLevel / val.avg))) / 100;
+        };
     }
     
     //Compile and transmit the data, can only be done after a session tick as this function uses both session and telem data
@@ -315,18 +319,21 @@ function compileAndTransmitData(telem) {
     telemetryOutput.bestLapTime = fancyTimeFormat(telem.LapBestLapTime);
 
     if (lapArray.length > 0) {
-        telemetryOutput.lastLapUsage = ((Math.round(100 * lapArray[lapArray.length - 1].fuelUsed)) / 100) + '<span class="additionalData"> L</span>';
+        telemetryOutput.lastLapUsage = ((Math.round(1000 * lapArray[lapArray.length - 1].fuelUsed)) / 1000) + '<span class="additionalData"> L</span>';
     } else {
         telemetryOutput.lastLapUsage = "---"
     };
 
-    telemetryOutput.minLapUsage = ((Math.round(100 * stintInfo.minFuel)) / 100) + '<span class="additionalData"> L</span>';
-    telemetryOutput.maxLapUsage = ((Math.round(100 * stintInfo.maxFuel)) / 100) + '<span class="additionalData"> L</span>';
-    telemetryOutput.avgLapUsage = ((Math.round(100 * stintInfo.avgFuel)) / 100) + '<span class="additionalData"> L</span>';
+    telemetryOutput.minLapUsage = ((Math.round(1000 * stintInfo.minFuel)) / 1000) + '<span class="additionalData"> L</span>';
+    telemetryOutput.maxLapUsage = ((Math.round(1000 * stintInfo.maxFuel)) / 1000) + '<span class="additionalData"> L</span>';
+    telemetryOutput.avgLapUsage = ((Math.round(1000 * stintInfo.avgFuel)) / 1000) + '<span class="additionalData"> L</span>';
+    telemetryOutput.lapsLeftFuel = stintInfo.lapsLeft;
 
-    if (isNaN((Math.round(100 * stintInfo.minFuel)) / 100)) { telemetryOutput.minLapUsage = "---" };
-    if (isNaN((Math.round(100 * stintInfo.maxFuel)) / 100)) { telemetryOutput.maxLapUsage = "---" };
-    if (isNaN((Math.round(100 * stintInfo.avgFuel)) / 100)) { telemetryOutput.avgLapUsage = "---" };
+    if (isNaN((Math.round(1000 * stintInfo.minFuel)) / 1000)) { telemetryOutput.minLapUsage = "---" };
+    if (isNaN((Math.round(1000 * stintInfo.maxFuel)) / 1000)) { telemetryOutput.maxLapUsage = "---" };
+    if (isNaN((Math.round(1000 * stintInfo.avgFuel)) / 1000)) { telemetryOutput.avgLapUsage = "---" };
+    if (isNaN(stintInfo.lapsLeft)) { telemetryOutput.lapsLeftFuel = "---" };
+
 
 
     switch (outlap) {

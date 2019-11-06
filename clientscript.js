@@ -18,7 +18,7 @@ function initialisePage() {
 
 function startConnection() {
     console.log('Attempting to create new websocket connection');
-    socket = new WebSocket('ws://127.0.0.1:8080');
+    socket = new WebSocket('ws://192.168.178.30:8080');
     var sessionInfo = null;
     var telem = null;
 
@@ -62,6 +62,7 @@ function startConnection() {
             document.getElementById('minLapUsage').innerHTML = telem.minLapUsage;
             document.getElementById('maxLapUsage').innerHTML = telem.maxLapUsage;
             document.getElementById('avgLapUsage').innerHTML = telem.avgLapUsage;
+            document.getElementById('lapsLeftFuel').innerHTML = telem.lapsLeftFuel;
 
             //Output lap timings
             document.getElementById('lastLapTime').innerHTML = "Last: " + telem.lastLapTime;
