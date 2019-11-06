@@ -63,11 +63,12 @@ function startConnection() {
             document.getElementById('maxLapUsage').innerHTML = telem.maxLapUsage;
             document.getElementById('avgLapUsage').innerHTML = telem.avgLapUsage;
             document.getElementById('lapsLeftFuel').innerHTML = telem.lapsLeftFuel;
+            document.getElementById('lapsThisStint').innerHTML = telem.lapsThisStint;
 
             //Output lap timings
-            document.getElementById('lastLapTime').innerHTML = "Last: " + telem.lastLapTime;
-            document.getElementById('bestLapTime').innerHTML = "Best: " + telem.bestLapTime;
-            document.getElementById('lapsThisStint').innerHTML = telem.lapsThisStint;
+            document.getElementById('lastLapTime').innerHTML = telem.lastLapTime;
+            document.getElementById('bestLapTime').innerHTML = telem.bestLapTime;
+            
                
         } else {
             if (event.data == "Connected to iRacing") {

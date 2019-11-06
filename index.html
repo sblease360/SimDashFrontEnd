@@ -24,7 +24,7 @@
                 </div>
                 <div class="row">
                     <div class="col-3 text-left"><span class="module-header status-info">iRacing:</span></div>
-                    <div class="col text-left"><span class="module-header status-info" id="irStatus"">N/A</span></div>
+                    <div class="col text-left"><span class="module-header status-info" id="irStatus">N/A</span></div>
                 </div>
             </div>
             <div class="col d-flex align-items-center justify-content-center">
@@ -80,7 +80,7 @@
                 </div>
                 <div class="row border-left border-bottom border-dark thicker-border" id="fuelRow2">
                     <div class="col border-right border-dark thicker-border">
-                        <p class="module-header">Current Lap:</h5>
+                        <p class="module-header">Current Lap:</p>
                         <h4 class="text-white text-center" id="currentLap"></h4>
                     </div>
                     <div class="col border-right border-dark thicker-border">
@@ -119,14 +119,47 @@
 
         </div>
 
-        <div class="row bg-primary">
+        <div class="row bg-dark" id="lapTimingArea">
             <div class="col">
-                <h2 id="lastLapTime"></h2>
-                <h2 id="bestLapTime"></h2>
-                <h1 id="pitRoadStatus"></h1>
-            </div>
+                <div class="row border-bottom thicker-border">
+                    <div class="col border-right border-left border-dark thicker-border bg-col-1">
+                        <p class="timing-header text-dark">Last Lap:</p>
+                        <h4 class="text-dark text-center" id="lastLapTime"></h4>
+                    </div>
+                    <div class="col border-right border-dark thicker-border bg-col-2">
+                        <p class="timing-header text-dark">Best Session Lap:</p>
+                        <h4 class="text-dark text-center" id="bestSessionLapTime"></h4>
+                    </div>
+                    <div class="col border-right border-dark thicker-border bg-col-3">
+                        <p class="timing-header text-dark">Avg Session Lap:</p>
+                        <h4 class="text-dark text-center" id="avgSessionLapTime"></h4>
+                    </div>
+                    <div class="col border-right border-dark thicker-border bg-col-4">
+                        <p class="timing-header text-dark">Best Stint Lap:</p>
+                        <h4 class="text-dark text-center" id="bestStintLapTime"></h4>
+                    </div>
+                    <div class="col border-right border-dark thicker-border bg-col-5">
+                        <p class="timing-header text-dark">Avg Stint Lap:</p>
+                        <h4 class="text-dark text-center" id="avgStintLapTime"></h4>
+                    </div>
+                </div>
+                <div class="row" id="thisLapInfo">
+                    <div class="col-2"></div>
+                    <div class="row col m-2 p-0" id="thisLapContainer">
+                        <div class="col m-0 p-0" id="thisLapProgress">
+                            <div id="hardRedLine"></div>
+                            <div id="softRedLine"></div>
+                            <div id="currentRevsBar"></div>
+                        </div>
+
+                    </div>
+                    <div class="row" id="currLapTime"></div>
+                </div>
+
+
         </div>
     </div>
+
 
     <script type="text/javascript" src="clientscript.js"></script>
 </body>

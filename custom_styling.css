@@ -18,6 +18,12 @@
     font-weight:500;
 }
 
+.timing-header {
+    padding: 0;
+    margin: 0;
+    font-weight: 500;
+}
+
 .status-info{
     font-size:0.85em;
 }
@@ -36,9 +42,35 @@
     color: #bbc2c9;
 }
 
+.additionalDataSmall {
+    font-size: 0.4em;
+    font-weight: 500;
+    color: #bbc2c9;
+}
+
 .speedUnits {
     font-size: 0.4em;
     color: #93959e;
+}
+
+.bg-col-1 {
+    background-color: #FFFFFA;
+}
+
+.bg-col-2 {
+    background-color: #c48d7e;
+}
+
+.bg-col-3 {
+    background-color: #b6c47e;
+}
+
+.bg-col-4 {
+    background-color: #7ec496;
+}
+
+.bg-col-5 {
+    background-color: #8178b0;
 }
 
 #revCounterBorder {
@@ -57,12 +89,27 @@
     background: repeating-linear-gradient( 90deg, transparent, transparent 6px, #0f1214 6px, #0f1214 9px);
 }
 
+#thisLapContainer {
+    position: relative;
+    border: 1px solid;
+    border-color: #0f1214;
+    border-radius: 4px;
+    height: 1.5em;
+}
+
+#thisLapProgress {
+    position: relative;
+    border: 2px solid #0f1214;
+    border-right: 4px solid #0f1214;
+    height: 100%;
+    background: repeating-linear-gradient( 90deg, transparent, transparent 6px, #0f1214 6px, #0f1214 9px);
+}
+
 #currentRevsBar {
     height: 100%;
     position: relative;
     width: 4%;
     z-index: -3;
-    //background-color: #a5abb4;
     background: linear-gradient(#a5abb4, #d2d4d9, #a5abb4)
 }
 

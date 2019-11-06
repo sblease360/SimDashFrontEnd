@@ -303,7 +303,7 @@ function compileAndTransmitData(telem) {
 
     telemetryOutput.currRevs = Math.round(telem.RPM);
 
-    telemetryOutput.currSpeed = Math.round(telem.Speed * 2.23694) + '<span class="additionalData"> mph</span>';
+    telemetryOutput.currSpeed = Math.round(telem.Speed * 2.23694) + '<span class="additionalDataSmall"> mph</span>';
 
     if (telem.RPM > sessionJSON.shiftLight) {
         telemetryOutput.shiftLight = true;
@@ -339,7 +339,6 @@ function compileAndTransmitData(telem) {
     switch (outlap) {
         case true:
             telemetryOutput.lapsThisStint = "Outlap";
-            telemetryOutput.lastLapUsage.replace('<span class="additionalData"> L</span>', '<span class="additionalData"> L (outlap)</span>');
             break;
         case false:
             telemetryOutput.lapsThisStint = (telem.Lap - lapDetail.startOfStint);
