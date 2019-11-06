@@ -30,6 +30,17 @@
     background-color: #0F1214!important;
 }
 
+.additionalData {
+    font-size: 1em;
+    font-weight: 500;
+    color: #bbc2c9;
+}
+
+.speedUnits {
+    font-size: 0.4em;
+    color: #93959e;
+}
+
 #revCounterBorder {
     position: relative;
     border: 4px solid;
@@ -43,7 +54,6 @@
     border: 2px solid #0f1214;
     border-right: 4px solid #0f1214;
     height: 100%;
-    width: 90%;
     background: repeating-linear-gradient( 90deg, transparent, transparent 6px, #0f1214 6px, #0f1214 9px);
 }
 
@@ -97,7 +107,3 @@
     margin-bottom: 0.1em;
 }
 
-.additionalData {
-    font-size: 0.4em;
-    color: #93959e;
-}

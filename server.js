@@ -23,6 +23,11 @@ var lapDetail = {
     startOfStint: null,
     initialFuel: null, 
 }
+var stintInfo = {
+    minFuel: null,
+    maxFuel: null,
+    avgFuel: null
+};
 
 //Initialise iRacing connection and log that we are waiting for a connection
 var irsdk = require('node-irsdk');
@@ -84,13 +89,6 @@ function sendWebSocketData(data) {
 
 //############# Specific functions
 
-//add calculated values to the telem object which will be sent to the frontend
-function addDataToTelem(telem) {
-    telem.startOfStint = lapDetail.startOfStint;
-    telem.outlap = outlap; 
-    return telem;
-}
-
 //Override hardRedLine, softRedLine and ShiftLight if required (because of launch control or similar)
 //If overridden, output new values to JSON, if not copy values from existing JSON
 function getRevThresholds(existingJSON, carName) {
@@ -127,6 +125,35 @@ function getRevThresholds(existingJSON, carName) {
     return existingJSON;
 }
 
+//Usage values from the lapArray
+function getValuesFromLapArray() {
+    var min, max, sum, count, avg, i;
+    count = 0;
+    sum = 0;
+    min = 500;
+    max = 0;    
+    avg = 0;
+    for (i = 0; i < lapArray.length; i++) {
+        if (lapArray[i].num < lapArray[lapArray.length - 1].startOfStint) { continue };
+        if (lapArray[i].outlap === false && lapArray[i].inlap === false) {
+            sum += lapArray[i].fuelUsed;
+            count += 1;
+            if (lapArray[i].fuelUsed < min) { min = lapArray[i].fuelUsed };
+            if (lapArray[i].fuelUsed > max) { max = lapArray[i].fuelUsed };
+        }
+    };
+    avg = sum / count;
+    if (min === 500) { min = "---" }; 
+    if (max === 0) { max = "---" };
+    if (avg === 0) { avg = "---" };
+    return {
+        min: min,
+        max: max,
+        avg: avg
+    };
+}
+
+
 //Output time values in seconds as 00:00:00.000
 function fancyTimeFormat(time) {
     //To be used server side to format second values into nice strings for output
@@ -151,6 +178,15 @@ function fancyTimeFormat(time) {
     ret += "" + milliSecs;
     return ret;
 }
+
+iracing.on('SessionInfo', function (rawInfo) {
+    sessionJSON = JSON.parse(JSON.stringify(rawInfo.data));
+
+    //Check gear override info for the current car and set variables for use in front end
+    sessionJSON = getRevThresholds(sessionJSON, rawInfo.data.DriverInfo.Drivers[0].CarScreenName);
+
+    console.log("Session info updated")
+})
 
 iracing.on('Telemetry', function (rawTelem) {
     var telem = null;
@@ -188,7 +224,6 @@ iracing.on('Telemetry', function (rawTelem) {
         //Update the lapDetail object with the required information
         //NOTE: this does not get added to the array yet, because the accurate lap time information is not available for a couple of seconds in the telemetry
         lapDetail.num = currLap;
-        console.log(inlap);
         if (inlap === true) {
             lapDetail.inlap = true;
         } else {
@@ -229,22 +264,21 @@ iracing.on('Telemetry', function (rawTelem) {
         lapDetail.lapTime = telem.LapLastLapTime;
         lapArray.push(JSON.parse(JSON.stringify(lapDetail)));
         prevLapDone = true;
-        console.log(lapArray);
+        let val = getValuesFromLapArray();
+        stintInfo.minFuel = val.min;
+        stintInfo.maxFuel = val.max;
+        stintInfo.avgFuel = val.avg;
     }
-
-    //Add calculated values to the telemetry object before it is sent to the front end
-    telem = addDataToTelem(telem)
-
+    
+    //Compile and transmit the data, can only be done after a session tick as this function uses both session and telem data
     if (!(sessionJSON === null)) {
         compileAndTransmitData(telem)
     }
-
-    //Transmit data to clients
-    //sendWebSocketData(JSON.stringify(telem));
 })
 
 function compileAndTransmitData(telem) {
     var telemetryOutput = {};
+    var i = null;
 
     //Gear and rev data
     telemetryOutput.revBarWidth = (100 * (telem.RPM / sessionJSON.hardRedLine)) + "%";
@@ -262,7 +296,7 @@ function compileAndTransmitData(telem) {
 
     telemetryOutput.currRevs = Math.round(telem.RPM);
 
-    telemetryOutput.currSpeed = Math.round(telem.Speed * 2.23694) + '<span id="speedUnits"> mph</span>';
+    telemetryOutput.currSpeed = Math.round(telem.Speed * 2.23694) + '<span class="additionalData"> mph</span>';
 
     if (telem.RPM > sessionJSON.shiftLight) {
         telemetryOutput.shiftLight = true;
@@ -271,28 +305,39 @@ function compileAndTransmitData(telem) {
     };
 
     //Fuel and current lap details
-    telemetryOutput.fuelRemaining = telem.FuelLevel.toFixed(2) + '<span class="additionalData"> L</span>'
+    telemetryOutput.fuelRemaining = telem.FuelLevel.toFixed(2) + '<span class="additionalData"> L</span>';
     telemetryOutput.currentLap = telem.Lap;
 
     telemetryOutput.lastLapTime = fancyTimeFormat(telem.LapLastLapTime);
     telemetryOutput.bestLapTime = fancyTimeFormat(telem.LapBestLapTime);
 
-    switch (telem.outlap) {
-        case true:
-            telemetryOutput.lapsThisStint = "Outlap"
-            break;
-        case false:
-            telemetryOutput.lapsThisStint = (telem.Lap - telem.startOfStint) + '<span class="additionalData"> + outlap</span>';
-            break; 
-        default: 
-            telemetryOutput.lapsThisStint = "---"
-    };
-
     if (lapArray.length > 0) {
-        telemetryOutput.lastLapUsage = (Math.round(100 * lapArray[lapArray.length - 1].fuelUsed))/100;
+        telemetryOutput.lastLapUsage = ((Math.round(100 * lapArray[lapArray.length - 1].fuelUsed)) / 100) + '<span class="additionalData"> L</span>';
     } else {
         telemetryOutput.lastLapUsage = "---"
     };
+
+    telemetryOutput.minLapUsage = ((Math.round(100 * stintInfo.minFuel)) / 100) + '<span class="additionalData"> L</span>';
+    telemetryOutput.maxLapUsage = ((Math.round(100 * stintInfo.maxFuel)) / 100) + '<span class="additionalData"> L</span>';
+    telemetryOutput.avgLapUsage = ((Math.round(100 * stintInfo.avgFuel)) / 100) + '<span class="additionalData"> L</span>';
+
+    if (isNaN((Math.round(100 * stintInfo.minFuel)) / 100)) { telemetryOutput.minLapUsage = "---" };
+    if (isNaN((Math.round(100 * stintInfo.maxFuel)) / 100)) { telemetryOutput.maxLapUsage = "---" };
+    if (isNaN((Math.round(100 * stintInfo.avgFuel)) / 100)) { telemetryOutput.avgLapUsage = "---" };
+
+
+    switch (outlap) {
+        case true:
+            telemetryOutput.lapsThisStint = "Outlap";
+            telemetryOutput.lastLapUsage.replace('<span class="additionalData"> L</span>', '<span class="additionalData"> L (outlap)</span>');
+            break;
+        case false:
+            telemetryOutput.lapsThisStint = (telem.Lap - lapDetail.startOfStint);
+            break;
+        default:
+            telemetryOutput.lapsThisStint = "---"
+    };
+    
 
     //Session info details
     telemetryOutput.trackTemp = sessionJSON.WeekendInfo.TrackSurfaceTemp;
@@ -304,14 +349,7 @@ function compileAndTransmitData(telem) {
     sendWebSocketData(JSON.stringify(telemetryOutput));
 };
 
-iracing.on('SessionInfo', function (rawInfo) {
-    sessionJSON = JSON.parse(JSON.stringify(rawInfo.data));
 
-    //Check gear override info for the current car and set variables for use in front end
-    sessionJSON = getRevThresholds(sessionJSON, rawInfo.data.DriverInfo.Drivers[0].CarScreenName);
-
-    console.log("Session info updated")
-})
 
 
 

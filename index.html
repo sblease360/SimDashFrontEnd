@@ -35,13 +35,13 @@
                 <h1 class="text-light" id="currGear"></h1>
             </div>
 
-            <div class="row col-9 m-2 p-0" id="revCounterBorder">
+            <div class="row col-8 m-2 p-0" id="revCounterBorder">
                 <div class="col m-0 p-0" id="revCounter">
                     <div id="hardRedLine"></div>
                     <div id="softRedLine"></div>
                     <div id="currentRevsBar"></div>
                 </div>
-                <div class="col-2 m-0 p-0 d-flex align-items-center justify-content-center" id="revsArea">
+                <div class="col-3 m-0 p-0 d-flex align-items-center justify-content-center" id="revsArea">
                     <h1 class="" id="currRevs"></h1>
                 </div>
             </div>
@@ -78,12 +78,12 @@
                         <h4 class="text-white text-center" id="currentLap"></h4>
                     </div>
                     <div class="col border-right border-dark thicker-border">
-                        <p class="module-header">Lowest Usage:</p>
-                        <h4 class="text-white text-center" id="minLapUsage"></h4>
+                        <p class="module-header">Last Lap Usage:</p>
+                        <h4 class="text-white text-center" id="lastLapUsage"></h4>
                     </div>
                     <div class="col border-right border-dark thicker-border">
-                        <p class="module-header">Highest Usage:</p>
-                        <h4 class="text-white text-center" id="maxLapUsage"></h4>
+                        <p class="module-header">Avg Usage this Stint:</p>
+                        <h4 class="text-white text-center" id="avgLapUsage"></h4>
                     </div>
                     <div class="col border-right border-dark thicker-border">
                         <p class="module-header">Air Temp:</p>
@@ -92,16 +92,17 @@
                 </div>
                 <div class="row border-left border-bottom border-dark thicker-border" id="fuelRow3">
                     <div class="col border-right border-dark thicker-border">
-                        <p class="module-header">Lap in stint:</p>
+                        <p class="module-header">Lap in Stint (excl outlap):</p>
                         <h4 class="text-white text-center" id="lapsThisStint"></h4>
                     </div>
                     <div class="col border-right border-dark thicker-border">
-                        <p class="module-header">Last Lap Usage:</p>
-                        <h4 class="text-white text-center" id="lastLapUsage"></h4>
+                        <p class="module-header">Lowest Usage this Stint:</p>
+                        <h4 class="text-white text-center" id="minLapUsage"></h4>
                     </div>
                     <div class="col border-right border-dark thicker-border">
-                        <p class="module-header">Avg Usage:</p>
-                        <h4 class="text-white text-center" id="avgLapUsage"></h4>
+                        <p class="module-header">Highest Usage this Stint:</p>
+                        <h4 class="text-white text-center" id="maxLapUsage"></h4>
+
                     </div>
                     <div class="col border-right border-dark thicker-border">
                         <p class="module-header">Weather Conditions:</p>
