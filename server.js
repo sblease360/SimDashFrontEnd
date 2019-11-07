@@ -12,6 +12,12 @@ var initialFuel = null;
 var outlap = null; 
 var inlap = null;
 var prevLapDone = null;
+
+var optimumLapTime = { //This is required as a workaround because this data is not in the telemetry packet, calculated using a laptime and a delta picked up in different places.
+    lapNum: null, 
+    optimum: null,
+    lapDelta: null, 
+}
 var lapArray = [];
 var lapDetail = {
     num: null,
@@ -123,7 +129,11 @@ function getRevThresholds(existingJSON, carName) {
     if (!(revInfo.shiftLight === null)) {
         existingJSON.shiftLight = gearOverrideInfo.shiftLight;
     } else {
-        existingJSON.shiftLight = existingJSON.DriverInfo.DriverCarSLBlinkRPM;
+        if (existingJSON.DriverInfo.DriverCarSLBlinkRPM < existingJSON.DriverInfo.DriverCarRedLine) {
+            existingJSON.shiftLight = existingJSON.DriverInfo.DriverCarSLBlinkRPM;
+        } else {
+            existingJSON.shiftLight = existingJSON.DriverInfo.DriverCarSLLastRPM;
+        }
     }
 
     return existingJSON;
@@ -262,12 +272,22 @@ iracing.on('Telemetry', function (rawTelem) {
         currLap = telem.Lap;
     }
 
-    //telem.LapLastLapTime doesn't get updated for a few seconds after telem.Lap does
+    //Attempt to estimate optimum lap time by catching a delta value very close to the end of the lap and adding it to the last lap time
+    if (telem.LapDistPct > 0.995 && telem.LapDeltaToSessionOptimalLap_OK === true && outlap === false) {
+        optimumLapTime.lapNum = telem.Lap;
+        optimumLapTime.lapDelta = telem.LapDeltaToSessionOptimalLap;
+    }
+
+    //telem.LapLastLapTime doesn't get updated for a second or two after telem.Lap does
     //To get accuract lap times displayed, wait for this time and then push a copy of the object to the array 
     if (prevLapDone === false && telem.LapCurrentLapTime < 5) {
+        prevLapDone = true;
+        if (!(optimumLapTime.lapDelta === null && optimumLapTime.lapNum === (telem.Lap - 1))) {
+            optimumLapTime.optimum = telem.LapLastLapTime - optimumLapTime.lapDelta;
+            optimumLapTime.lapDelta = null;
+        }        
         lapDetail.lapTime = telem.LapLastLapTime;
         lapArray.push(JSON.parse(JSON.stringify(lapDetail)));
-        prevLapDone = true;
         let val = getValuesFromLapArray();
         stintInfo.minFuel = val.min;
         stintInfo.maxFuel = val.max;
@@ -315,9 +335,6 @@ function compileAndTransmitData(telem) {
     telemetryOutput.fuelRemaining = telem.FuelLevel.toFixed(2) + '<span class="additionalData"> L</span>';
     telemetryOutput.currentLap = telem.Lap;
 
-    telemetryOutput.lastLapTime = fancyTimeFormat(telem.LapLastLapTime);
-    telemetryOutput.bestLapTime = fancyTimeFormat(telem.LapBestLapTime);
-
     if (lapArray.length > 0) {
         telemetryOutput.lastLapUsage = ((Math.round(1000 * lapArray[lapArray.length - 1].fuelUsed)) / 1000) + '<span class="additionalData"> L</span>';
     } else {
@@ -346,6 +363,30 @@ function compileAndTransmitData(telem) {
         default:
             telemetryOutput.lapsThisStint = "---"
     };
+
+    //Lap details and progress bars
+    if (!(optimumLapTime.optimum === null)) {
+        telemetryOutput.optimumLapTime = fancyTimeFormat(optimumLapTime.optimum);
+    };
+
+    telemetryOutput.lastLapTime = fancyTimeFormat(telem.LapLastLapTime);
+    telemetryOutput.bestLapTime = fancyTimeFormat(telem.LapBestLapTime);
+    telemetryOutput.optimumLapTime = fancyTimeFormat(optimumLapTime.optimum);
+
+    telemetryOutput.thisLapProgress = (100 * telem.LapDistPct) + "%";
+    telemetryOutput.lapComparisonBar = (100 * telem.LapDistPct) + "%";
+    let scalingFactor = 1; //Inflate the size of the gap between the bars
+    if (telem.LapDeltaToSessionBestLap_OK === true) {
+        telemetryOutput.bestSessionLapProgress = (((100 * telem.LapDistPct) / telem.LapCurrentLapTime) * (telem.LapCurrentLapTime + (scalingFactor * telem.LapDeltaToSessionBestLap))) + "%";
+    };
+    if (telem.LapDeltaToSessionOptimalLap_OK === true) {
+        telemetryOutput.optimumSessionLapProgress = (((100 * telem.LapDistPct) / telem.LapCurrentLapTime) * (telem.LapCurrentLapTime + (scalingFactor * telem.LapDeltaToSessionOptimalLap))) + "%";
+    };
+    if (telem.LapDeltaToSessionLastlLap_OK === true) {
+        telemetryOutput.lastLapProgress = (((100 * telem.LapDistPct) / telem.LapCurrentLapTime) * (telem.LapCurrentLapTime + (scalingFactor * telem.LapDeltaToSessionLastlLap))) + "%";
+    };
+
+    
     
 
     //Session info details

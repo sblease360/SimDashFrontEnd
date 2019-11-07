@@ -119,40 +119,66 @@
 
         </div>
 
-        <div class="row bg-dark" id="lapTimingArea">
+        <div class="row bg-nearly-black border-top border-bottom thicker-border border-nearly-black" id="lapTimingArea">
             <div class="col">
-                <div class="row border-bottom thicker-border">
-                    <div class="col border-right border-left border-dark thicker-border bg-col-1">
+                <div class="row border-bottom thicker-border border-nearly-black">
+                    <div class="col border-right border-left border-dark thicker-border border-nearly-black bg-col-1">
                         <p class="timing-header text-dark">Last Lap:</p>
                         <h4 class="text-dark text-center" id="lastLapTime"></h4>
                     </div>
-                    <div class="col border-right border-dark thicker-border bg-col-2">
-                        <p class="timing-header text-dark">Best Session Lap:</p>
+                    <div class="col border-right border-dark thicker-border border-nearly-black bg-col-2">
+                        <p class="timing-header text-dark">Best Lap:</p>
                         <h4 class="text-dark text-center" id="bestSessionLapTime"></h4>
                     </div>
-                    <div class="col border-right border-dark thicker-border bg-col-3">
-                        <p class="timing-header text-dark">Avg Session Lap:</p>
-                        <h4 class="text-dark text-center" id="avgSessionLapTime"></h4>
+                    <div class="col border-right border-dark thicker-border border-nearly-black bg-col-3">
+                        <p class="timing-header text-dark">Optimum Lap:</p>
+                        <h4 class="text-dark text-center" id="optimumLapTime"></h4>
                     </div>
-                    <div class="col border-right border-dark thicker-border bg-col-4">
-                        <p class="timing-header text-dark">Best Stint Lap:</p>
-                        <h4 class="text-dark text-center" id="bestStintLapTime"></h4>
+                    <div class="col border-right border-dark thicker-border border-nearly-black bg-dark-1-lighter">
+                        <p class="timing-header module-header">Best Stint Lap:</p>
+                        <h4 class="text-center" id="bestStintLapTime"></h4>
                     </div>
-                    <div class="col border-right border-dark thicker-border bg-col-5">
-                        <p class="timing-header text-dark">Avg Stint Lap:</p>
-                        <h4 class="text-dark text-center" id="avgStintLapTime"></h4>
-                    </div>
-                </div>
-                <div class="row" id="thisLapInfo">
-                    <div class="col-2"></div>
-                    <div class="col border-right thicker-border m-0 p-0" id="thisLapContainer">
-                        <div class="row m-0 p-0" id="thisLapProgress">
-                            <div id="hardRedLine"></div>
-                            <div id="softRedLine"></div>
-                            <div id="currentRevsBar"></div>
-                        </div>
+                    <div class="col border-right border-dark thicker-border border-nearly-black bg-dark-1-lighter">
+                        <p class="timing-header module-header">Avg Stint Lap:</p>
+                        <h4 class="text-center" id="avgStintLapTime"></h4>
                     </div>
                 </div>
+                <div class="row border-top border-bottom border-nearly-black lapInfoWrapper" id="thisLapInfo">
+                    <div class="col col-time-info lapInfoIdentifier border-right thicker-border border-nearly-black">
+                        <p class="module-header">This lap:</p>
+                    </div>
+                    <div class="col m-0 p-0 LapProgressContainer border-left thicker-border border-nearly-black" id="thisLapContainer">
+                        <div class="row m-0 p-0 lapProgressBar bg-col-6" id="thisLapProgress"></div>
+                    </div>
+                </div>
+                <div class="row border-bottom border-bottom border-nearly-black lapInfoWrapper" id="bestStintLapInfo">
+                    <div class="col col-time-info lapInfoIdentifier">
+                        <p class="module-header">Last:</p>
+                    </div>
+                    <div class="col m-0 p-0 LapProgressContainer border-left thicker-border border-nearly-black" id="LastLapContainer">
+                        <div class="lapProgressBar bg-col-1" id="lastLapProgress"></div>
+                        <div class="lapComparisonBar"></div>
+                    </div>
+                </div>
+                <div class="row border-bottom border-bottom border-nearly-black lapInfoWrapper" id="bestSessionLapInfo">
+                    <div class="col col-time-info lapInfoIdentifier border-right thicker-border border-nearly-black">
+                        <p class="module-header">Best:</p>
+                    </div>
+                    <div class="col m-0 p-0 LapProgressContainer border-left thicker-border border-nearly-black" id="bestSessionLapContainer">
+                        <div class="row m-0 p-0 lapProgressBar bg-col-2" id="bestSessionLapProgress"></div>
+                        <div class="row m-0 p-0 lapComparisonBar"></div>
+                    </div>
+                </div>
+                <div class="row border-bottom border-bottom border-nearly-black lapInfoWrapper" id="avgSessionLapInfo">
+                    <div class="col col-time-info lapInfoIdentifier border-right thicker-border border-nearly-black">
+                        <p class="module-header">Optimum:</p>
+                    </div>
+                    <div class="col m-0 p-0 LapProgressContainer border-left thicker-border border-nearly-black" id="avgSessionLapContainer">
+                        <div class="row m-0 p-0 lapProgressBar bg-col-3" id="optimumSessionLapProgress"></div>
+                        <div class="lapComparisonBar"></div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

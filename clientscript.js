@@ -67,7 +67,18 @@ function startConnection() {
 
             //Output lap timings
             document.getElementById('lastLapTime').innerHTML = telem.lastLapTime;
-            document.getElementById('bestLapTime').innerHTML = telem.bestLapTime;
+            document.getElementById('bestSessionLapTime').innerHTML = telem.bestLapTime;
+            document.getElementById('optimumLapTime').innerHTML = telem.optimumLapTime;
+
+            //Lap Progress bars
+            document.getElementById('thisLapProgress').style.width = telem.thisLapProgress;
+            let elements = document.getElementsByClassName('lapComparisonBar');       
+            for (let i = 0; i < elements.length; i++) {
+                elements[i].style.width = telem.thisLapProgress;
+            }
+            document.getElementById('bestSessionLapProgress').style.width = telem.bestSessionLapProgress;
+            document.getElementById('optimumSessionLapProgress').style.width = telem.optimumSessionLapProgress;
+            document.getElementById('lastLapProgress').style.width = telem.lastLapProgress;
             
                
         } else {
