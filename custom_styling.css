@@ -57,12 +57,19 @@
     color: #93959e;
 }
 
+.deltaTime{
+    float:right;
+    text-align: right;
+    margin-right: 0;
+}
+
 #revCounterBorder {
     position: relative;
     border: 4px solid;
     border-color: #0f1214;
     border-radius: 4px;
     height: 3.5em;
+    max-width: 60%;
 }
 
 #revCounter {
@@ -84,6 +91,10 @@
 
 .col-time-info {
     max-width: 20%
+}
+
+.lapInfoWrapper {
+    border-width: 2px!important;
 }
 
 .LapProgressContainer {
