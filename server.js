@@ -222,14 +222,12 @@ function fancyDeltaFormat(time) {
         return "---"
     };
 
-    var secs = ~~time;
+    var secs = Math.floor(time);
     var milliSecs = Math.round(1000 * (time - Math.floor(time)));
 
     var ret = "";
 
-    if (time < 0) {
-        ret += "-";
-    } else if (time > 0) {
+    if (time > 0) {
         ret += "+"
     };
 
@@ -440,18 +438,21 @@ function compileAndTransmitData(telem) {
         telemetryOutput.lastLapDelta = fancyDeltaFormat(telem.LapDeltaToSessionBestLap);
     } else {
         telemetryOutput.lastLapDelta = "+/-00.000";
+        telemetryOutput.bestSessionLapProgress = "0%"
     };
     if (telem.LapDeltaToSessionOptimalLap_OK === true) {
         telemetryOutput.optimumSessionLapProgress = (((100 * telem.LapDistPct) / telem.LapCurrentLapTime) * (telem.LapCurrentLapTime + (scalingFactor * telem.LapDeltaToSessionOptimalLap))) + "%";
         telemetryOutput.optimumLapDelta = fancyDeltaFormat(telem.LapDeltaToSessionOptimalLap);
     } else {
         telemetryOutput.optimumLapDelta = "+/-00.000";
+        telemetryOutput.optimumSessionLapProgress = "0%" 
     };
     if (telem.LapDeltaToSessionLastlLap_OK === true) {
         telemetryOutput.lastLapProgress = (((100 * telem.LapDistPct) / telem.LapCurrentLapTime) * (telem.LapCurrentLapTime + (scalingFactor * telem.LapDeltaToSessionLastlLap))) + "%";
         telemetryOutput.bestLapDelta = fancyDeltaFormat(telem.LapDeltaToSessionLastlLap)
     } else {
         telemetryOutput.bestLapDelta = "+/-00.000";
+        telemetryOutput.lastLapProgress = "0%"
     };
 
     //Session info details
