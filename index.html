@@ -62,11 +62,11 @@
             <div class="col">
                 <div class="row border-left border-bottom border-top border-nearly-black thicker-border" id="fuelRow1">
                     <div class="col border-right border-nearly-black thicker-border">
-                        <p class="module-header">Current Lap:</p>
+                        <p class="module-header">Session Lap Num:</p>
                         <h4 class="text-white text-center" id="currentLap"></h4>
                     </div>
                     <div class="col border-right border-nearly-black thicker-border">
-                        <p class="module-header">Lap in Stint (excl outlap):</p>
+                        <p class="module-header">Stint Lap Num:</p>
                         <h4 class="text-white text-center" id="lapsThisStint"></h4>
                     </div>
                     <div class="col border-right border-nearly-black thicker-border">
@@ -139,9 +139,9 @@
                         <div class="row m-0 p-0 lapProgressBar bg-col-6" id="thisLapProgress"></div>
                     </div>
                 </div>
-                <div class="row border-bottom border-nearly-black lapInfoWrapper" id="bestStintLapInfo">
+                <div class="row border-bottom border-nearly-black lapInfoWrapper">
                     <div class="col col-time-info lapInfoIdentifier px-1">
-                        <p class="module-header">Last:<span class="deltaTime">±00.000</span></p>
+                        <p class="module-header">Last:<span class="deltaTime" id="lastLapDelta">+/-00.000</span></p>
                     </div>
                     <div class="col m-0 p-0 LapProgressContainer border-left thicker-border border-nearly-black" id="LastLapContainer">
                         <div class="lapProgressBar bg-col-1" id="lastLapProgress"></div>
@@ -150,7 +150,7 @@
                 </div>
                 <div class="row border-bottom border-nearly-black lapInfoWrapper" id="bestSessionLapInfo">
                     <div class="col col-time-info lapInfoIdentifier px-1">
-                        <p class="module-header">Best:<span class="deltaTime">±00.000</span></p>
+                        <p class="module-header">Best:<span class="deltaTime" id="bestLapDelta">+/-00.000</span></p>
                     </div>
                     <div class="col m-0 p-0 LapProgressContainer border-left thicker-border border-nearly-black" id="bestSessionLapContainer">
                         <div class="row m-0 p-0 lapProgressBar bg-col-2" id="bestSessionLapProgress"></div>
@@ -159,7 +159,7 @@
                 </div>
                 <div class="row lapInfoWrapper" id="avgSessionLapInfo">
                     <div class="col col-time-info lapInfoIdentifier px-1">
-                        <p class="module-header">Optimum:<span class="deltaTime">±00.000</span></p>
+                        <p class="module-header">Optimum:<span class="deltaTime" id="optimumLapDelta">+/-00.000</span></p>
                     </div>
                     <div class="col m-0 p-0 LapProgressContainer border-left thicker-border border-nearly-black" id="avgSessionLapContainer">
                         <div class="row m-0 p-0 lapProgressBar bg-col-3" id="optimumSessionLapProgress"></div>

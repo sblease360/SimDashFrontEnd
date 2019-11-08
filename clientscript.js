@@ -62,13 +62,14 @@ function startConnection() {
             document.getElementById('minLapUsage').innerHTML = telem.minLapUsage;
             document.getElementById('maxLapUsage').innerHTML = telem.maxLapUsage;
             document.getElementById('avgLapUsage').innerHTML = telem.avgLapUsage;
-            document.getElementById('lapsLeftFuel').innerHTML = telem.lapsLeftFuel;
             document.getElementById('lapsThisStint').innerHTML = telem.lapsThisStint;
 
             //Output lap timings
             document.getElementById('lastLapTime').innerHTML = telem.lastLapTime;
             document.getElementById('bestSessionLapTime').innerHTML = telem.bestLapTime;
             document.getElementById('optimumLapTime').innerHTML = telem.optimumLapTime;
+            document.getElementById('bestStintLapTime').innerHTML = telem.bestStintLapTime;
+            document.getElementById('avgStintLapTime').innerHTML = telem.avgStintLapTime;
 
             //Lap Progress bars
             document.getElementById('thisLapProgress').style.width = telem.thisLapProgress;
@@ -79,6 +80,24 @@ function startConnection() {
             document.getElementById('bestSessionLapProgress').style.width = telem.bestSessionLapProgress;
             document.getElementById('optimumSessionLapProgress').style.width = telem.optimumSessionLapProgress;
             document.getElementById('lastLapProgress').style.width = telem.lastLapProgress;
+
+            //lap deltas
+            document.getElementById('lastLapDelta').innerHTML = telem.lastLapDelta;
+            document.getElementById('bestLapDelta').innerHTML = telem.bestLapDelta;
+            document.getElementById('optimumLapDelta').innerHTML = telem.optimumLapDelta;
+
+            let elements2 = document.getElementsByClassName('deltaTime');
+            for (let j = 0; j < elements2.length; j++) {
+                if (elements2[j].innerHTML < -0.05) {
+                    elements2[j].style.color = "#5aff3d"
+                } else if (elements2[j].innerHTML > 0.05) {
+                    elements2[j].style.color = "#ff1100"
+                } else {
+                    elements2[j].style.color = "#A2A8AD"
+                }
+
+            
+            }
             
                
         } else {

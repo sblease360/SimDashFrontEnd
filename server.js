@@ -34,6 +34,8 @@ var stintInfo = {
     maxFuel: "---",
     avgFuel: "---",
     lapsLeft: "---",
+    avgLap: "---",
+    bestLap: "---",
 };
 
 //Initialise iRacing connection and log that we are waiting for a connection
@@ -141,29 +143,41 @@ function getRevThresholds(existingJSON, carName) {
 
 //Usage values from the lapArray
 function getValuesFromLapArray() {
-    var min, max, sum, count, avg, i;
+    var min, max, sum, count, avg, best, sumTime, avgTime, i;
     count = 0;
     sum = 0;
     min = 500;
     max = 0;    
     avg = 0;
+    best = 0;
+    sumTime = 0;
+    avgTime = 0;
     for (i = 0; i < lapArray.length; i++) {
         if (lapArray[i].num < lapArray[lapArray.length - 1].startOfStint) { continue };
         if (lapArray[i].outlap === false && lapArray[i].inlap === false) {
             sum += lapArray[i].fuelUsed;
+            sumTime += lapArray[i].lapTime;
+            if (best === 0 || best > lapArray[i].lapTime) {
+                best = lapArray[i].lapTime;
+            };
             count += 1;
             if (lapArray[i].fuelUsed < min) { min = lapArray[i].fuelUsed };
             if (lapArray[i].fuelUsed > max) { max = lapArray[i].fuelUsed };
-        }
+        };
     };
+    avgTime = sumTime / count;
     avg = sum / count;
     if (min === 500) { min = "---" }; 
     if (max === 0) { max = "---" };
     if (avg === 0) { avg = "---" };
+    if (best === 0) { best = "---" };
+    if (avgTime === 0) { avgTime = "---" };
     return {
         min: min,
         max: max,
-        avg: avg
+        avg: avg,
+        best: best,
+        avgTime: avgTime
     };
 }
 
@@ -172,9 +186,13 @@ function getValuesFromLapArray() {
 function fancyTimeFormat(time) {
     //To be used server side to format second values into nice strings for output
     // Hours, minutes, seconds and milliseconds in format 00:00.000 assuming no hours
-    if (time == -1) {
-        return "-:--.---";
+    if (time === -1 || time === null || time === "---" || typeof time === "undefined") {
+        return "---";
     }
+
+    if (Number.isNaN(time) === true) {
+        return "---"
+    };
 
     var hrs = ~~(time / 3600);
     var mins = ~~((time % 3600) / 60);
@@ -190,6 +208,43 @@ function fancyTimeFormat(time) {
     ret += "" + mins + ":" + (secs < 10 ? "0" : "");
     ret += "" + secs + "." + (milliSecs < 100 ? "0" : "");
     ret += "" + milliSecs;
+    return ret;
+}
+
+function fancyDeltaFormat(time) {
+    //To be used server side to format second values into nice strings for output
+    //seconds and milliseconds in format 00.000
+    if (time === -1 || time === null || time === "---" || typeof time === "undefined") {
+        return "---";
+    }
+
+    if (Number.isNaN(time) === true) {
+        return "---"
+    };
+
+    var secs = ~~time;
+    var milliSecs = Math.round(1000 * (time - Math.floor(time)));
+
+    var ret = "";
+
+    if (time < 0) {
+        ret += "-";
+    } else if (time > 0) {
+        ret += "+"
+    };
+
+    ret += "" + secs.toFixed(0) + "." + (milliSecs < 100 ? "0" : "");
+
+    switch (milliSecs.length) {
+        case 1:
+            milliSecs = "00" + milliSecs;
+            break;
+        case 2:
+            milliSecs = "0" + milliSecs;
+            break;
+    };
+
+    ret += "" + milliSecs.toFixed(0);
     return ret;
 }
 
@@ -292,6 +347,8 @@ iracing.on('Telemetry', function (rawTelem) {
         stintInfo.minFuel = val.min;
         stintInfo.maxFuel = val.max;
         stintInfo.avgFuel = val.avg;
+        stintInfo.avgLap = val.avgTime; 
+        stintInfo.bestLap = val.best;
         if (!(isNaN(val.avg))) {
             stintInfo.lapsLeft = (Math.round(100 * (telem.FuelLevel / val.avg))) / 100;
         };
@@ -332,7 +389,7 @@ function compileAndTransmitData(telem) {
     };
 
     //Fuel and current lap details
-    telemetryOutput.fuelRemaining = telem.FuelLevel.toFixed(2) + '<span class="additionalData"> L</span>';
+    telemetryOutput.fuelRemaining = ((Math.round(1000 * telem.FuelLevel))/1000) + '<span class="additionalData"> L</span>';
     telemetryOutput.currentLap = telem.Lap;
 
     if (lapArray.length > 0) {
@@ -372,22 +429,30 @@ function compileAndTransmitData(telem) {
     telemetryOutput.lastLapTime = fancyTimeFormat(telem.LapLastLapTime);
     telemetryOutput.bestLapTime = fancyTimeFormat(telem.LapBestLapTime);
     telemetryOutput.optimumLapTime = fancyTimeFormat(optimumLapTime.optimum);
+    telemetryOutput.avgStintLapTime = fancyTimeFormat(stintInfo.avgLap);
+    telemetryOutput.bestStintLapTime = fancyTimeFormat(stintInfo.bestLap);
 
     telemetryOutput.thisLapProgress = (100 * telem.LapDistPct) + "%";
     telemetryOutput.lapComparisonBar = (100 * telem.LapDistPct) + "%";
     let scalingFactor = 1; //Inflate the size of the gap between the bars
     if (telem.LapDeltaToSessionBestLap_OK === true) {
         telemetryOutput.bestSessionLapProgress = (((100 * telem.LapDistPct) / telem.LapCurrentLapTime) * (telem.LapCurrentLapTime + (scalingFactor * telem.LapDeltaToSessionBestLap))) + "%";
+        telemetryOutput.lastLapDelta = fancyDeltaFormat(telem.LapDeltaToSessionBestLap);
+    } else {
+        telemetryOutput.lastLapDelta = "+/-00.000";
     };
     if (telem.LapDeltaToSessionOptimalLap_OK === true) {
         telemetryOutput.optimumSessionLapProgress = (((100 * telem.LapDistPct) / telem.LapCurrentLapTime) * (telem.LapCurrentLapTime + (scalingFactor * telem.LapDeltaToSessionOptimalLap))) + "%";
+        telemetryOutput.optimumLapDelta = fancyDeltaFormat(telem.LapDeltaToSessionOptimalLap);
+    } else {
+        telemetryOutput.optimumLapDelta = "+/-00.000";
     };
     if (telem.LapDeltaToSessionLastlLap_OK === true) {
         telemetryOutput.lastLapProgress = (((100 * telem.LapDistPct) / telem.LapCurrentLapTime) * (telem.LapCurrentLapTime + (scalingFactor * telem.LapDeltaToSessionLastlLap))) + "%";
+        telemetryOutput.bestLapDelta = fancyDeltaFormat(telem.LapDeltaToSessionLastlLap)
+    } else {
+        telemetryOutput.bestLapDelta = "+/-00.000";
     };
-
-    
-    
 
     //Session info details
     telemetryOutput.trackTemp = sessionJSON.WeekendInfo.TrackSurfaceTemp;
