@@ -62,8 +62,10 @@
     float:right;
     text-align: right;
     margin-right: 0;
-    font-family: monospace;
-    font-size: 1.2em;
+}
+
+.fill-space{
+    height: 100vh;
 }
 
 #revCounterBorder {
