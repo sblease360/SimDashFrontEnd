@@ -11,6 +11,11 @@ function isJSON(str) {
     return true;
 };
 
+function fullscreen(){
+    document.documentElement.requestFullscreen()
+    document.getElementById('full-screen-button').style.display = 'none';
+};
+
 function initialisePage() {
     startConnection();
     setInterval(checkConnection(), 5000);

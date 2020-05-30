@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="custom_styling.css" />
     <script type="text/javascript" src="datahandling.js"></script>
 </head>
-<body class="h-100">
+<body class="h-100" onload="loading_routine()" id="main-body">
     <div class="container-fluid h-100 p-0">
         <div class="row m-0 p-0" id="rev-counter-row">
             <div class="col bg-dark" id="rev-counter"></div>
@@ -35,7 +35,7 @@
                 </div>
             </div>
             <div class="col border" id="main-dash-area">
-
+                <input type="button" onclick="fullscreen()" value="Start" id="full-screen-button"/>
             </div>
             <div class="col border shift-light-col" id="right-shift-light-area">
                 <div class="row shift-light-row">
