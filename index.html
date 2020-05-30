@@ -39,7 +39,47 @@
                 </div>
             </div>
             <div class="col bg-default" id="main-dash-area">
-                <div class="h-30 w-100 text-center text-light bg-default" id="full-screen-button" onclick="fullscreen()">Touch anywhere to start</div>
+                <!-- <div class="text-center text-light m-0 p-0" id="full-screen-button" onclick="fullscreen()">Touch anywhere to start</div> -->
+                <div class="row m-0 p-0" id="dash-contents">
+                    <div class="col border" id="fuel-col"></div>
+                    <div class="col border" id="car-info-col">
+                        <div class="row m-0 p-0">
+                            <div class="col m-0 p-0 value" id="rpm">7586</div>
+                        </div>
+                        <div class="row m-0 p-0">
+                            <div class="col m-0 p-0 value" id="gear">5</div>
+                        </div>
+                        <div class="row m-0 p-0">
+                            <div class="col m-0 p-0 value" id="speed">156</div>
+                            <div class="col m-0 p-0 unit" id="speed-unit">mph</div>
+                        </div>
+                        <div class="row m-0 p-0">
+                            <div class="col m-0 p-0" id="oil-col">
+                                <div class="row m-0 p-0">
+                                    <div class="col m-0 p-0 label temps" id="oil-label">oil</div>
+                                    <div class="col m-0 p-0 value temps" id="oil-temp">95<span class="unit" id="oil-unit">°C</span></div>
+                                </div>
+                                <div class="row m-0 p-0">
+                                    <div class="col m-0 p-0 label temps" id="water-label">water</div>
+                                    <div class="col m-0 p-0 value temps" id="water-temp">95<span class="unit" id="water-unit">°C</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row m-0 p-0">
+                            <div class="col m-0 p-0" id="track-col">
+                                <div class="row m-0 p-0">
+                                    <div class="col m-0 p-0 label temps" id="track-label">track</div>
+                                    <div class="col m-0 p-0 value temps" id="track-temp">95<span class="unit" id="track-unit">°C</span></div>
+                                </div>
+                                <div class="row m-0 p-0">
+                                    <div class="col m-0 p-0 label temps" id="air-label">air</div>
+                                    <div class="col m-0 p-0 value temps" id="air-temp">95<span class="unit" id="air-unit">°C</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col border" id="timing-col"></div>
+                </div>
             </div>
             <div class="col shift-light-col" id="right-shift-light-area">
                 <div class="row shift-light-row">

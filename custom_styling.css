@@ -18,11 +18,11 @@ html{
     }
 
     #left-shift-light-area{
-        margin-right: 2.19%
+        border-right: 1.2em solid black
     }
 
     #right-shift-light-area{
-        margin-left: 2.19%
+        border-left: 1.2em solid black
     }
 
     .shift-light-col{
@@ -30,8 +30,8 @@ html{
     }
 
     .shift-light-row{
-        height: 22.7%;
-        margin-top: 30%;
+        height: 25%;
+        border-top: 1.2em solid black
     }
 
 /*z-index positioning of rev counter elements*/
@@ -66,11 +66,76 @@ html{
         z-index: 2;
     }
 
-/*Main Area Styling*/
-    #full-screen-button{
-        font-family: ubuntu;
-        font-size: 3em;
-        margin-top: 35%;
+/*Main Area z-index positioning*/
+    #main-dash-area{
+        position: relative;
+        top: 0px;
+        left: 0px;
+        border-top: 1.2em solid black
     }
 
+    #dash-contents{
+        position:absolute;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+    }
 
+    #full-screen-button{
+        font-family: ubuntu;
+        position: absolute;
+        top: 0px; 
+        left: 0px;
+        height: 100%;
+        width: 100%;
+        font-size: 3em;
+        background-color: rgb(30,30,30);
+        z-index: 100;
+        vertical-align: middle;
+        line-height: 8em;
+        
+    }
+
+/*Car info column styling*/
+    .value{
+        text-align: center;
+        font-family: ubuntu mono;
+        color: white;
+        font-size: 2.5em;
+        line-height: 1em;
+    }
+
+    .label{
+        text-align: center;
+        font-family: ubuntu;
+        color: rgb(200,200,200);
+        font-size: 1.8em;
+    }
+
+    .unit{
+        text-align: left;
+        font-family: ubuntu;
+        color: rgb(200,200,200);
+        font-size: 2.5em;
+        line-height: 1em;
+    }
+
+    .temps{
+        font-size: 1.8em;
+        line-height: 1em;
+    }
+    
+    span.unit{
+        font-size: 1em;
+    }
+
+    #gear{
+        font-size: 17em;
+        line-height: 0.8em;
+    }
+
+    #rpm, #speed, #speed-unit{
+        font-size: 3.5em;
+        line-height: 1.1em;
+    }
