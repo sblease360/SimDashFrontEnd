@@ -1,28 +1,76 @@
 html{
     height: 100%;
+    font-family: 'Ubuntu', sans-serif;
+    font-family: 'Ubuntu Mono', monospace;
 }
 
-#rev-counter-row{
-    height: 11.47%;
+.bg-default{
+    background-color: rgb(30,30,30);
 }
 
-#all-except-rev-counter{
-    height: 88.53%;
-}
+/*Basic sizing and positioning*/
+    #rev-counter-row{
+        height: 11.47%;
+    }
 
-#left-shift-light-area{
-    margin-right: 2.19%
-}
+    #all-except-rev-counter{
+        height: 88.53%;
+    }
 
-#right-shift-light-area{
-    margin-left: 2.19%
-}
+    #left-shift-light-area{
+        margin-right: 2.19%
+    }
 
-.shift-light-col{
-    max-width: 9.86%;
-}
+    #right-shift-light-area{
+        margin-left: 2.19%
+    }
 
-.shift-light-row{
-    height: 21.55%;
-    margin-top: 31%;
-}
+    .shift-light-col{
+        max-width: 9.86%;
+    }
+
+    .shift-light-row{
+        height: 22.7%;
+        margin-top: 30%;
+    }
+
+/*z-index positioning of rev counter elements*/
+    #rev-counter-col{
+        position: relative;
+        top: 0px;
+        left: 0px;
+        border-right: 10px solid red;
+        background-color: rgb(30,30,30);
+    }
+
+    #current-revs{
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        height: 100%;
+        width: 95%;
+        background: rgb(2,0,36);
+        background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(16,77,238,1) 63%, rgba(17,154,255,1) 100%);
+        border-right: 1px solid white;
+        z-index: 1;
+    }
+
+    #soft-red-line{
+        position: absolute;
+        right: 0px;
+        bottom: 0px;
+        height: 100%;
+        width: 7%;
+        background: rgb(116,0,0);
+        background: linear-gradient(90deg, rgba(116,0,0,0.0929) 0%, rgba(189,0,0,0.398) 46%, rgba(255,17,17,0.667) 100%);
+        z-index: 2;
+    }
+
+/*Main Area Styling*/
+    #full-screen-button{
+        font-family: ubuntu;
+        font-size: 3em;
+        margin-top: 35%;
+    }
+
+

@@ -13,49 +13,49 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="custom_styling.css" />
     <script type="text/javascript" src="datahandling.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet"> 
 </head>
 <body class="h-100" onload="loading_routine()" id="main-body">
     <div class="container-fluid h-100 p-0">
         <div class="row m-0 p-0" id="rev-counter-row">
-            <div class="col bg-dark" id="rev-counter"></div>
+            <div class="col m-0 p-0" id="rev-counter-col">
+                <div class="m-0 p-0" id="current-revs"></div>
+                <div class="m-0 p-0" id="soft-red-line"></div>               
+            </div>
         </div>
         <div class="row m-0 p-0" id="all-except-rev-counter">
-            <div class="col border shift-light-col" id="left-shift-light-area">
+            <div class="col shift-light-col" id="left-shift-light-area">
                 <div class="row shift-light-row">
-                    <div class="col border shift-light" id="shift-light-4-left"></div>            
+                    <div class="col shift-light bg-default" id="shift-light-4-left"></div>            
                 </div>
                 <div class="row shift-light-row">
-                    <div class="col border shift-light" id="shift-light-3-left"></div>            
+                    <div class="col shift-light bg-default" id="shift-light-3-left"></div>            
                 </div>
                 <div class="row shift-light-row">
-                    <div class="col border shift-light" id="shift-light-2-left"></div>            
+                    <div class="col shift-light bg-default" id="shift-light-2-left"></div>            
                 </div>
                 <div class="row shift-light-row">
-                    <div class="col border shift-light" id="shift-light-1-left"></div>            
+                    <div class="col shift-light bg-default" id="shift-light-1-left"></div>            
                 </div>
             </div>
-            <div class="col border" id="main-dash-area">
-                <input type="button" onclick="fullscreen()" value="Start" id="full-screen-button"/>
+            <div class="col bg-default" id="main-dash-area">
+                <div class="h-30 w-100 text-center text-light bg-default" id="full-screen-button" onclick="fullscreen()">Touch anywhere to start</div>
             </div>
-            <div class="col border shift-light-col" id="right-shift-light-area">
+            <div class="col shift-light-col" id="right-shift-light-area">
                 <div class="row shift-light-row">
-                    <div class="col border shift-light" id="shift-light-4-right"></div>            
+                    <div class="col shift-light bg-default" id="shift-light-4-right"></div>            
                 </div>
                 <div class="row shift-light-row">
-                    <div class="col border shift-light" id="shift-light-3-right"></div>            
+                    <div class="col shift-light bg-default" id="shift-light-3-right"></div>            
                 </div>
                 <div class="row shift-light-row">
-                    <div class="col border shift-light" id="shift-light-2-right"></div>            
+                    <div class="col shift-light bg-default" id="shift-light-2-right"></div>            
                 </div>
                 <div class="row shift-light-row">
-                    <div class="col border shift-light" id="shift-light-1-right"></div>            
+                    <div class="col shift-light bg-default" id="shift-light-1-right"></div>            
                 </div>
             </div>
         </div>
     </div>
-
-    
-
-        <script type="text/javascript" src="clientscript.js"></script>
 </body>
 </html>
