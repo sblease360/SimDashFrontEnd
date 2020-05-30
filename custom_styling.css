@@ -1,216 +1,28 @@
-.text-black {
-    color: #000;
-}
-
-.thicker-border {
-    border-width: 3px !important;
-    border-color: #343A40!important;
-}
-
-.bg-dark-1-lighter {
-    background-color: #505a63;
-}
-
-.module-header {
-    color: #a2a8ad;
-    padding: 0;
-    margin: 0;
-    font-weight:500;
-    font-size: 0.95em;
-}
-
-.timing-header {
-    padding: 0;
-    margin: 0;
-    font-weight: 500;
-}
-
-.status-info{
-    font-size:0.85em;
-}
-
-.black-border{
-    border-color: black!important;
-}
-
-.border-nearly-black {
-    border-color: #0F1214!important;
-}
-
-.bg-nearly-black {
-    background-color: #0F1214!important;
-}
-
-.additionalData {
-    font-size: 1em;
-    font-weight: 500;
-    color: #bbc2c9;
-}
-
-.additionalDataSmall {
-    font-size: 0.4em;
-    font-weight: 500;
-    color: #bbc2c9;
-}
-
-.speedUnits {
-    font-size: 0.4em;
-    color: #93959e;
-}
-
-.deltaTime{
-    float:right;
-    text-align: right;
-    margin-right: 0;
-}
-
-.fill-space{
-    height: 100vh;
-}
-
-#revCounterBorder {
-    position: relative;
-    border: 4px solid;
-    border-color: #0f1214;
-    border-radius: 4px;
-    height: 3.5em;
-    max-width: 60%;
-}
-
-#revCounter {
-    position: relative;
-    border: 2px solid #0f1214;
-    border-right: 4px solid #0f1214;
-    height: 100%;
-    background: repeating-linear-gradient( 90deg, transparent, transparent 6px, #0f1214 6px, #0f1214 9px);
-}
-
-#lapTimingArea{
-    z-index: 0;
-}
-
-
-.lapInfoIdentifier {
-    width: 100%;
-}
-
-.col-time-info {
-    max-width: 20%
-}
-
-.lapInfoWrapper {
-    border-width: 2px!important;
-}
-
-.LapProgressContainer {
-    position: relative;
-    border-right: 3px solid;
-    border-color: #0f1214;
-    height: 1.5em;
-    background-color: #505A63;
-}
-
-.lapProgressBar {
-    position: absolute;
-    width: 1%;
+html{
     height: 100%;
 }
 
-.lapComparisonBar {
-    position: absolute;
-    border-right: 2px solid #000;
-    width: 1%;
-    height: 100%;
-    z-index: 100;
+#rev-counter-row{
+    height: 11.47%;
 }
 
-#thisLapProgress {
-    background: linear-gradient(#a5abb4, #c1c4c9, #a5abb4);
-    border-right: 2px solid #000;
+#all-except-rev-counter{
+    height: 88.53%;
 }
 
-#lastLapProgress {
-    background: linear-gradient(#3da5ff, #63b7ff, #3da5ff);
+#left-shift-light-area{
+    margin-right: 2.19%
 }
 
-#bestSessionLapProgress {
-    background: linear-gradient(#5aff3d, #7dff66, #5aff3d);
+#right-shift-light-area{
+    margin-left: 2.19%
 }
 
-#optimumSessionLapProgress {
-    background: linear-gradient(#ffef3d, #fff261, #ffef3d);
+.shift-light-col{
+    max-width: 9.86%;
 }
 
-.bg-col-1 {
-    background-color: #3da5ff;
+.shift-light-row{
+    height: 21.55%;
+    margin-top: 31%;
 }
-
-.bg-col-2 {
-    background-color: #5aff3d;
-}
-
-.bg-col-3 {
-    background-color: #ffef3d;
-}
-
-.bg-col-4 {
-    background-color: #7ec496;
-}
-
-.bg-col-5 {
-    background-color: #8178b0;
-}
-
-.bg-col-6 {
-    background-color: #7c7c7c;
-}
-
-#currentRevsBar {
-    height: 100%;
-    position: relative;
-    width: 4%;
-    z-index: -3;
-    background: linear-gradient(#a5abb4, #d2d4d9, #a5abb4)
-}
-
-#revsArea{
-    height: 100%;
-    background-color: #0f1214;
-}
-
-#hardRedLine {
-    position: relative;
-    border: 1px solid #ff0000;
-    height: 100%;
-    width: 2%;
-    background-color: #ff0000;
-    float: right;
-    z-index: -1;
-}
-
-#softRedLine {
-    position: relative;
-    border: 1px solid #ff0000;
-    height: 100%;
-    width: 90%;
-    background-color: #ff0000;
-    float: right;
-    z-index: -2;
-    opacity: 0.5;
-}
-
-#gearInfo{
-    position: relative;
-    z-index: 0;
-}
-
-#gearArea revsArea{
-    max-width: 10px;
-}
-
-#currRevs{
-    color: #ffffff;
-    height:100%;
-    margin-bottom: 0.1em;
-}
-
