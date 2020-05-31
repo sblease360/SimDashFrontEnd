@@ -25,6 +25,10 @@ html{
         border-left: 1.0vw solid black
     }
 
+    .shift-light{
+        background-color: black;
+    }
+
     .shift-light-col{
         max-width: 11%;
     }
@@ -93,53 +97,59 @@ html{
         left: 0px;
         height: 100%;
         width: 100%;
-        font-size: 3em;
+        font-size: 3vh;
         background-color: rgb(30,30,30);
         z-index: 100;
         vertical-align: middle;
-        line-height: 8em;
+        line-height: 8vh;
         
     }
 
 /*Car info column styling*/
     .value{
         text-align: center;
-        font-family: ubuntu mono;
+        font-family: ubuntu;
         color: white;
-        font-size: 2.5em;
-        line-height: 1em;
     }
 
     .label{
         text-align: center;
         font-family: ubuntu;
         color: rgb(200,200,200);
-        font-size: 1.8em;
     }
 
     .unit{
         text-align: left;
         font-family: ubuntu;
         color: rgb(200,200,200);
-        font-size: 2.5em;
-        line-height: 1em;
     }
 
-    .temps{
-        font-size: 1.8em;
-        line-height: 1em;
+    .car-info{
+        font-size: 3.5vh;
+        line-height: 3.5vh;
+        margin-right: 10px;
+        margin-left: 1vw;
+    }
+
+    .info-value{
+        text-align: right;
+        margin-right: 1vw;
     }
     
     span.unit{
-        font-size: 1em;
+        font-size: 3vh;
+    }
+
+    #temp-symbol{
+        width: 5vw;
     }
 
     #gear{
-        font-size: 17em;
-        line-height: 0.8em;
+        font-size: 45vh;
+        line-height: 32vh;
     }
 
     #rpm, #speed, #speed-unit{
-        font-size: 3.5em;
-        line-height: 1.1em;
+        font-size: 10vh;
+        line-height: 12vh;
     }

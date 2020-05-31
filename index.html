@@ -26,23 +26,23 @@
         <div class="row m-0 p-0" id="all-except-rev-counter">
             <div class="col m-0 p-0 shift-light-col" id="left-shift-light-area">
                 <div class="row m-0 p-0 shift-light-row">
-                    <div class="col shift-light bg-light" id="shift-light-4-left"></div>            
+                    <div class="col shift-light" id="shift-light-4-left"></div>            
                 </div>
                 <div class="row m-0 p-0 shift-light-row">
-                    <div class="col shift-light bg-light" id="shift-light-3-left"></div>            
+                    <div class="col shift-light" id="shift-light-3-left"></div>            
                 </div>
                 <div class="row m-0 p-0 shift-light-row">
-                    <div class="col shift-light bg-light" id="shift-light-2-left"></div>            
+                    <div class="col shift-light" id="shift-light-2-left"></div>            
                 </div>
                 <div class="row m-0 p-0 shift-light-row">
-                    <div class="col shift-light bg-light" id="shift-light-1-left"></div>            
+                    <div class="col shift-light" id="shift-light-1-left"></div>            
                 </div>
             </div>
-            <div class="col bg-light" id="main-dash-area">
-                <div class="text-center text-light m-0 p-0" id="full-screen-button" onclick="fullscreen()">Touch anywhere to start</div>
-                <div class="row m-0 p-0" id="dash-contents">
-                    <div class="col border" id="fuel-col"></div>
-                    <div class="col border" id="car-info-col">
+            <div class="col" id="main-dash-area">
+                <!-- <div class="text-center text-light m-0 p-0" id="full-screen-button" onclick="fullscreen()">Touch anywhere to start</div> -->
+                <div class="row m-0 p-0 bg-default" id="dash-contents">
+                    <div class="col border m-0 p-0" id="fuel-col"></div>
+                    <div class="col border m-0 p-0" id="car-info-col">
                         <div class="row m-0 p-0">
                             <div class="col m-0 p-0 value" id="rpm">7586</div>
                         </div>
@@ -54,45 +54,47 @@
                             <div class="col m-0 p-0 unit" id="speed-unit">mph</div>
                         </div>
                         <div class="row m-0 p-0">
-                            <div class="col m-0 p-0" id="oil-col">
+                            <div class="col m-0 p-0 label car-info" id="oil-label">Oil</div>
+                            <div class="col m-0 p-0 value car-info info-value" id="oil-temp">95<span class="unit" id="oil-unit">°C</span></div>
+                            <div class="col m-0 p-0 label car-info" id="water-label">Water</div>
+                            <div class="col m-0 p-0 value car-info info-value" id="water-temp">120<span class="unit" id="water-unit">°C</span></div>
+                        </div>
+                        <div class="row m-0 p-0">
+                            <div class="col m-0 p-0" id="brake-bias-col">
                                 <div class="row m-0 p-0">
-                                    <div class="col m-0 p-0 label temps" id="oil-label">oil</div>
-                                    <div class="col m-0 p-0 value temps" id="oil-temp">95<span class="unit" id="oil-unit">°C</span></div>
-                                </div>
-                                <div class="row m-0 p-0">
-                                    <div class="col m-0 p-0 label temps" id="water-label">water</div>
-                                    <div class="col m-0 p-0 value temps" id="water-temp">95<span class="unit" id="water-unit">°C</span></div>
+                                    <div class="col label car-info" id="bias-label">Brake Bias</div>
+                                    <div class="col value car-info info-value" id="bias-value">57.6%</div>
                                 </div>
                             </div>
                         </div>
                         <div class="row m-0 p-0">
                             <div class="col m-0 p-0" id="track-col">
                                 <div class="row m-0 p-0">
-                                    <div class="col m-0 p-0 label temps" id="track-label">track</div>
-                                    <div class="col m-0 p-0 value temps" id="track-temp">95<span class="unit" id="track-unit">°C</span></div>
+                                    <div class="col label car-info" id="track-label">Track</div>
+                                    <div class="col value car-info info-value" id="track-temp">45<span class="unit" id="track-unit">°C</span></div>
                                 </div>
                                 <div class="row m-0 p-0">
-                                    <div class="col m-0 p-0 label temps" id="air-label">air</div>
-                                    <div class="col m-0 p-0 value temps" id="air-temp">95<span class="unit" id="air-unit">°C</span></div>
+                                    <div class="col label car-info" id="air-label">Ambient</div>
+                                    <div class="col value car-info info-value" id="air-temp">32<span class="unit" id="air-unit">°C</span></div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col border" id="timing-col"></div>
+                    <div class="col border m-0 p-0" id="timing-col"></div>
                 </div>
             </div>
             <div class="col shift-light-col" id="right-shift-light-area">
                 <div class="row shift-light-row">
-                    <div class="col shift-light bg-light" id="shift-light-4-right"></div>            
+                    <div class="col shift-light" id="shift-light-4-right"></div>            
                 </div>
                 <div class="row shift-light-row">
-                    <div class="col shift-light bg-light" id="shift-light-3-right"></div>            
+                    <div class="col shift-light" id="shift-light-3-right"></div>            
                 </div>
                 <div class="row shift-light-row">
-                    <div class="col shift-light bg-light" id="shift-light-2-right"></div>            
+                    <div class="col shift-light" id="shift-light-2-right"></div>            
                 </div>
                 <div class="row shift-light-row">
-                    <div class="col shift-light bg-light" id="shift-light-1-right"></div>            
+                    <div class="col shift-light" id="shift-light-1-right"></div>            
                 </div>
             </div>
         </div>
