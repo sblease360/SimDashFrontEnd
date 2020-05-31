@@ -17,20 +17,12 @@ html{
         height: 88.53%;
     }
 
-    #left-shift-light-area{
-        border-right: 1.0vw solid black
-    }
-
-    #right-shift-light-area{
-        border-left: 1.0vw solid black
-    }
-
     .shift-light{
         background-color: black;
     }
 
     .shift-light-col{
-        max-width: 11%;
+        max-width: 12%;
     }
 
     .shift-light-row{
@@ -38,9 +30,20 @@ html{
         border-top: 1.2vh solid black
     }
 
+    #right-shift-light-area{
+        border-left: 1.2vw solid black;
+    }
+
+    #left-shift-light-area{
+        border-right: 1.2vw solid black;
+    }
+
     #shift-light-4-left, #shift-light-4-right{
         border-top: none;
+        background-color: rgb(255,50,50);
     }
+
+
 
 /*z-index positioning of rev counter elements*/
     #rev-counter-col{
