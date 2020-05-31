@@ -41,8 +41,11 @@
             <div class="col" id="main-dash-area">
                 <div class="text-center text-light m-0 p-0" id="full-screen-button" onclick="fullscreen()">Touch anywhere to start</div>
                 <div class="row m-0 p-0 bg-default" id="dash-contents">
-                    <div class="col border m-0 p-0" id="fuel-col"></div>
-                    <div class="col border m-0 p-0" id="car-info-col">
+                    <div class="col m-0 p-0" id="fuel-col"></div>
+                    <div class="col mx-1 my-0 p-0 pedal-input-area" id="brake-pressure-area">
+                        <div id="brake-pressure-value"></div>
+                    </div>
+                    <div class="col m-0 p-0" id="car-info-col">
                         <div class="row m-0 p-0">
                             <div class="col m-0 p-0 value" id="rpm">7586</div>
                         </div>
@@ -74,7 +77,11 @@
                             <div class="col value pr-1 pl-0 m-0 car-info info-value"><span id="ambient-temp">32</span><span class="unit" id="air-unit">°C</span></div>     
                         </div>
                     </div>
-                    <div class="col border m-0 p-0" id="timing-col"></div>
+                    <div class="col mx-1 my-0 p-0 pedal-input-area" id="throttle-pressure-area">
+                        <div id="throttle-pressure-value"></div>
+                        <div class="bg-default" id="throttle-100pct-indicator"></div>
+                    </div>
+                    <div class="col m-0 p-0" id="timing-col"></div>
                 </div>
             </div>
             <div class="col shift-light-col" id="right-shift-light-area">
