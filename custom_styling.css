@@ -203,25 +203,9 @@ html{
         color: white;
         font-family: roboto mono;
         text-align: right;
-        font-size: 7vh;
-        line-height: 9vh;
+        font-size: 6.5vh;
+        line-height: 9.5vh;
     }
 
-    #session-label-area, #stint-label-area{
-        position: relative;
-        top: 0;
-        left: 0;    
-    }
-
-    #session-label, #stint-label{
-        font-size: 3vh;
-        position: absolute;
-        bottom: 2.5vh;
-        left: 0.6vw;
-    }
-
-    #stint-laps-complete, #session-laps-complete{
-        font-size: 5vh;
-    }
     
     
