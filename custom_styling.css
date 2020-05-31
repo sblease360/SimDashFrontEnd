@@ -18,20 +18,24 @@ html{
     }
 
     #left-shift-light-area{
-        border-right: 1.2em solid black
+        border-right: 1.0vw solid black
     }
 
     #right-shift-light-area{
-        border-left: 1.2em solid black
+        border-left: 1.0vw solid black
     }
 
     .shift-light-col{
-        max-width: 12%;
+        max-width: 14%;
     }
 
     .shift-light-row{
         height: 25%;
-        border-top: 1.2em solid black
+        border-top: 1.2vh solid black
+    }
+
+    #shift-light-4-left, #shift-light-4-right{
+        border-top: none;
     }
 
 /*z-index positioning of rev counter elements*/
@@ -71,7 +75,7 @@ html{
         position: relative;
         top: 0px;
         left: 0px;
-        border-top: 1.2em solid black
+        border-top: 1.2vh solid black
     }
 
     #dash-contents{
