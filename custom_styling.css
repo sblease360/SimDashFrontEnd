@@ -1,7 +1,7 @@
 html{
     height: 100%;
     font-family: 'Ubuntu', sans-serif;
-    font-family: 'Ubuntu Mono', monospace;
+    font-family: 'roboto mono', monospace;
 }
 
 .bg-default{
@@ -108,7 +108,7 @@ html{
 /*Car info column styling*/
     .value{
         text-align: center;
-        font-family: ubuntu;
+        font-family: roboto mono;
         color: white;
     }
 
@@ -187,3 +187,20 @@ html{
         height: 0.9vh;
         width: 100%;
     }
+
+/* Timing section styling */
+    .timing-label{
+        color: rgb(200,200,200);
+        font-family: ubuntu;
+        font-size: 3vh;
+    }
+
+    
+    .timing-value{
+        color: white;
+        font-family: roboto mono;
+        text-align: right;
+        font-size: 4vh;
+    }
+    
+    
