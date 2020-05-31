@@ -113,7 +113,7 @@ html{
     }
 
     .label{
-        text-align: center;
+        text-align: left;
         font-family: ubuntu;
         color: rgb(200,200,200);
     }
@@ -125,10 +125,8 @@ html{
     }
 
     .car-info{
-        font-size: 3.5vh;
-        line-height: 3.5vh;
-        margin-right: 10px;
-        margin-left: 1vw;
+        font-size: 4vh;
+        line-height: 4.5vh;
     }
 
     .info-value{
@@ -137,7 +135,7 @@ html{
     }
     
     span.unit{
-        font-size: 3vh;
+        font-size: 4vh;
     }
 
     #temp-symbol{
@@ -146,10 +144,10 @@ html{
 
     #gear{
         font-size: 45vh;
-        line-height: 32vh;
+        line-height: 34vh;
     }
 
     #rpm, #speed, #speed-unit{
-        font-size: 10vh;
-        line-height: 12vh;
+        font-size: 8vh;
+        line-height: 13vh;
     }
