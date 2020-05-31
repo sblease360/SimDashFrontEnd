@@ -180,8 +180,8 @@ html{
     #throttle-100pct-indicator{
         position: absolute;
         left: 0;
-        top: 1.5vh;
+        top: 1.8vh;
         z-index: 50;
-        height: 0.8vh;
+        height: 0.9vh;
         width: 100%;
     }
