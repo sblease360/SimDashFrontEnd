@@ -195,7 +195,8 @@ html{
     .timing-label{
         color: rgb(200,200,200);
         font-family: ubuntu;
-        font-size: 3vh;
+        font-size: 3.5vh;
+        line-height: 3vh;
     }
 
     
@@ -203,7 +204,8 @@ html{
         color: white;
         font-family: roboto mono;
         text-align: right;
-        font-size: 4vh;
+        font-size: 7vh;
+        line-height: 9vh;
     }
     
     
