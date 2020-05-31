@@ -5,7 +5,7 @@ html{
 }
 
 .bg-default{
-    background-color: rgb(30,30,30);
+    background-color: rgb(10,10,30);
 }
 
 /*Basic sizing and positioning*/
@@ -104,9 +104,7 @@ html{
         line-height: 70vh;
         background-color: rgb(30,30,30);
         z-index: 100;
-        vertical-align: middle;
-        line-height: 8vh;
-        
+        vertical-align: middle;        
     }
 
 /*Car info column styling*/
@@ -205,7 +203,7 @@ html{
         font-family: roboto mono;
         text-align: right;
         font-size: 6.5vh;
-        line-height: 9.5vh;
+        line-height: 9.3vh;
     }
 
 /* Lap section styling */
@@ -225,7 +223,7 @@ html{
     font-family: roboto mono;
     text-align: right;
     font-size: 6.5vh;
-    line-height: 9.5vh;
+    line-height: 9.3vh;
 }
 
 .lap-unit{
