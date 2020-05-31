@@ -16,8 +16,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet"> 
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet"> 
 </head>
-<body class="h-100" onload="loading_routine()" id="main-body">
+<body class="h-100" onload="loadingRoutine()" id="main-body">
     <div class="container-fluid h-100 p-0">
+        <div class="text-center text-light m-0 p-5" id="full-screen-button" onclick="fullscreen()">
+            <h5 class="p-5">Data Connection: <span id="data-source-status">Attempting to connect</span></h5>
+            <h5 class="p-5">iRacing Status: <span id="iracing-status">Not Running</span></h5>
+            <h3 class="p-5">Touch Anywhere to Start</h3>
+        </div>
         <div class="row m-0 p-0" id="rev-counter-row">
             <div class="col m-0 p-0" id="rev-counter-col">
                 <div class="m-0 p-0" id="current-revs"></div>
@@ -40,9 +45,71 @@
                 </div>
             </div>
             <div class="col" id="main-dash-area">
-                <div class="text-center text-light m-0 p-0" id="full-screen-button" onclick="fullscreen()">Touch anywhere to start</div>
                 <div class="row m-0 p-0 bg-default" id="dash-contents">
-                    <div class="col m-0 p-0" id="fuel-col"></div>
+                    <div class="col m-0 p-0" id="fuel-col">
+                        <div class="row m-0 p-0">
+                            <div class="col m-0 p-0">
+                                <div class="row m-0 p-0">
+                                    <div class="col mt-2 mb-0 ml-1 mr-0 p-0 lap-label" id="session-laps-complete-label">Session Laps:</div>
+                                    <div class="col mt-2 mb-0 ml-1 mr-0 p-0 lap-label" id="stint-laps-complete-label">Stint Laps:</div> 
+                                </div>
+                                <div class="row m-0 p-0">
+                                    <div class="col my-0 ml-0 mr-2 p-0 lap-value" id="sesion-laps-value">54</div> 
+                                    <div class="col my-0 ml-0 mr-2 p-0 lap-value" id="sesion-laps-value">14</div> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row m-0 p-0">
+                            <div class="col m-0 p-0">
+                                <div class="row m-0 p-0">
+                                    <div class="col mt-2 mb-0 ml-1 mr-0 p-0 lap-label" id="fuel-level-label">Fuel Level:</div>
+                                </div>
+                                <div class="row m-0 p-0">
+                                    <div class="col my-0 ml-0 mr-2 p-0 lap-value"><span id="fuel-level-value">38.43</span><span class="lap-unit" id="fuel-level-unit">L</span></div> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row m-0 p-0">
+                            <div class="col m-0 p-0">
+                                <div class="row m-0 p-0">
+                                    <div class="col mt-2 mb-0 ml-1 mr-0 p-0 lap-label" id="fuel-level-label">Per Lap Usage:</div>
+                                </div>
+                                <div class="row m-0 p-0">
+                                    <div class="col my-0 ml-0 mr-2 p-0 lap-value"><span id="fuel-usage-value">1.636</span><span class="lap-unit" id="fuel-level-unit">L</div> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row m-0 p-0">
+                            <div class="col m-0 p-0">
+                                <div class="row m-0 p-0">
+                                    <div class="col mt-2 mb-0 ml-1 mr-0 p-0 lap-label" id="remaining-range-label">Remaining Range Laps:</div>
+                                </div>
+                                <div class="row m-0 p-0">
+                                    <div class="col my-0 ml-0 mr-2 p-0 lap-value"><span id="remaining-range-value">7</span><span class="lap-unit"> laps</div> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row m-0 p-0">
+                            <div class="col m-0 p-0">
+                                <div class="row m-0 p-0">
+                                    <div class="col mt-2 mb-0 ml-1 mr-0 p-0 lap-label" id="remaining-race-laps-label">Remaining Race Laps:</div>
+                                </div>
+                                <div class="row m-0 p-0">
+                                    <div class="col my-0 ml-0 mr-2 p-0 lap-value"><span id="remaining-race-laps-value">14</span><span class="lap-unit"> laps</div> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row m-0 p-0">
+                            <div class="col m-0 p-0">
+                                <div class="row m-0 p-0">
+                                    <div class="col mt-2 mb-0 ml-1 mr-0 p-0 lap-label" id="fuel-needed-label">Fuel Needed:</div>
+                                </div>
+                                <div class="row m-0 p-0">
+                                    <div class="col my-0 ml-0 mr-2 p-0 lap-value"><span id="fuel-needed-value">11.45</span><span class="lap-unit">L</div> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col mx-1 my-0 p-0 pedal-input-area" id="brake-pressure-area">
                         <div id="brake-pressure-value"></div>
                     </div>

@@ -16,7 +16,7 @@ function fullscreen(){
     document.getElementById('full-screen-button').style.display = 'none';
 };
 
-function initialisePage() {
+function loadingRoutine() {
     startConnection();
     setInterval(checkConnection(), 5000);
 }
@@ -134,17 +134,17 @@ function checkConnection() {
 function displayConnectionState() {
     switch (socket.readyState) {
         case 0: //connecting
-            document.getElementById('dataSourceStatus').innerHTML = 'Attempting to connect'
+            document.getElementById('data-source-status').innerHTML = 'Attempting to connect'
             break;
         case 1: //open
-            document.getElementById('dataSourceStatus').innerHTML = 'Connected'
+            document.getElementById('data-source-status').innerHTML = 'Connected'
             break;
         case 2: //closing
-            document.getElementById('dataSourceStatus').innerHTML = 'Connection Error'
+            document.getElementById('data-source-status').innerHTML = 'Connection Error'
             break;
         case 3: //closed
-            document.getElementById('dataSourceStatus').innerHTML = 'Disconnected'
-            document.getElementById('irStatus').innerHTML = "Not Running"
+            document.getElementById('data-source-status').innerHTML = 'Disconnected'
+            document.getElementById('iracing-status').innerHTML = "Not Running"
             break;
         default: //bad things have happened
     };
