@@ -79,7 +79,7 @@ html{
         position: relative;
         top: 0px;
         left: 0px;
-        border-top: 1.5vh solid black
+        border-top: 1.7vh solid black
     }
 
     #dash-contents{
@@ -180,8 +180,8 @@ html{
     #throttle-100pct-indicator{
         position: absolute;
         left: 0;
-        top: 1vh;
+        top: 1.5vh;
         z-index: 50;
-        height: 0.5vh;
+        height: 0.8vh;
         width: 100%;
     }
