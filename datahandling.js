@@ -29,7 +29,7 @@ function startConnection() {
 
     socket.onopen = function (event) {
         console.log("WebSocket connection open, sending confirmation to data source");
-        socket.send("webapp connected and ready to recieve data");
+        //socket.send("webapp connected and ready to recieve data");
         displayConnectionState();
     };
 
