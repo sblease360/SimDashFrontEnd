@@ -23,7 +23,7 @@ function loadingRoutine() {
 
 function startConnection() {
     console.log('Attempting to create new websocket connection');
-    socket = new WebSocket('ws://192.168.178.30:8080');
+    socket = new WebSocket('ws://192.168.178.50:8080');
     var sessionInfo = null;
     var telem = null;
 
