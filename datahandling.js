@@ -36,7 +36,15 @@ function startConnection() {
     socket.onmessage = function (event) { 
         //All data from the game is passed as JSON, other items are sent in plain text
         console.log(event.data)
-        document.getElementById('gear').innerHTML = event.data;
+        let gear = null
+        if (event.data === -1) {
+            gear = 'R'
+        } else if (event.data === 0){
+            gear = 'N'
+        } else {
+            gear = event.data
+        };
+        document.getElementById('gear').innerHTML = gear;
         // if (isJSON(event.data)) {
         //     console.log("this is telemetry data");
         //     telem = JSON.parse(event.data);
