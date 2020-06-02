@@ -35,7 +35,6 @@ function startConnection() {
 
     socket.onmessage = function (event) { 
         let data = JSON.parse(event.data)
-        console.log(data)
         let gear = null
         if (data.gear == -1) {
             gear = 'R'
@@ -52,6 +51,67 @@ function startConnection() {
         document.getElementById('track-temp').innerHTML = data.track_temp.toFixed(1);
         document.getElementById('ambient-temp').innerHTML = data.ambient_temp.toFixed(1);
         document.getElementById('fuel-level-value').innerHTML = data.fuel_level.toFixed(2);
+        document.getElementById('current-revs').style.width = (100 * (data.rpm / data.redline)) + '%'
+        document.getElementById('throttle-pressure-value').style.height = (100 * data.throttle) + '%'
+        document.getElementById('brake-pressure-value').style.height = (100 * data.brake) + '%'
+        if (data.throttle === 1) {
+            document.getElementById('throttle-100pct-indicator').style.display = 'block'
+        } else {
+            document.getElementById('throttle-100pct-indicator').style.display = 'none'
+        };
+        
+        switch(data.shift_light) {
+            case 0:
+                document.getElementById('shift-light-1-left').style.backgroundColor = "black"
+                document.getElementById('shift-light-2-left').style.backgroundColor = "black"
+                document.getElementById('shift-light-3-left').style.backgroundColor = "black"
+                document.getElementById('shift-light-4-left').style.backgroundColor = "black"
+                document.getElementById('shift-light-1-right').style.backgroundColor = "black"
+                document.getElementById('shift-light-2-right').style.backgroundColor = "black"
+                document.getElementById('shift-light-3-right').style.backgroundColor = "black"
+                document.getElementById('shift-light-4-right').style.backgroundColor = "black"
+                break;
+            case 1: 
+                document.getElementById('shift-light-1-left').style.backgroundColor = "#ffe100"
+                document.getElementById('shift-light-2-left').style.backgroundColor = "black"
+                document.getElementById('shift-light-3-left').style.backgroundColor = "black"
+                document.getElementById('shift-light-4-left').style.backgroundColor = "black"
+                document.getElementById('shift-light-1-right').style.backgroundColor = "#ffe100"
+                document.getElementById('shift-light-2-right').style.backgroundColor = "black"
+                document.getElementById('shift-light-3-right').style.backgroundColor = "black"
+                document.getElementById('shift-light-4-right').style.backgroundColor = "black"
+                break;            
+            case 2: 
+                document.getElementById('shift-light-1-left').style.backgroundColor = "#ffe100"
+                document.getElementById('shift-light-2-left').style.backgroundColor = "#ffaa00"
+                document.getElementById('shift-light-3-left').style.backgroundColor = "black"
+                document.getElementById('shift-light-4-left').style.backgroundColor = "black"
+                document.getElementById('shift-light-1-right').style.backgroundColor = "#ffe100"
+                document.getElementById('shift-light-2-right').style.backgroundColor = "#ffaa00"
+                document.getElementById('shift-light-3-right').style.backgroundColor = "black"
+                document.getElementById('shift-light-4-right').style.backgroundColor = "black"
+                break;
+            case 3: 
+                document.getElementById('shift-light-1-left').style.backgroundColor = "#ffe100"
+                document.getElementById('shift-light-2-left').style.backgroundColor = "#ffaa00"
+                document.getElementById('shift-light-3-left').style.backgroundColor = "#ff6200"
+                document.getElementById('shift-light-4-left').style.backgroundColor = "black"
+                document.getElementById('shift-light-1-right').style.backgroundColor = "#ffe100"
+                document.getElementById('shift-light-2-right').style.backgroundColor = "#ffaa00"
+                document.getElementById('shift-light-3-right').style.backgroundColor = "#ff6200"
+                document.getElementById('shift-light-4-right').style.backgroundColor = "black"
+                break;
+            case 4: 
+                document.getElementById('shift-light-1-left').style.backgroundColor = "#ff0000"
+                document.getElementById('shift-light-2-left').style.backgroundColor = "#ff0000"
+                document.getElementById('shift-light-3-left').style.backgroundColor = "#ff0000"
+                document.getElementById('shift-light-4-left').style.backgroundColor = "#ff0000"
+                document.getElementById('shift-light-1-right').style.backgroundColor = "#ff0000"
+                document.getElementById('shift-light-2-right').style.backgroundColor = "#ff0000"
+                document.getElementById('shift-light-3-right').style.backgroundColor = "#ff0000"
+                document.getElementById('shift-light-4-right').style.backgroundColor = "#ff0000"
+                break;            
+        }
         // if (isJSON(event.data)) {
         //     console.log("this is telemetry data");
         //     telem = JSON.parse(event.data);
