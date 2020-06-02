@@ -46,7 +46,7 @@ function startConnection() {
         };
         document.getElementById('gear').innerHTML = gear;
         document.getElementById('rpm').innerHTML = data.rpm.toFixed(0);
-        document.getElementById('speed').innerHTML = data.speed.toFixed(0);
+        document.getElementById('speed').innerHTML = (2.23694 * data.speed).toFixed(0);
         document.getElementById('oil-temp').innerHTML = data.oil_temp.toFixed(1);
         document.getElementById('water-temp').innerHTML = data.water_temp.toFixed(1);
         document.getElementById('track-temp').innerHTML = data.track_temp.toFixed(1);
