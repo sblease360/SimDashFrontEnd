@@ -34,17 +34,24 @@ function startConnection() {
     };
 
     socket.onmessage = function (event) { 
-        //All data from the game is passed as JSON, other items are sent in plain text
-        console.log(event.data)
+        let data = JSON.parse(event.data)
+        console.log(data)
         let gear = null
-        if (event.data === -1) {
+        if (data.gear == -1) {
             gear = 'R'
-        } else if (event.data === 0){
+        } else if (data.gear == 0){
             gear = 'N'
         } else {
-            gear = event.data
+            gear = data.gear
         };
         document.getElementById('gear').innerHTML = gear;
+        document.getElementById('rpm').innerHTML = data.rpm.toFixed(0);
+        document.getElementById('speed').innerHTML = data.speed.toFixed(0);
+        document.getElementById('oil-temp').innerHTML = data.oil_temp.toFixed(1);
+        document.getElementById('water-temp').innerHTML = data.water_temp.toFixed(1);
+        document.getElementById('track-temp').innerHTML = data.track_temp.toFixed(1);
+        document.getElementById('ambient-temp').innerHTML = data.ambient_temp.toFixed(1);
+        document.getElementById('fuel-level-value').innerHTML = data.fuel_level.toFixed(2);
         // if (isJSON(event.data)) {
         //     console.log("this is telemetry data");
         //     telem = JSON.parse(event.data);
