@@ -77,6 +77,17 @@ html{
         z-index: 2;
     }
 
+    #rpm{
+        position: absolute;
+        text-align: center;
+        width: 20%;
+        left: 40%;
+        top: -1%;
+        font-size: 8vh;
+        line-height: 13vh;
+        z-index: 3
+    }
+
 /*Main Area z-index positioning*/
     #main-dash-area{
         position: relative;
@@ -85,13 +96,28 @@ html{
         border-top: 1.7vh solid black
     }
 
-    #dash-contents{
+    #main-dash-area-row{
+        position: relative;
+        height: 100%;
+    }
+
+
+    #dash-contents-row-1{
         position:absolute;
         top: 0px;
         left: 0px;
         width: 100%;
-        height: 100%;
+        height: 65%;
     }
+
+    #dash-contents-row-2{
+        position:absolute;
+        top: 65%;
+        left: 0px;
+        width: 100%;
+        height: 35%;
+    }
+
 
     #full-screen-button{
         font-family: ubuntu;
@@ -102,7 +128,7 @@ html{
         width: 100%;
         font-size: 10vh;
         line-height: 70vh;
-        background-color: rgb(30,30,30);
+        background-color: rgb(30,0,0);
         z-index: 100;
         vertical-align: middle;        
     }
@@ -145,11 +171,11 @@ html{
     }
 
     #gear{
-        font-size: 45vh;
-        line-height: 34vh;
+        font-size: 40vh;
+        line-height: 30vh;
     }
 
-    #rpm, #speed, #speed-unit{
+    #speed, #speed-unit{
         font-size: 8vh;
         line-height: 13vh;
     }
@@ -178,7 +204,8 @@ html{
     #throttle-pressure-value{
         background: rgb(66,0,0);
         background: linear-gradient(0deg, rgba(0,150,0,0.5) 0%, rgba(0,220,0,0.7) 46%, rgba(0,255,0,0.9) 100%);
-        
+        margin: none;
+        padding: none;
     }
 
     #throttle-100pct-indicator{

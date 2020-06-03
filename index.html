@@ -26,8 +26,9 @@
         <div class="row m-0 p-0" id="rev-counter-row">
             <div class="col m-0 p-0" id="rev-counter-col">
                 <div class="m-0 p-0" id="current-revs"></div>
-                <div class="m-0 p-0" id="soft-red-line"></div>               
+                <div class="m-0 p-0" id="soft-red-line"></div>        
             </div>
+            <div class="m-0 p-0 value" id="rpm">7586</div>      
         </div>
         <div class="row m-0 p-0" id="all-except-rev-counter">
             <div class="col m-0 p-0 shift-light-col" id="left-shift-light-area">
@@ -44,172 +45,180 @@
                     <div class="col m-0 p-0 shift-light" id="shift-light-1-left"></div>            
                 </div>
             </div>
-            <div class="col" id="main-dash-area">
-                <div class="row m-0 p-0 bg-default" id="dash-contents">
-                    <div class="col m-0 p-0" id="fuel-col">
-                        <div class="row m-0 p-0">
-                            <div class="col m-0 p-0">
-                                <div class="row m-0 p-0">
-                                    <div class="col mt-2 mb-1 ml-1 mr-0 p-0 lap-label" id="session-laps-complete-label">Session Laps:</div>
-                                    <div class="col mt-2 mb-1 ml-1 mr-0 p-0 lap-label" id="stint-laps-complete-label">Stint Laps:</div> 
-                                </div>
-                                <div class="row m-0 p-0">
-                                    <div class="col my-0 ml-0 mr-2 p-0 lap-value" id="sesion-laps-value">54</div> 
-                                    <div class="col my-0 ml-0 mr-2 p-0 lap-value" id="sesion-laps-value">14</div> 
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row m-0 p-0">
-                            <div class="col m-0 p-0">
-                                <div class="row m-0 p-0">
-                                    <div class="col mt-2 mb-0 ml-1 mr-0 p-0 lap-label" id="fuel-level-label">Fuel Level:</div>
-                                </div>
-                                <div class="row m-0 p-0">
-                                    <div class="col my-0 ml-0 mr-2 p-0 lap-value"><span id="fuel-level-value">38.43</span><span class="lap-unit" id="fuel-level-unit">L</span></div> 
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row m-0 p-0">
-                            <div class="col m-0 p-0">
-                                <div class="row m-0 p-0">
-                                    <div class="col mt-2 mb-0 ml-1 mr-0 p-0 lap-label" id="fuel-level-label">Per Lap Usage:</div>
-                                </div>
-                                <div class="row m-0 p-0">
-                                    <div class="col my-0 ml-0 mr-2 p-0 lap-value"><span id="fuel-usage-value">1.636</span><span class="lap-unit" id="fuel-level-unit">L</div> 
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row m-0 p-0">
-                            <div class="col m-0 p-0">
-                                <div class="row m-0 p-0">
-                                    <div class="col mt-2 mb-0 ml-1 mr-0 p-0 lap-label" id="remaining-range-label">Remaining Range Laps:</div>
-                                </div>
-                                <div class="row m-0 p-0">
-                                    <div class="col my-0 ml-0 mr-2 p-0 lap-value"><span id="remaining-range-value">7</span></div> 
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row m-0 p-0">
-                            <div class="col m-0 p-0">
-                                <div class="row m-0 p-0">
-                                    <div class="col mt-2 mb-0 ml-1 mr-0 p-0 lap-label" id="remaining-race-laps-label">Remaining Race Laps:</div>
-                                </div>
-                                <div class="row m-0 p-0">
-                                    <div class="col my-0 ml-0 mr-2 p-0 lap-value"><span id="remaining-race-laps-value">14</span></div> 
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row m-0 p-0">
-                            <div class="col m-0 p-0">
-                                <div class="row m-0 p-0">
-                                    <div class="col mt-2 mb-0 ml-1 mr-0 p-0 lap-label" id="fuel-needed-label">Fuel Needed:</div>
-                                </div>
-                                <div class="row m-0 p-0">
-                                    <div class="col my-0 ml-0 mr-2 p-0 lap-value"><span id="fuel-needed-value">11.45</span><span class="lap-unit">L</div> 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col mx-1 my-0 p-0 pedal-input-area" id="brake-pressure-area">
+            <div class="col m-0 p-0" id="main-dash-area">
+                <div class="row m-0 p-0" id="main-dash-area-row">
+                    <div class="col m-0 p-0 pedal-input-area bg-default" id="brake-pressure-area">
                         <div id="brake-pressure-value"></div>
                     </div>
-                    <div class="col m-0 p-0" id="car-info-col">
-                        <div class="row m-0 p-0">
-                            <div class="col m-0 p-0 value" id="rpm">7586</div>
+                    <div class="col m-0 p-0">
+                        <div class="row m-0 p-0 bg-default" id="dash-contents-row-1">
+                            <div class="col m-0 p-0" id="fuel-col">
+                                <!-- <div class="row m-0 p-0">
+                                    <div class="col m-0 p-0">
+                                        <div class="row m-0 p-0">
+                                            <div class="col mt-2 mb-1 ml-1 mr-0 p-0 lap-label" id="session-laps-complete-label">Session Laps:</div>
+                                            <div class="col mt-2 mb-1 ml-1 mr-0 p-0 lap-label" id="stint-laps-complete-label">Stint Laps:</div> 
+                                        </div>
+                                        <div class="row m-0 p-0">
+                                            <div class="col my-0 ml-0 mr-2 p-0 lap-value" id="sesion-laps-value">54</div> 
+                                            <div class="col my-0 ml-0 mr-2 p-0 lap-value" id="sesion-laps-value">14</div> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row m-0 p-0">
+                                    <div class="col m-0 p-0">
+                                        <div class="row m-0 p-0">
+                                            <div class="col mt-2 mb-0 ml-1 mr-0 p-0 lap-label" id="fuel-level-label">Fuel Level:</div>
+                                        </div>
+                                        <div class="row m-0 p-0">
+                                            <div class="col my-0 ml-0 mr-2 p-0 lap-value"><span id="fuel-level-value">38.43</span><span class="lap-unit" id="fuel-level-unit">L</span></div> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row m-0 p-0">
+                                    <div class="col m-0 p-0">
+                                        <div class="row m-0 p-0">
+                                            <div class="col mt-2 mb-0 ml-1 mr-0 p-0 lap-label" id="fuel-level-label">Per Lap Usage:</div>
+                                        </div>
+                                        <div class="row m-0 p-0">
+                                            <div class="col my-0 ml-0 mr-2 p-0 lap-value"><span id="fuel-usage-value">1.636</span><span class="lap-unit" id="fuel-level-unit">L</div> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row m-0 p-0">
+                                    <div class="col m-0 p-0">
+                                        <div class="row m-0 p-0">
+                                            <div class="col mt-2 mb-0 ml-1 mr-0 p-0 lap-label" id="remaining-range-label">Remaining Range Laps:</div>
+                                        </div>
+                                        <div class="row m-0 p-0">
+                                            <div class="col my-0 ml-0 mr-2 p-0 lap-value"><span id="remaining-range-value">7</span></div> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row m-0 p-0">
+                                    <div class="col m-0 p-0">
+                                        <div class="row m-0 p-0">
+                                            <div class="col mt-2 mb-0 ml-1 mr-0 p-0 lap-label" id="remaining-race-laps-label">Remaining Race Laps:</div>
+                                        </div>
+                                        <div class="row m-0 p-0">
+                                            <div class="col my-0 ml-0 mr-2 p-0 lap-value"><span id="remaining-race-laps-value">14</span></div> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row m-0 p-0">
+                                    <div class="col m-0 p-0">
+                                        <div class="row m-0 p-0">
+                                            <div class="col mt-2 mb-0 ml-1 mr-0 p-0 lap-label" id="fuel-needed-label">Fuel Needed:</div>
+                                        </div>
+                                        <div class="row m-0 p-0">
+                                            <div class="col my-0 ml-0 mr-2 p-0 lap-value"><span id="fuel-needed-value">11.45</span><span class="lap-unit">L</div> 
+                                        </div>
+                                    </div>
+                                </div> -->
+                            </div>
+                            <div class="col m-0 p-0" id="car-info-col">
+                                <!-- <div class="row m-0 p-0">
+                                    <div class="col m-0 p-0 value" id="rpm">7586</div>
+                                </div> -->
+                                <div class="row m-0 p-0">
+                                    <div class="col m-0 p-0 value" id="gear">5</div>
+                                </div>
+                                <div class="row m-0 p-0">
+                                    <div class="col m-0 p-0 value" id="speed">156</div>
+                                    <div class="col m-0 p-0 unit" id="speed-unit">mph</div>
+                                </div>
+                                <!-- <div class="row m-0 p-0">
+                                    <div class="col label pl-1 pr-0 m-0 car-info" id="bias-label">Brake Bias</div>
+                                    <div class="col value pr-1 pl-0 m-0 car-info info-value"><span id="bias-value"></span>57.6</span></span><span class="unit">%</span></div>
+                                </div>
+                                <div class="row m-0 p-0">
+                                    <div class="col label pl-1 pr-0 m-0 car-info" id="oil-label">Oil</div>
+                                    <div class="col value pr-1 pl-0 m-0 car-info info-value"><span id="oil-temp">95</span><span class="unit" id="oil-unit">°C</span></div>
+                                </div>
+                                <div class="row m-0 p-0">
+                                    <div class="col label pl-1 pr-0 m-0 car-info" id="water-label">Water</div>
+                                    <div class="col value pr-1 pl-0 m-0 car-info info-value"><span id="water-temp">120</span><span class="unit" id="water-unit">°C</span></div>
+                                </div>
+                                <div class="row m-0 p-0">
+                                    <div class="col label pl-1 pr-0 m-0 car-info" id="track-label">Track</div>
+                                    <div class="col value pr-1 pl-0 m-0 car-info info-value"><span id="track-temp">45</span><span class="unit" id="track-unit">°C</span></div>
+                                </div>
+                                <div class="row m-0 p-0">
+                                    <div class="col label pl-1 pr-0 m-0 car-info" id="air-label">Ambient</div>
+                                    <div class="col value pr-1 pl-0 m-0 car-info info-value"><span id="ambient-temp">32</span><span class="unit" id="air-unit">°C</span></div>     
+                                </div> -->
+                            </div>
+
+                            <div class="col mx-0 mb-0 mt-2 p-0" id="timing-col">
+                                <!-- <div class="row m-0 p-0">
+                                    <div class="col m-0 p-0">
+                                        <div class="row m-0 p-0">
+                                            <div class="col mt-1 mb-0 ml-1 mr-0 p-0 timing-label" id="current-lap-label">Current vs <span id="current-vs-lap">best</span>:</div> 
+                                        </div>
+                                        <div class="row m-0 p-0">
+                                            <div class="col my-0 ml-0 mr-2 p-0 timing-value" id="current-lap-value">+ 0.006</div> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row m-0 p-0">
+                                    <div class="col m-0 p-0">
+                                        <div class="row m-0 p-0">
+                                            <div class="col mt-2 mb-0 ml-1 mr-0 p-0 timing-label" id="last-lap-label">Last:</div> 
+                                        </div>
+                                        <div class="row m-0 p-0">
+                                            <div class="col my-0 ml-0 mr-2 p-0 timing-value" id="last-lap-value">1:45:123</div> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row m-0 p-0">
+                                    <div class="col m-0 p-0">
+                                        <div class="row m-0 p-0">
+                                            <div class="col mt-2 mb-0 ml-1 mr-0 p-0 timing-label" id="best-lap-label">Best:</div> 
+                                        </div>
+                                        <div class="row m-0 p-0">
+                                            <div class="col my-0 ml-0 mr-2 p-0 timing-value" id="best-lap-value">1:44:786</div> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row m-0 p-0">
+                                    <div class="col m-0 p-0">
+                                        <div class="row m-0 p-0">
+                                            <div class="col mt-2 mb-0 ml-1 mr-0 p-0 timing-label" id="optimum-lap-label">Optimum:</div> 
+                                        </div>
+                                        <div class="row m-0 p-0">
+                                            <div class="col my-0 ml-0 mr-2 p-0 timing-value" id="optimum-lap-value">1:44:153</div> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row m-0 p-0">
+                                    <div class="col m-0 p-0">
+                                        <div class="row m-0 p-0">
+                                            <div class="col mt-2 mb-0 ml-1 mr-0 p-0 timing-label" id="delta-last-lap-ahead-label">Last Lap ▲ Ahead</div> 
+                                        </div>
+                                        <div class="row m-0 p-0">
+                                            <div class="col my-0 ml-0 mr-2 p-0 timing-value" id="delta-last-lap-ahead-value">+0.345</div> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row m-0 p-0">
+                                    <div class="col m-0 p-0">
+                                        <div class="row m-0 p-0">
+                                            <div class="col mt-2 mb-0 ml-1 mr-0 p-0 timing-label" id="delta-last-lap-ahead-label">Last Lap ▲ Behind</div> 
+                                        </div>
+                                        <div class="row m-0 p-0">
+                                            <div class="col my-0 ml-0 mr-2 p-0 timing-value" id="delta-last-lap-ahead-value">-0.121</div> 
+                                        </div>
+                                    </div>
+                                </div> -->
+                            </div>
+    
                         </div>
-                        <div class="row m-0 p-0">
-                            <div class="col m-0 p-0 value" id="gear">5</div>
-                        </div>
-                        <div class="row m-0 p-0">
-                            <div class="col m-0 p-0 value" id="speed">156</div>
-                            <div class="col m-0 p-0 unit" id="speed-unit">mph</div>
-                        </div>
-                        <div class="row m-0 p-0">
-                            <div class="col label pl-1 pr-0 m-0 car-info" id="bias-label">Brake Bias</div>
-                            <div class="col value pr-1 pl-0 m-0 car-info info-value"><span id="bias-value"></span>57.6</span></span><span class="unit">%</span></div>
-                        </div>
-                        <div class="row m-0 p-0">
-                            <div class="col label pl-1 pr-0 m-0 car-info" id="oil-label">Oil</div>
-                            <div class="col value pr-1 pl-0 m-0 car-info info-value"><span id="oil-temp">95</span><span class="unit" id="oil-unit">°C</span></div>
-                        </div>
-                        <div class="row m-0 p-0">
-                            <div class="col label pl-1 pr-0 m-0 car-info" id="water-label">Water</div>
-                            <div class="col value pr-1 pl-0 m-0 car-info info-value"><span id="water-temp">120</span><span class="unit" id="water-unit">°C</span></div>
-                        </div>
-                        <div class="row m-0 p-0">
-                            <div class="col label pl-1 pr-0 m-0 car-info" id="track-label">Track</div>
-                            <div class="col value pr-1 pl-0 m-0 car-info info-value"><span id="track-temp">45</span><span class="unit" id="track-unit">°C</span></div>
-                        </div>
-                        <div class="row m-0 p-0">
-                            <div class="col label pl-1 pr-0 m-0 car-info" id="air-label">Ambient</div>
-                            <div class="col value pr-1 pl-0 m-0 car-info info-value"><span id="ambient-temp">32</span><span class="unit" id="air-unit">°C</span></div>     
-                        </div>
-                    </div>
-                    <div class="col mx-1 my-0 p-0 pedal-input-area" id="throttle-pressure-area">
+                        <div class="row m-0 p-0 bg-dark" id="dash-contents-row-2">
+                        </div>             
+                    </div> 
+                    <div class="col m-0 p-0 pedal-input-area bg-default" id="throttle-pressure-area">
                         <div id="throttle-pressure-value"></div>
                         <div class="bg-default" id="throttle-100pct-indicator"></div>
-                    </div>
-                    <div class="col mx-0 mb-0 mt-2 p-0" id="timing-col">
-                        <div class="row m-0 p-0">
-                            <div class="col m-0 p-0">
-                                <div class="row m-0 p-0">
-                                    <div class="col mt-1 mb-0 ml-1 mr-0 p-0 timing-label" id="current-lap-label">Current vs <span id="current-vs-lap">best</span>:</div> 
-                                </div>
-                                <div class="row m-0 p-0">
-                                    <div class="col my-0 ml-0 mr-2 p-0 timing-value" id="current-lap-value">+ 0.006</div> 
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row m-0 p-0">
-                            <div class="col m-0 p-0">
-                                <div class="row m-0 p-0">
-                                    <div class="col mt-2 mb-0 ml-1 mr-0 p-0 timing-label" id="last-lap-label">Last:</div> 
-                                </div>
-                                <div class="row m-0 p-0">
-                                    <div class="col my-0 ml-0 mr-2 p-0 timing-value" id="last-lap-value">1:45:123</div> 
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row m-0 p-0">
-                            <div class="col m-0 p-0">
-                                <div class="row m-0 p-0">
-                                    <div class="col mt-2 mb-0 ml-1 mr-0 p-0 timing-label" id="best-lap-label">Best:</div> 
-                                </div>
-                                <div class="row m-0 p-0">
-                                    <div class="col my-0 ml-0 mr-2 p-0 timing-value" id="best-lap-value">1:44:786</div> 
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row m-0 p-0">
-                            <div class="col m-0 p-0">
-                                <div class="row m-0 p-0">
-                                    <div class="col mt-2 mb-0 ml-1 mr-0 p-0 timing-label" id="optimum-lap-label">Optimum:</div> 
-                                </div>
-                                <div class="row m-0 p-0">
-                                    <div class="col my-0 ml-0 mr-2 p-0 timing-value" id="optimum-lap-value">1:44:153</div> 
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row m-0 p-0">
-                            <div class="col m-0 p-0">
-                                <div class="row m-0 p-0">
-                                    <div class="col mt-2 mb-0 ml-1 mr-0 p-0 timing-label" id="delta-last-lap-ahead-label">Last Lap ▲ Ahead</div> 
-                                </div>
-                                <div class="row m-0 p-0">
-                                    <div class="col my-0 ml-0 mr-2 p-0 timing-value" id="delta-last-lap-ahead-value">+0.345</div> 
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row m-0 p-0">
-                            <div class="col m-0 p-0">
-                                <div class="row m-0 p-0">
-                                    <div class="col mt-2 mb-0 ml-1 mr-0 p-0 timing-label" id="delta-last-lap-ahead-label">Last Lap ▲ Behind</div> 
-                                </div>
-                                <div class="row m-0 p-0">
-                                    <div class="col my-0 ml-0 mr-2 p-0 timing-value" id="delta-last-lap-ahead-value">-0.121</div> 
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
