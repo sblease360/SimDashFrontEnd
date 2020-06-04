@@ -1,7 +1,5 @@
 html{
     height: 100%;
-    font-family: 'Ubuntu', sans-serif;
-    font-family: 'roboto mono', monospace;
 }
 
 .bg-default{
@@ -120,7 +118,7 @@ html{
 
 
     #full-screen-button{
-        font-family: ubuntu;
+        font-family: 'Share', cursive;
         position: absolute;
         top: 0px; 
         left: 0px;
@@ -136,19 +134,19 @@ html{
 /*Car info column styling*/
     .value{
         text-align: center;
-        font-family: roboto mono;
+        font-family: 'Share Tech Mono', monospace;
         color: white;
     }
 
     .label{
         text-align: left;
-        font-family: ubuntu;
+        font-family: 'Share', cursive;
         color: rgb(200,200,200);
     }
 
     .unit{
         text-align: left;
-        font-family: ubuntu;
+        font-family: 'Share', cursive;
         color: rgb(200,200,200);
     }
 
@@ -182,7 +180,7 @@ html{
 
 /* Pedal reading styling */
     #brake-pressure-area, #throttle-pressure-area{
-        max-width: 1vw;
+        max-width: 1.4vw;
         position: relative;
         top: 0px;
         left: 0px;
@@ -211,7 +209,7 @@ html{
     #throttle-100pct-indicator{
         position: absolute;
         left: 0;
-        top: 1.8vh;
+        top: 4vh;
         z-index: 50;
         height: 0.9vh;
         width: 100%;
@@ -220,14 +218,14 @@ html{
 /* Timing section styling */
     .timing-label{
         color: rgb(200,200,200);
-        font-family: ubuntu;
+        font-family: 'Share', cursive;
         font-size: 3.5vh;
         line-height: 3vh;
     }
 
     .timing-value{
         color: white;
-        font-family: roboto mono;
+        font-family: 'Share Tech Mono', monospace;
         text-align: right;
         font-size: 6.5vh;
         line-height: 9.3vh;
@@ -236,7 +234,7 @@ html{
 /* Lap section styling */
 .lap-label{
     color: rgb(200,200,200);
-    font-family: ubuntu;
+    font-family: 'Share', cursive;
     font-size: 3.5vh;
     line-height: 3vh;
 }
@@ -247,7 +245,7 @@ html{
 
 .lap-value{
     color: white;
-    font-family: roboto mono;
+    font-family: 'Share Tech Mono', monospace;
     text-align: right;
     font-size: 6.5vh;
     line-height: 9.3vh;
