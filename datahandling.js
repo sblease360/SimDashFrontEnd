@@ -46,11 +46,11 @@ function startConnection() {
         document.getElementById('gear').innerHTML = gear;
         document.getElementById('rpm').innerHTML = data.rpm.toFixed(0);
         document.getElementById('speed').innerHTML = (2.23694 * data.speed).toFixed(0);
-        document.getElementById('oil-temp').innerHTML = data.oil_temp.toFixed(1);
-        document.getElementById('water-temp').innerHTML = data.water_temp.toFixed(1);
-        document.getElementById('track-temp').innerHTML = data.track_temp.toFixed(1);
-        document.getElementById('ambient-temp').innerHTML = data.ambient_temp.toFixed(1);
-        document.getElementById('fuel-level-value').innerHTML = data.fuel_level.toFixed(2);
+        //document.getElementById('oil-temp').innerHTML = data.oil_temp.toFixed(1);
+        // document.getElementById('water-temp').innerHTML = data.water_temp.toFixed(1);
+        // document.getElementById('track-temp').innerHTML = data.track_temp.toFixed(1);
+        // document.getElementById('ambient-temp').innerHTML = data.ambient_temp.toFixed(1);
+        // document.getElementById('fuel-level-value').innerHTML = data.fuel_level.toFixed(2);
         document.getElementById('current-revs').style.width = (100 * (data.rpm / data.redline)) + '%'
         document.getElementById('throttle-pressure-value').style.height = (100 * data.throttle) + '%'
         document.getElementById('brake-pressure-value').style.height = (100 * data.brake) + '%'
