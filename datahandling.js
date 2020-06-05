@@ -11,9 +11,13 @@ function isJSON(str) {
     return true;
 };
 
-function fullscreen(){
-    document.documentElement.requestFullscreen()
-    document.getElementById('full-screen-button').style.display = 'none';
+function toggleFullscreen(){
+
+    if(document.fullscreenElement === null) {
+        document.documentElement.requestFullscreen();
+    } else {
+        window.location.reload(true); 
+    };  
 };
 
 function loadingRoutine() {
