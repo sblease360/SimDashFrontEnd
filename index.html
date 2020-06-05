@@ -43,7 +43,7 @@
                     <div class="col m-0 p-0 shift-light" id="shift-light-2-left"></div>            
                 </div>
                 <div class="row m-0 p-0 shift-light-row">
-                    <div class="col m-0 p-0 shift-light" id="shift-light-1-left"></div>            
+                    <div class="col m-0 p-0 shift-light" id="shift-light-1-left" onclick="toggleFullscreen()"></div>            
                 </div>
             </div>
             <div class="col m-0 p-0" id="main-dash-area">
@@ -54,12 +54,19 @@
                     <div class="col m-0 p-0">
                         <div class="row m-0 p-0 bg-default" id="dash-contents-row-1">
                             <div class="col m-0 p-0" id="fuel-col">
-                                
+                                <div class="row m-0 p-0">
+                                    <div class="col m-0 ml-3 p-0 label" id="fuel-label">Fuel</div>
+                                </div>
+                                <div class="row m-0 p-0">
+                                    <div class="col m-0 ml-3 p-0 fuel-value" id="fuel-amount">190.78</div>
+                                    <div class="col m-0 ml-1 p-0 fuel-unit">L</div>
+                                </div>
+                                <div class="row m-0 p-0">
+                                    <div class="col m-0 ml-3 p-0 fuel-value" id="fuel-amount-per-lap">1.68</div>
+                                    <div class="col m-0 ml-1 p-0 fuel-unit">L/lap</div>
+                                </div>
                             </div>
                             <div class="col m-0 p-0" id="car-info-col">
-                                <!-- <div class="row m-0 p-0">
-                                    <div class="col m-0 p-0 value" id="rpm">7586</div>
-                                </div> -->
                                 <div class="row my-1 p-0">
                                     <div class="col m-0 p-0 value" id="speed">156</div>
                                     <div class="col m-0 p-0 unit" id="speed-unit">mph</div>

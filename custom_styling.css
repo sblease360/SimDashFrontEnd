@@ -105,18 +105,17 @@ html{
         top: 0px;
         left: 0px;
         width: 100%;
-        height: 50%;
+        height: 52%;
     }
 
     #dash-contents-row-2{
         position:absolute;
-        top: 50%;
+        top: 52%;
         left: 0px;
         width: 100%;
         height: 50%;
         border-top: 2px solid rgb(50,50,60);
     }
-
 
     #full-screen-button{
         font-family: 'Share', cursive;
@@ -142,7 +141,7 @@ html{
     .label{
         text-align: left;
         font-family: 'Share', cursive;
-        color: rgb(200,200,200);
+        color: rgb(87, 152, 247);
     }
 
     .unit{
@@ -232,30 +231,24 @@ html{
         line-height: 9.3vh;
     }
 
-/* Lap section styling */
-.lap-label{
-    color: rgb(200,200,200);
-    font-family: 'Share', cursive;
-    font-size: 3.5vh;
-    line-height: 3vh;
-}
+/* Fuel section styling */
+    #fuel-label{
+        font-size: 4vh;
+    }
 
-#session-laps-complete-label, #stint-laps-complete-label{
-    font-size: 3vh;
-}
+    .fuel-value{
+        font-family: 'Share Tech Mono', monospace;
+        color: white;
+        text-align: left;
+        font-size: 4.5vh;
+        line-height: 7vh;
+    }
 
-.lap-value{
-    color: white;
-    font-family: 'Share Tech Mono', monospace;
-    text-align: right;
-    font-size: 6.5vh;
-    line-height: 9.3vh;
-}
-
-.lap-unit{
-    color: rgb(200,200,200);
-}
-
-
-    
+    .fuel-unit{
+        color: rgb(200,200,200);
+        text-align: left;
+        font-family: 'Share Tech Mono', monospace;
+        font-size: 3.5vh;
+        line-height: 7.5vh;
+    }
     
