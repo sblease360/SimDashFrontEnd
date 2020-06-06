@@ -236,19 +236,36 @@ html{
         font-size: 8vh;
     }
 
+    #fuel-required-label{
+        font-size: 5vh;
+        color: rgb(200,200,200);
+        font-family: 'Share', cursive;
+        line-height: 6vh;        
+    }
+
     .fuel-value{
         font-family: 'Share Tech Mono', monospace;
         color: white;
         text-align: left;
         font-size: 7vh;
-        line-height: 9vh;
+        line-height: 8vh;
     }
 
     .fuel-unit{
         color: rgb(200,200,200);
         text-align: left;
-        font-family: 'Share Tech Mono', monospace;
-        font-size: 7vh;
-        line-height: 9vh;
+        font-family: 'Share', cursive;
+        font-size: 6.8vh;
+        line-height: 8.8vh;
+    }
+    
+/* Car info section */
+    .car-label{
+        color: rgb(87, 152, 247); 
+    }
+
+    .car-value{
+        text-align: right;
+        line-height: 11vh;
     }
     
