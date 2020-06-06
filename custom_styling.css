@@ -270,4 +270,21 @@ html{
         font-size: 7vh;    
         line-height: 11vh;
     }
+
+/* Timing section */
+    .timing-label{
+        color: rgb(87, 152, 247); 
+        font-size: 8vh;
+        line-height: 10vh;
+    }
+
+    .timing-value{text-align: right;
+        font-size: 8vh;    
+        line-height: 10vh;
+        text-align: center;
+    }
+
+    .lap-label{
+        font-size: 7vh;
+    }
     
