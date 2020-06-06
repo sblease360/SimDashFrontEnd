@@ -174,7 +174,7 @@ html{
     }
 
     #speed, #speed-unit{
-        font-size: 8vh;
+        font-size: 10vh;
         line-height: 13vh;
     }
 
@@ -233,22 +233,22 @@ html{
 
 /* Fuel section styling */
     #fuel-label{
-        font-size: 4vh;
+        font-size: 8vh;
     }
 
     .fuel-value{
         font-family: 'Share Tech Mono', monospace;
         color: white;
         text-align: left;
-        font-size: 4.5vh;
-        line-height: 7vh;
+        font-size: 7vh;
+        line-height: 9vh;
     }
 
     .fuel-unit{
         color: rgb(200,200,200);
         text-align: left;
         font-family: 'Share Tech Mono', monospace;
-        font-size: 3.5vh;
-        line-height: 7.5vh;
+        font-size: 7vh;
+        line-height: 9vh;
     }
     
