@@ -262,12 +262,12 @@ html{
 /* Car info section */
     .car-label{
         color: rgb(87, 152, 247); 
-        font-size: 7vh;
+        font-size: 6.5vh;
     }
 
     .car-value{
         text-align: right;
-        font-size: 7.5vh;    
-        line-height: 12vh;
+        font-size: 7vh;    
+        line-height: 11vh;
     }
     
