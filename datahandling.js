@@ -34,7 +34,7 @@ function startConnection() {
     socket.onopen = function (event) {
         console.log("WebSocket connection open, sending confirmation to data source");
         //socket.send("webapp connected and ready to recieve data");
-        displayConnectionState();
+        //displayConnectionState();
     };
 
     socket.onmessage = function (event) { 
@@ -44,7 +44,7 @@ function startConnection() {
         let data = JSON.parse(event.data)
 
         if (data.test === "test") {
-            console.log("success")
+            //console.log("success")
         } else {
             let gear = null
             if (data.gear == -1) {
@@ -57,6 +57,12 @@ function startConnection() {
             document.getElementById('gear').innerHTML = gear;
             document.getElementById('rpm').innerHTML = data.rpm.toFixed(0);
             document.getElementById('speed').innerHTML = (2.23694 * data.speed).toFixed(0);
+            document.getElementById('fuel-amount').innerHTML = data.fuel_level.toFixed(2);
+            document.getElementById('brake-bias').innerHTML = data.brake_bias.toFixed(1);
+            document.getElementById('abs').innerHTML = data.abs;
+            document.getElementById('traction-control').innerHTML = data.tc_value;
+            document.getElementById('diff-value').innerHTML = data.tc_value;
+
             //document.getElementById('oil-temp').innerHTML = data.oil_temp.toFixed(1);
             // document.getElementById('water-temp').innerHTML = data.water_temp.toFixed(1);
             // document.getElementById('track-temp').innerHTML = data.track_temp.toFixed(1);
@@ -208,7 +214,7 @@ function startConnection() {
 
     socket.onclose = function (event) {
         console.log('WebSocket closing');
-        displayConnectionState();
+        //displayConnectionState();
         checkConnection()
     };
 
@@ -219,22 +225,3 @@ function checkConnection() {
         startConnection()
     }
 }
-
-function displayConnectionState() {
-    switch (socket.readyState) {
-        case 0: //connecting
-            document.getElementById('data-source-status').innerHTML = 'Attempting to connect'
-            break;
-        case 1: //open
-            document.getElementById('data-source-status').innerHTML = 'Connected'
-            break;
-        case 2: //closing
-            document.getElementById('data-source-status').innerHTML = 'Connection Error'
-            break;
-        case 3: //closed
-            document.getElementById('data-source-status').innerHTML = 'Disconnected'
-            document.getElementById('iracing-status').innerHTML = "Not Running"
-            break;
-        default: //bad things have happened
-    };
-};
