@@ -27,10 +27,10 @@ function loadingRoutine() {
 
 function prettyPrintTime(time) {
     let output
-    let mins = ((time / 60) > 1) ? (time/60).toFixed(0) : "0";
-    let secs = (time - (60 * mins) > 9) ? (time - (60 * mins)).toFixed(0) : "0" + (time - (60 * mins)).toFixed(0);
-    let ms = (time % 1).toFixed(3);
-    output = "" + mins + secs + ms;
+    let mins = ((time / 60) > 1) ? Math.floor(time/60) : "0";
+    let secs = (time - (60 * mins) > 9) ? Math.floor(time - (60 * mins)) : "0" + Math.floor(time - (60 * mins));
+    let ms = Math.floor(1000 * (time % 1).toFixed(3));
+    output = "" + mins + ":" + secs + ":" + ms;
     return output;
 };
 
