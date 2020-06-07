@@ -25,6 +25,15 @@ function loadingRoutine() {
     setInterval(checkConnection(), 5000);
 }
 
+function prettyPrintTime(time) {
+    let output
+    let mins = ((time / 60) > 1) ? (time/60).toFixed(0) : "0";
+    let secs = (time - (60 * mins) > 9) ? (time - (60 * mins)).toFixed(0) : "0" + (time - (60 * mins)).toFixed(0);
+    let ms = (time % 1).toFixed(3);
+    output = "" + mins + secs + ms;
+    return output;
+};
+
 function startConnection() {
     console.log('Attempting to create new websocket connection');
     socket = new WebSocket('ws://192.168.178.50:8080');
@@ -38,13 +47,10 @@ function startConnection() {
     };
 
     socket.onmessage = function (event) { 
-
-        
-
         let data = JSON.parse(event.data)
 
         if (data.test === "test") {
-            //console.log("success")
+            //console.log("success" )
         } else {
             let gear = null
             if (data.gear == -1) {
@@ -61,6 +67,25 @@ function startConnection() {
             document.getElementById('brake-bias').innerHTML = data.brake_bias.toFixed(1);
             document.getElementById('abs').innerHTML = data.abs;
             document.getElementById('traction-control').innerHTML = data.tc_value;
+            document.getElementById('diff-value').innerHTML = data.tc_value;
+
+            document.getElementById('last-lap-time').innerHTML = prettyPrintTime(data.last_lap);
+            if (data.last_lap_delta_OK) {
+                document.getElementById('last-lap-delta').innerHTML = data.last_lap_delta.toFixed(3)
+            };
+
+            document.getElementById('best-lap-time').innerHTML = prettyPrintTime(data.best_lap);
+            if (data.best_lap_delta_OK) {
+                document.getElementById('best-lap-delta').innerHTML = data.best_lap_delta.toFixed(3)
+            };
+
+            if (data.optimum_lap_delta_OK) {
+                document.getElementById('optimum-lap-delta').innerHTML = prettyPrintDelta(data.optimum_lap_delta)
+                document.getElementById('optimum-lap-time').innerHTML = (data.best_lap + data.best_lap_delta - data.optimum_lap_delta).toFixed(3);
+            };
+            
+
+            document.getElementById('diff-value').innerHTML = data.tc_value;
             document.getElementById('diff-value').innerHTML = data.tc_value;
 
             //document.getElementById('oil-temp').innerHTML = data.oil_temp.toFixed(1);
