@@ -61,7 +61,15 @@ function startConnection() {
                 gear = data.gear
             };
             document.getElementById('gear').innerHTML = gear;
-            document.getElementById('rpm').innerHTML = data.rpm.toFixed(0);
+            if (data.pit_limiter) {
+                document.getElementById('rpm').innerHTML = "limit: " + (2.23694 * data.pit_limit).toFixed(0) +  "mph";
+                document.getElementById('dash-contents-row-1').style.backgroundColor = "rgb(17, 94, 184)"
+                document.getElementById('dash-contents-row-2').style.backgroundColor = "rgb(17, 94, 184)"
+            } else {
+                document.getElementById('rpm').innerHTML = data.rpm.toFixed(0);
+                document.getElementById('dash-contents-row-1').style.backgroundColor = "rgb(0, 0, 0)"
+                document.getElementById('dash-contents-row-2').style.backgroundColor = "rgb(0, 0, 0)"
+            }            
             document.getElementById('speed').innerHTML = (2.23694 * data.speed).toFixed(0);
             document.getElementById('fuel-amount').innerHTML = data.fuel_level.toFixed(2);
             document.getElementById('brake-bias').innerHTML = data.brake_bias.toFixed(1);
@@ -71,12 +79,24 @@ function startConnection() {
 
             document.getElementById('last-lap-time').innerHTML = prettyPrintTime(data.last_lap);
             if (data.last_lap_delta_OK) {
-                document.getElementById('last-lap-delta').innerHTML = data.last_lap_delta.toFixed(3)
+                if (data.last_lap_delta < 0) {
+                    document.getElementById('last-lap-delta').innerHTML = data.last_lap_delta.toFixed(3)
+                    document.getElementById('last-lap-delta').style.color = "rgb(0,255,0)"
+                } else {
+                    document.getElementById('last-lap-delta').innerHTML = "+" + data.last_lap_delta.toFixed(3)
+                    document.getElementById('last-lap-delta').style.color = "rgb(255,0,0)"
+                };
             };
 
             document.getElementById('best-lap-time').innerHTML = prettyPrintTime(data.best_lap);
             if (data.best_lap_delta_OK) {
-                document.getElementById('best-lap-delta').innerHTML = data.best_lap_delta.toFixed(3)
+                if (data.best_lap_delta < 0) {
+                    document.getElementById('best-lap-delta').innerHTML = data.best_lap_delta.toFixed(3)
+                    document.getElementById('best-lap-delta').style.color = "rgb(0,255,0)"
+                } else {
+                    document.getElementById('best-lap-delta').innerHTML = "+" + data.best_lap_delta.toFixed(3)
+                    document.getElementById('best-lap-delta').style.color = "rgb(255,0,0)"
+                };
             };
 
             if (data.optimum_lap_delta_OK) {
