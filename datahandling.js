@@ -102,21 +102,17 @@ function startConnection() {
             };
 
             document.getElementById('best-lap-time').innerHTML = prettyPrintTime(data.best_lap);
-            if (data.best_lap_delta_OK) {
-                if (data.best_lap_delta < 0) {
-                    document.getElementById('best-lap-delta').innerHTML = data.best_lap_delta.toFixed(3)
-                    document.getElementById('best-lap-delta').style.color = "rgb(0,255,0)"
-                } else {
-                    document.getElementById('best-lap-delta').innerHTML = "+" + data.best_lap_delta.toFixed(3)
-                    document.getElementById('best-lap-delta').style.color = "rgb(255,0,0)"
-                };
+            if (data.best_lap_delta < 0) {
+                document.getElementById('best-lap-delta').innerHTML = data.best_lap_delta.toFixed(3)
+                document.getElementById('best-lap-delta').style.color = "rgb(0,255,0)"
+            } else if (data.best_lap_delta < 0) {
+                document.getElementById('best-lap-delta').innerHTML = "+" + data.best_lap_delta.toFixed(3)
+                document.getElementById('best-lap-delta').style.color = "rgb(255,0,0)"
+            } else {
+                document.getElementById('best-lap-delta').innerHTML = "+0.000"
+                document.getElementById('best-lap-delta').style.color = "rgb(255,255,255)"
             };
-
-            if (data.optimum_lap_delta_OK) {
-                document.getElementById('optimum-lap-delta').innerHTML = prettyPrintDelta(data.optimum_lap_delta)
-                document.getElementById('optimum-lap-time').innerHTML = (data.best_lap + data.best_lap_delta - data.optimum_lap_delta).toFixed(3);
-            };
-            
+       
 
             document.getElementById('diff-value').innerHTML = data.tc_value;
             document.getElementById('diff-value').innerHTML = data.tc_value;
