@@ -91,15 +91,16 @@ function startConnection() {
             document.getElementById('diff-value').innerHTML = data.tc_value;
 
             document.getElementById('last-lap-time').innerHTML = prettyPrintTime(data.last_lap);
-            if (data.last_lap_delta_OK) {
-                if (data.last_lap_delta < 0) {
-                    document.getElementById('last-lap-delta').innerHTML = data.last_lap_delta.toFixed(3)
-                    document.getElementById('last-lap-delta').style.color = "rgb(0,255,0)"
-                } else {
-                    document.getElementById('last-lap-delta').innerHTML = "+" + data.last_lap_delta.toFixed(3)
-                    document.getElementById('last-lap-delta').style.color = "rgb(255,0,0)"
-                };
-            };
+            if (data.last_lap_delta < 0) {
+                document.getElementById('last-lap-delta').innerHTML = data.last_lap_delta.toFixed(3)
+                document.getElementById('last-lap-delta').style.color = "rgb(0,255,0)"
+            } else if (data.last_lap_delta > 0){
+                document.getElementById('last-lap-delta').innerHTML = "+" + data.last_lap_delta.toFixed(3)
+                document.getElementById('last-lap-delta').style.color = "rgb(255,0,0)"
+            } else {
+                document.getElementById('last-lap-delta').innerHTML = "+0.000"
+                document.getElementById('last-lap-delta').style.color = "rgb(255,255,255)"
+            }
 
             document.getElementById('best-lap-time').innerHTML = prettyPrintTime(data.best_lap);
             if (data.best_lap_delta < 0) {
