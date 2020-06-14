@@ -90,8 +90,8 @@ function startConnection() {
             document.getElementById('abs').innerHTML = data.abs;
             document.getElementById('traction-control').innerHTML = data.tc_value;
             document.getElementById('diff-value').innerHTML = data.tc_value;
-            document.getElementById('track-temp-value').innerHTML = data.track_temp.ToFixed(2);
-            document.getElementById('air-temp-value').innerHTML = data.ambient_temp.ToFixed(2);
+            document.getElementById('track-temp-value').innerHTML = data.track_temp.toFixed(2);
+            document.getElementById('air-temp-value').innerHTML = data.ambient_temp.toFixed(2);
 
 
 
