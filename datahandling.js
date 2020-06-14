@@ -26,6 +26,7 @@ function loadingRoutine() {
 }
 
 function prettyPrintTime(time) {
+    if (!(time > 0)) { return };
     let output, mins, secs, ms
     mins = ((time / 60) > 1) ? Math.floor(time/60) : "0";
     secs = (time - (60 * mins) > 9) ? Math.floor(time - (60 * mins)) : "0" + Math.floor(time - (60 * mins));
@@ -89,6 +90,10 @@ function startConnection() {
             document.getElementById('abs').innerHTML = data.abs;
             document.getElementById('traction-control').innerHTML = data.tc_value;
             document.getElementById('diff-value').innerHTML = data.tc_value;
+            document.getElementById('track-temp-value').innerHTML = data.track_temp;
+            document.getElementById('air-temp-value').innerHTML = data.ambient_temp;
+
+
 
             document.getElementById('last-lap-time').innerHTML = prettyPrintTime(data.last_lap);
             if (data.last_lap_delta < 0) {
@@ -102,21 +107,21 @@ function startConnection() {
                 document.getElementById('last-lap-delta').style.color = "rgb(255,255,255)"
             }
 
-            document.getElementById('best-lap-time').innerHTML = prettyPrintTime(data.best_lap);
-            if (data.best_lap_delta < 0) {
-                document.getElementById('best-lap-delta').innerHTML = data.best_lap_delta.toFixed(3)
-                document.getElementById('best-lap-delta').style.color = "rgb(0,255,0)"
-            } else if (data.best_lap_delta < 0) {
-                document.getElementById('best-lap-delta').innerHTML = "+" + data.best_lap_delta.toFixed(3)
-                document.getElementById('best-lap-delta').style.color = "rgb(255,0,0)"
-            } else {
-                document.getElementById('best-lap-delta').innerHTML = "+0.000"
-                document.getElementById('best-lap-delta').style.color = "rgb(255,255,255)"
-            };
+            // document.getElementById('best-lap-time').innerHTML = prettyPrintTime(data.best_lap);
+            // if (data.best_lap_delta < 0) {
+            //     document.getElementById('best-lap-delta').innerHTML = data.best_lap_delta.toFixed(3)
+            //     document.getElementById('best-lap-delta').style.color = "rgb(0,255,0)"
+            // } else if (data.best_lap_delta > 0) {
+            //     document.getElementById('best-lap-delta').innerHTML = "+" + data.best_lap_delta.toFixed(3)
+            //     document.getElementById('best-lap-delta').style.color = "rgb(255,0,0)"
+            // } else {
+            //     document.getElementById('best-lap-delta').innerHTML = "+0.000"
+            //     document.getElementById('best-lap-delta').style.color = "rgb(255,255,255)"
+            // };
        
 
-            document.getElementById('diff-value').innerHTML = data.tc_value;
-            document.getElementById('diff-value').innerHTML = data.tc_value;
+            // document.getElementById('diff-value').innerHTML = data.tc_value;
+            // document.getElementById('diff-value').innerHTML = data.tc_value;
 
             //document.getElementById('oil-temp').innerHTML = data.oil_temp.toFixed(1);
             // document.getElementById('water-temp').innerHTML = data.water_temp.toFixed(1);
