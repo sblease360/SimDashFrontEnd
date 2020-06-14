@@ -26,7 +26,7 @@ function loadingRoutine() {
 }
 
 function prettyPrintTime(time) {
-    if (!(time > 0)) { return };
+    if (!(time > 0)) { return "0:00:000" };
     let output, mins, secs, ms
     mins = ((time / 60) > 1) ? Math.floor(time/60) : "0";
     secs = (time - (60 * mins) > 9) ? Math.floor(time - (60 * mins)) : "0" + Math.floor(time - (60 * mins));
@@ -90,8 +90,8 @@ function startConnection() {
             document.getElementById('abs').innerHTML = data.abs;
             document.getElementById('traction-control').innerHTML = data.tc_value;
             document.getElementById('diff-value').innerHTML = data.tc_value;
-            document.getElementById('track-temp-value').innerHTML = data.track_temp;
-            document.getElementById('air-temp-value').innerHTML = data.ambient_temp;
+            document.getElementById('track-temp-value').innerHTML = data.track_temp.ToFixed(2);
+            document.getElementById('air-temp-value').innerHTML = data.ambient_temp.ToFixed(2);
 
 
 
