@@ -87,11 +87,11 @@ function startConnection() {
             document.getElementById('speed').innerHTML = (2.23694 * data.speed).toFixed(0);
             document.getElementById('fuel-amount').innerHTML = data.fuel_level.toFixed(2);
             document.getElementById('brake-bias').innerHTML = data.brake_bias.toFixed(1);
-            document.getElementById('abs').innerHTML = data.abs;
-            document.getElementById('traction-control').innerHTML = data.tc_value;
-            document.getElementById('diff-value').innerHTML = data.tc_value;
+            //document.getElementById('abs').innerHTML = data.abs;
+            // document.getElementById('traction-control').innerHTML = data.tc_value;
+            // document.getElementById('diff-value').innerHTML = data.tc_value;
             document.getElementById('track-temp-value').innerHTML = data.track_temp.toFixed(1);
-            document.getElementById('air-temp-value').innerHTML = data.ambient_temp.toFixed(1);
+            document.getElementById('air-temp-value').innerHTML = data.ambient_temp.toFixed(1); 
 
 
 
